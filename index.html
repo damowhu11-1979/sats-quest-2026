@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATs Quest 2026 – 100% WORKING!</title>
+    <title>SATs Quest 2026 – OFFICIAL SPEC!</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; text-align: center; margin:0; padding:20px; min-height:100vh;}
@@ -12,10 +12,10 @@
         button {background:#ff4757; border:none; color:white; padding:22px 50px; font-size:1.9em; border-radius:60px; cursor:pointer; margin:20px; box-shadow:0 10px 30px rgba(0,0,0,0.4); transition:all 0.3s;}
         button:hover {transform:translateY(-10px) scale(1.1); background:#ff3742;}
         .hidden {display:none !important;}
-        #question {font-size:2.3em; background:rgba(255,255,255,0.2); padding:40px; border-radius:20px; margin:30px 0; min-height:140px;}
+        #question {font-size:2.3em; background:rgba(255,255,255,0.2); padding:40px; border-radius:20px; margin:30px 0; min-height:140px; line-height:1.4;}
         input#answer-input {padding:20px; font-size:2em; width:340px; border-radius:15px; text-align:center;}
         #timer {font-size:4em; color:#ffd700; font-weight:bold;}
-        #feedback {font-size:2.5em; margin:30px;}
+        #feedback {font-size:2.5em; margin:30px; min-height:80px;}
         .end-early {background:#2ed573 !important;}
     </style>
 </head>
@@ -26,10 +26,10 @@
 
         <!-- HOME -->
         <div id="welcome">
-            <p style="font-size:2.2em;">Choose your paper – every test is brand new!</p>
-            <button onclick="startQuest('arithmetic')">Arithmetic Paper 1 (30 min)</button>
-            <button onclick="startQuest('reasoning2')">Reasoning Paper 2 (40 min)</button>
-            <button onclick="startQuest('reasoning3')">Reasoning Paper 3 (40 min)</button>
+            <p style="font-size:2.2em; margin:40px;">Choose your official paper – brand new every time!</p>
+            <button onclick="startQuest('arithmetic')">Arithmetic Paper 1<br><small>40 questions • 30 minutes</small></button>
+            <button onclick="startQuest('reasoning2')">Reasoning Paper 2<br><small>35 questions • 40 minutes</small></button>
+            <button onclick="startQuest('reasoning3')">Reasoning Paper 3<br><small>35 questions • 40 minutes</small></button>
         </div>
 
         <!-- GAME -->
@@ -38,7 +38,7 @@
             <div id="timer">30:00</div>
             <p style="font-size:1.8em;">Score: <span id="score">0</span> / <span id="total">0</span></p>
             <div id="question"></div>
-            <input type="text" id="answer-input" placeholder="Answer" autocomplete="off"
+            <input type="text" id="answer-input" placeholder="Your answer" autocomplete="off"
                    onkeypress="if(event.key==='Enter') checkAnswer()">
             <br><br>
             <button onclick="checkAnswer()">Submit</button>
@@ -49,7 +49,7 @@
         <!-- RESULTS -->
         <div id="results" class="hidden">
             <h2>Quest Complete!</h2>
-            <h1 style="font-size:5em;"><span id="final-score">0</span>/<span id="final-total">40</span></h1>
+            <h1 style="font-size:5em;"><span id="final-score">0</span>/<span id="final-total">35</span></h1>
             <p id="result-message" style="font-size:2.8em;"></p>
             <button onclick="restart()">Another Paper!</button>
         </div>
@@ -70,17 +70,16 @@
             document.getElementById('game').classList.remove('hidden');
             document.getElementById('results').classList.add('hidden');
 
-            // Generate fresh paper
             paper = type === 'arithmetic' ? generateArithmetic() : generateReasoning();
             q = 0; score = 0;
             document.getElementById('total').textContent = paper.length;
             document.getElementById('final-total').textContent = paper.length;
             document.getElementById('level-title').textContent = 
-                type === 'arithmetic' ? 'Arithmetic Paper 1' : 
-                type === 'reasoning2' ? 'Reasoning Paper 2' : 'Reasoning Paper 3';
+                type === 'arithmetic' ? 'Arithmetic Paper 1 (40 questions)' : 
+                type === 'reasoning2' ? 'Reasoning Paper 2 (35 questions)' : 'Reasoning Paper 3 (35 questions)';
 
             loadQuestion();
-            timeLeft = type === 'arithmetic' ? 1800 : 2400;
+            timeLeft = type === 'arithmetic' ? 1800 : 2400;  // 30 min vs 40 min
             document.getElementById('timer').textContent = formatTime(timeLeft);
             timer = setInterval(() => {
                 timeLeft--;
@@ -91,7 +90,7 @@
 
         function generateArithmetic() {
             const questions = [];
-            for(let i = 1; i <= 40; i++) {
+            for(let i = 1; i <= 40; i++) {  // Exactly 40
                 let text, answer, marks = i <= 32 ? 1 : 2;
                 if(i <= 16) { let a = random(1000,9999), b = random(100,999); text = `${a} + ${b} =`; answer = a + b; }
                 else if(i <= 32) { let a = random(20,999), b = random(2,12); text = `${a} × ${b} =`; answer = a * b; }
@@ -102,20 +101,20 @@
         }
 
         function generateReasoning() {
-            const q = [];
-            for(let i = 0; i < 35; i++) {
-                const templates = [
-                    `What is 25% of ${random(100,800)}?`, (n)=>n*0.25,
-                    `Round ${random(1000,9999)} to the nearest 100.`, (n)=>Math.round(n/100)*100,
-                    `${random(1,9)}.${random(0,9)} litres = ? ml`, (l)=>l*1000,
-                    `Area of rectangle ${random(5,25)}cm × ${random(5,20)}cm =`, (l,w)=>l*w
-                ];
-                const t = templates[random(0,templates.length-1)];
-                const value = eval(t[0].match(/\d+/g).map(Number));
-                const answer = typeof t[1] === 'function' ? t[1](...value) : t[1];
-                q.push({text: t[0], answer: answer.toString(), marks: random(0,1)?2:1});
+            const questions = [];
+            const templates = [
+                () => { let n = random(100,9999); return {text: `Round ${n} to the nearest 100.`, answer: (Math.round(n/100)*100).toString()}; },
+                () => { let p = [10,20,25,50,75][random(0,4)], n = random(20,400)*5; return {text: `${p}% of ${n} =`, answer: (p*n/100).toString()}; },
+                () => { let l = (random(1,20) + random(0,9)/10).toFixed(1); return {text: `${l} litres = ? ml`, answer: (l*1000).toString()}; },
+                () => { let l = random(6,30), w = random(5,25); return {text: `Area of rectangle ${l} cm × ${w} cm =`, answer: (l*w).toString()}; },
+                () => { let s = random(8,40); return {text: `Perimeter of square with side ${s} cm =`, answer: (s*4).toString()}; },
+                () => { let f = ['1/2','1/4','3/4','1/5','2/5','3/5','1/10'][random(0,6)], n = random(20,500); return {text: `${f} of ${n} =`, answer: Math.round(eval(f)*n).toString()}; }
+            ];
+            for(let i = 0; i < 35; i++) {  // EXACTLY 35 QUESTIONS
+                const gen = templates[random(0, templates.length-1)]();
+                questions.push({text: gen.text, answer: gen.answer, marks: random(0,1)?2:1});
             }
-            return q;
+            return questions;
         }
 
         function loadQuestion() {
@@ -133,11 +132,11 @@
             if(right) {
                 score += paper[q].marks;
                 document.getElementById('score').textContent = score;
-                correctSound.play();
-                confetti({particleCount:150, spread:80, origin:{y:0.6}});
-                document.getElementById('feedback').innerHTML = '✓ Correct!';
+                correctSound.play().catch(()=>{});
+                confetti({particleCount:180, spread:80, origin:{y:0.6}});
+                document.getElementById('feedback').innerHTML = '✓ Correct! +' + paper[q].marks;
             } else {
-                wrongSound.play();
+                wrongSound.play().catch(()=>{});
                 document.getElementById('feedback').innerHTML = `✗ Answer: ${correct}`;
             }
             q++;
@@ -154,8 +153,8 @@
             const pct = Math.round((score / paper.length) * 100);
             document.getElementById('result-message').innerHTML = 
                 pct >= 90 ? 'MATHS LEGEND!<br>110+ scaled score!' :
-                pct >= 75 ? 'Brilliant!<br>100+ coming!' : 'Great effort!';
-            if(pct >= 85) victorySound.play();
+                pct >= 75 ? 'BRILLIANT!<br>100+ incoming!' : 'Great practice – go again!';
+            if(pct >= 85) victorySound.play().catch(()=>{});
         }
 
         function restart() {
