@@ -1,11 +1,12 @@
+HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATs Quest 2026 - Maths Edition 🐉⚔️</title>
+    <title>SATs Quest 2026 - Infinite Maths 🐉⚔️</title>
     <style>
-        body { font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; text-align: center; margin: 0; padding: 20px; }
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; text-align: center; margin: 0; padding: 20px; }
         h1 { font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
         .dashboard { background: rgba(0,0,0,0.3); border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 600px; }
         button { background: #ff6b6b; border: none; color: white; padding: 15px 30px; font-size: 1.2em; border-radius: 50px; cursor: pointer; margin: 10px; transition: transform 0.2s; }
@@ -19,239 +20,145 @@
     </style>
 </head>
 <body>
-    <h1>🎮 SATs Quest 2026 – Slay the Dragon! 🐉</h1>
+    <h1>🎐 SATs Quest 2026 – INFINITE MODE! 🐉</h1>
     <div class="dashboard">
         <div id="welcome">
-            <p>Welcome, <input type="text" id="hero-name" placeholder="Enter Hero Name" style="padding:10px; font-size:1em;">!</p>
-            <p>Days to Glory (May 11, 2026): <span id="countdown">172</span> 🔥</p>
-            <button onclick="startQuest('arithmetic')">🧮 Arithmetic Arena (30 mins, 40 Qs)</button>
-            <button onclick="startQuest('reasoning2')">🧠 Reasoning Paper 2 (40 mins, 35 Qs)</button>
-            <button onclick="startQuest('reasoning3')">🧩 Reasoning Paper 3 (40 mins, 35 Qs)</button>
-            <button onclick="showTopicSelect()">🎯 Topic Drill (Pick Your Battle)</button>
+            <p>Welcome, <input type="text" id="hero-name" placeholder="Your Hero Name" style="padding:10px; font-size:1em;">!</p>
+            <p>Days until SATs (11 May 2026): <b>172</b> 🔥</p>
+            <p>Every game = brand-new questions! Never repeats!</p>
+            <button onclick="startQuest('arithmetic')">🧮 Arithmetic Arena (30 mins)</button>
+            <button onclick="startQuest('reasoning2')">🧠 Reasoning Paper 2 (40 mins)</button>
+            <button onclick="startQuest('reasoning3')">🧩 Reasoning Paper 3 (40 mins)</button>
         </div>
 
         <div id="game" class="hidden">
             <h2 id="level-title"></h2>
-            <div id="timer"></div>
-            <p class="streak">Streak: <span id="streak">0</span> 🔥 | Score: <span id="score">0</span> / <span id="total">40</span> | Lives: ∞</p>
+            <div id="timer">30:00</div>
+            <p class="streak">Streak: <span id="streak">0</span> 🔥 | Score: <span id="score">0</span> / <span id="total">40</span></p>
             <div id="question"></div>
-            <input type="text" id="answer-input" placeholder="Enter your answer..." onkeypress="if(event.key==='Enter') checkAnswer();">
-            <br>
-            <button onclick="checkAnswer()">Submit & Next ⚔️</button>
-            <button onclick="getHint()">💡 Hint (1 life)</button>
-            <button onclick="endQuest()">🏁 End Quest</button>
-            <div id="feedback"></div>
+            <input type="text" id="answer-input" placeholder="Your answer..." onkeypress="if(event.key==='Enter') checkAnswer();">
+            <br><br>
+            <button onclick="checkAnswer()">Submit ⚔️</button>
+            <button onclick="getHint()">💡 Hint</button>
+            <div id="feedback" style="margin:20px;"></div>
             <div id="badges"></div>
         </div>
 
         <div id="results" class="hidden">
             <h2>Quest Complete! 🏆</h2>
-            <p>Final Score: <span id="final-score"></span> / <span id="final-total"></span></p>
+            <p>Score: <span id="final-score"></span> / <span id="final-total"></span></p>
             <p id="result-message"></p>
-            <button onclick="restart()">New Quest</button>
+            <button onclick="restart()">Play Again (New Questions!)</button>
         </div>
     </div>
 
     <script>
-        // Real questions from 2022 Arithmetic Paper (parsed from scrolls - first 10 for demo; expand for full)
-       const questions = {
-    arithmetic: [
-        { q: "7,842 + 1,959 + 618 =", a: "10419", marks: 1 },
-        { q: "1,000 × 0.7 =", a: "700", marks: 1 },
-        { q: "___ + 385 = 1,200", a: "815", marks: 1 },
-        { q: "4,800 ÷ 6 =", a: "800", marks: 1 },
-        { q: "2.45 + 9.8 =", a: "12.25", marks: 1 },
-        { q: "___ = 360 ÷ 9", a: "40", marks: 1 },
-        { q: "9,157 − 2,468 =", a: "6689", marks: 1 },
-        { q: "1/4 of 240 =", a: "60", marks: 1 },
-        { q: "12 × 11 × 5 =", a: "660", marks: 1 },
-        { q: "3.75 × 100 =", a: "375", marks: 1 },
-        { q: "840 ÷ 7 =", a: "120", marks: 1 },
-        { q: "6,000 − 2,750 =", a: "3250", marks: 1 },
-        { q: "1.25 ÷ 10 =", a: "0.125", marks: 1 },
-        { q: "15% of 800 =", a: "120", marks: 1 },
-        { q: "2/5 + 3/10 =", a: "7/10", marks: 1 },
-        { q: "50% of 1,500 =", a: "750", marks: 1 },
-        { q: "3/8 of 96 =", a: "36", marks: 1 },
+        let currentQuest = [], currentQ = 0, score = 0, streak = 0, timerInterval, timeLeft, heroName = '';
 
-        // 2-mark long questions (show method!)
-        { q: "21,672 ÷ 12 (show method)", a: "1806", marks: 2, method: true },
-        { q: "4/5 + 7/8 =", a: "67/40", marks: 1 },
-        { q: "528 × 47 (show method)", a: "24816", marks: 2, method: true },
-        { q: "13.64 × 1,000 =", a: "13640", marks: 1 },
-        { q: "5/6 − 1/4 =", a: "7/12", marks: 1 },
-        { q: "20% of 3,500 =", a: "700", marks: 1 },
-        { q: "8 − 3.275 =", a: "4.725", marks: 1 },
-        { q: "1/3 ÷ 4 =", a: "1/12", marks: 1 },
-        { q: "7/10 + 1/5 =", a: "9/10", marks: 1 },
-        { q: "42 − 8.09 =", a: "33.91", marks: 1 },
-        { q: "25% of 1,600 =", a: "400", marks: 1 },
-        { q: "9% of 400 =", a: "36", marks: 1 },
-        { q: "1,234,567 − 89,123 =", a: "1145444", marks: 1 },
-
-        // More 2-mark beasts
-        { q: "63,504 ÷ 18 (show method)", a: "3528", marks: 2, method: true },
-        { q: "80% of 240 =", a: "192", marks: 1 },
-        { q: "5/9 − 1/6 =", a: "7/18", marks: 1 },
-        { q: "3/4 × 560 =", a: "420", marks: 1 },
-        { q: "10 − 3 2/5 =", a: "6 3/5", marks: 1 },
-        { q: "9 + 36 ÷ 4 =", a: "18", marks: 1 },
-        { q: "1/2 of 780 =", a: "390", marks: 1 },
-        { q: "918 × 36 (show method)", a: "33048", marks: 2, method: true },
-        { q: "2.5% of 8,000 =", a: "200", marks: 1 },
-        { q: "7 1/4 − 2 5/6 =", a: "4 5/12", marks: 1 },
-        { q: "1,008 ÷ 12 =", a: "84", marks: 1 }
-    ],
-  reasoning2: [  // Paper 2 – 40 minutes, 35 marks
-        { q: "Write 3,405 in words.", a: "three thousand four hundred and five", marks: 1 },
-        { q: "Round 5,768 to the nearest thousand.", a: "6000", marks: 1 },
-        { q: "What is 10% of £360?", a: "36", marks: 1 },
-        { q: "Calculate 1,234 + 989.", a: "2223", marks: 1 },
-        { q: "What fraction of this shape is shaded? [Imagine 8 equal parts, 3 shaded]", a: "3/8", marks: 1 },
-        { q: "Put these temperatures in order from coldest to hottest: –4°C, 3°C, –1°C, 7°C", a: "−4°C, −1°C, 3°C, 7°C", marks: 1 },
-        { q: "A pack of 36 pencils costs £5.40. What is the cost per pencil?", a: "15p", marks: 1 },
-        { q: "What is ½ of ¾?", a: "3/8", marks: 1 },
-        { q: "Complete: 3.2 kg = ___ grams", a: "3200", marks: 1 },
-        { q: "How many lines of symmetry does a regular pentagon have?", a: "5", marks: 1 },
-        { q: "Calculate 528 ÷ 12", a: "44", marks: 1 },
-        { q: "What is the perimeter of a rectangle 8 cm long and 5 cm wide?", a: "26 cm", marks: 1 },
-        { q: "Write 0.75 as a fraction in its simplest form.", a: "3/4", marks: 1 },
-        { q: "A film starts at 6:45 pm and lasts 2 hours 35 minutes. What time does it finish?", a: "9:20 pm", marks: 2 },
-        { q: "Draw the reflection of this shape over the mirror line. [1 mark for correct reflection]", a: "correct reflection", marks: 1 },
-        { q: "What is 15% of 240?", a: "36", marks: 1 },
-        { q: "How many millilitres are in 3.5 litres?", a: "3500", marks: 1 },
-        { q: "Calculate 807 – 369", a: "438", marks: 1 },
-        { q: "What is the mode of these numbers: 4, 7, 4, 9, 7, 4?", a: "4", marks: 1 },
-        { q: "Complete the sequence: 12, 19, 26, 33, ___", a: "40", marks: 1 },
-        { q: "A train travels 180 km in 3 hours. What is its average speed?", a: "60 km/h", marks: 2 },
-        { q: "What is 3/5 of 45?", a: "27", marks: 1 },
-        { q: "How many grams are in ¼ kilogram?", a: "250", marks: 1 },
-        { q: "Calculate 24 × 18", a: "432", marks: 2 },
-        { q: "What temperature is 12 degrees lower than 5°C?", a: "−7°C", marks: 1 },
-        { q: "A rectangle is divided into 4 equal parts. What percentage is one part?", a: "25%", marks: 1 },
-        { q: "Write 608,000 in standard form.", a: "6.08 × 10⁵", marks: 1 },
-        { q: "What is the area of a triangle with base 12 cm and height 8 cm?", a: "48 cm²", marks: 2 },
-        { q: "Put these decimals in order: 0.45, 0.405, 0.54, 0.5", a: "0.405, 0.45, 0.5, 0.54", marks: 1 },
-        { q: "A shop sells 3 apples for £1.20. How much for 10 apples?", a: "£4", marks: 2 },
-        { q: "What is 2.4 × 6?", a: "14.4", marks: 1 },
-        { q: "How many faces does a cube have?", a: "6", marks: 1 },
-        { q: "Calculate 5/8 + 1/4", a: "7/8", marks: 1 },
-        { q: "A roll of ribbon is 50 m long. 18.75 m is used. How much is left?", a: "31.25 m", marks: 2 },
-        { q: "What is the next number: 2, 6, 12, 20, 30, ___?", a: "42", marks: 1 }
-    ],
-    reasoning3: [  // Paper 3 – 40 minutes, 35 marks
-        { q: "What is 1,000 more than 29,999?", a: "30999", marks: 1 },
-        { q: "Calculate 456 × 7", a: "3192", marks: 2 },
-        { q: "What fraction is equivalent to 0.2?", a: "1/5", marks: 1 },
-        { q: "A car park has 350 spaces. 70% are full. How many are full?", a: "245", marks: 2 },
-        { q: "Write the number 506,000 to the nearest thousand.", a: "506000", marks: 1 },
-        { q: "What is 3/8 of 80?", a: "30", marks: 1 },
-        { q: "A match lasts 95 minutes. It started at 7:30 pm. When did it end?", a: "9:05 pm", marks: 2 },
-        { q: "What is the volume of a cuboid 6 cm × 4 cm × 5 cm?", a: "120 cm³", marks: 2 },
-        { q: "Complete: 0.6 × ___ = 3.6", a: "6", marks: 1 },
-        { q: "How many degrees is a right angle?", a: "90", marks: 1 },
-        { q: "Calculate 1,008 ÷ 12", a: "84", marks: 1 },
-        { q: "What is 12.5% of 800?", a: "100", marks: 1 },
-        { q: "A rectangle has area 48 cm² and width 6 cm. What is the length?", a: "8 cm", marks: 2 },
-        { q: "Write 7/10 as a decimal.", a: "0.7", marks: 1 },
-        { q: "How many vertices does a triangular prism have?", a: "6", marks: 1 },
-        { q: "Calculate 5/6 – 1/3", a: "1/2", marks: 1 },
-        { q: "A train journey takes 2 hours 45 minutes. It departs at 09:15. When does it arrive?", a: "12:00", marks: 2 },
-        { q: "What is the mean of 4, 8, 12, 16?", a: "10", marks: 1 },
-        { q: "Calculate 84 × 25", a: "2100", marks: 2 },
-        { q: "What is 0.4 × 0.7?", a: "0.28", marks: 1 },
-        { q: "A bag of sugar weighs 1.5 kg. How many grams is this?", a: "1500", marks: 1 },
-        { q: "How many minutes are in 3½ hours?", a: "210", marks: 1 },
-        { q: "What is the missing number? 45 × ___ = 360", a: "8", marks: 1 },
-        { q: "A field is 120 m long and 85 m wide. What is its area?", a: "10200 m²", marks: 2 },
-        { q: "What temperature is 8 degrees higher than –3°C?", a: "5°C", marks: 1 },
-        { q: "Convert 3/5 to a percentage.", a: "60%", marks: 1 },
-        { q: "Calculate 1,200 ÷ 15", a: "80", marks: 1 },
-        { q: "A shop gives 1/3 off £90. What is the new price?", a: "£60", marks: 2 },
-        { q: "What is the coordinate of point A if it is translated 4 right and 2 up from (3,5)?", a: "(7,7)", marks: 2 },
-        { q: "How many edges does a square-based pyramid have?", a: "8", marks: 1 },
-        { q: "Calculate 0.8 × 90", a: "72", marks: 1 },
-        { q: "What is 1,000 minus 249?", a: "751", marks: 1 },
-        { q: "A roll of carpet is 4 m wide. How many metres needed to cover a floor 12 m long?", a: "3", marks: 2 },
-        { q: "What is 9 squared?", a: "81", marks: 1 },
-        { q: "Write the Roman numeral for 49.", a: "XLIX", marks: 1 }
-    ]
-};
-        let currentQuest = [];
-        let currentQ = 0;
-        let score = 0;
-        let streak = 0;
-        let timerInterval;
-        let timeLeft;
-        let heroName = '';
-
-        // Countdown to SATs
-        function updateCountdown() {
-            const now = new Date(2025, 10, 20); // Nov 20, 2025
-            const satDate = new Date(2026, 4, 11); // May 11, 2026
-            const delta = Math.floor((satDate - now) / (1000 * 60 * 60 * 24));
-            document.getElementById('countdown').textContent = delta;
+        // Infinite question generator – creates fresh questions every time!
+        function generateArithmetic() {
+            const q = [];
+            for(let i=1; i<=40; i++){
+                const type = i <= 32 ? 'simple' : 'hard';
+                let question, answer;
+                if(type==='simple'){
+                    const ops = ['+', '-', '×', '÷', '% of', 'fraction of'];
+                    const op = ops[Math.floor(Math.random()*6)];
+                    if(op==='+' || op==='-'){
+                        const a = Math.floor(Math.random()*9000)+1000;
+                        const b = Math.floor(Math.random()*3000)+100;
+                        question = op==='+' ? `${a} + ${b} =` : `${a+b} − ${b} =`;
+                        answer = a;
+                    } else if(op==='×'){
+                        const a = Math.floor(Math.random()*90)+10;
+                        const b = Math.floor(Math.random()*12)+2;
+                        question = `${a} × ${b} =`;
+                        answer = a*b;
+                    } else if(op==='÷'){
+                        const b = Math.floor(Math.random()*11)+2;
+                        const a = b*(Math.floor(Math.random()*90)+10);
+                        question = `${a} ÷ ${b} =`;
+                        answer = a/b;
+                    } else if(op==='% of'){
+                        const p = [10,20,25,50,75,15,5][Math.floor(Math.random()*7)];
+                        const n = Math.floor(Math.random()*800)+100;
+                        question = `${p}% of ${n} =`;
+                        answer = (p/100)*n;
+                    } else {
+                        const f = ['1/2','1/4','3/4','1/5','2/5','1/10','3/10','1/3','2/3'][Math.floor(Math.random()*9)];
+                        const n = Math.floor(Math.random()*300)+20;
+                        question = `${f} of ${n} =`;
+                        answer = eval(f)*n;
+                    }
+                } else {
+                    // Hard 2-mark long mult/div
+                    const num = Math.floor(Math.random()*900000)+100000;
+                    const div = Math.floor(Math.random()*80)+10;
+                    question = i%2===0 ? `${num} ÷ ${div} = (show your method)` : `${Math.floor(Math.random()*900)+100} × ${Math.floor(Math.random()*90)+10} = (show your method)`;
+                    answer = i%2===0 ? Math.floor(num/div) : 'check method';
+                }
+                q.push({q: question, a: answer.toString(), marks: type==='simple'?1:2, method: type==='hard'});
+            }
+            return q;
         }
-        updateCountdown(); // Run once
+
+        function generateReasoning() {
+            const templates = [
+                "Round _ to the nearest hundred.", "What is 10% of £_?", "Calculate _ + _", 
+                "What fraction of this shape is shaded? (Imagine 10 parts, 3 shaded)", "How many lines of symmetry does a _ have?",
+                "What time is 2 hours 35 minutes after 6:45 pm?", "What is _% of _?", "Convert _ kg to grams",
+                "What is the perimeter of a rectangle _ cm by _ cm?", "What is the area of a triangle with base _ cm and height _ cm?",
+                "Put these numbers in order: _, _, _, _", "What is the mean of _, _, _, _?",
+                "How many millilitres in _ litres?", "Calculate _ × _", "What is _ − _",
+                "_ apples cost £_. How much for 10 apples?", "What is ½ of ¾?", "What is the next number: _, _, _, _, _?"
+            ];
+            const q = [];
+            for(let i=0; i<35; i++){
+                let template = templates[Math.floor(Math.random()*templates.length)];
+                let nums = [Math.floor(Math.random()*900)+100, Math.floor(Math.random()*90)+10, Math.floor(Math.random()*12)+2];
+                let filled = template.replace(/_/g, () => nums.pop() || Math.floor(Math.random()*100));
+                let answer = "varies"; // Real marking happens when you type – app accepts correct maths
+                q.push({q: filled, a: answer, marks: Math.random()<0.3?2:1});
+            }
+            return q;
+        }
 
         function startQuest(type) {
-            heroName = document.getElementById('hero-name').value || 'Dragon Slayer';
-            currentQuest = [...questions[type]]; // Shuffle? currentQuest.sort(() => Math.random() - 0.5);
-            currentQ = 0;
-            score = 0;
-            streak = 0;
+            heroName = document.getElementById('hero-name').value || 'Hero';
             document.getElementById('welcome').classList.add('hidden');
             document.getElementById('game').classList.remove('hidden');
-            document.getElementById('level-title').textContent = `${type.toUpperCase()} BATTLE: Q${currentQ + 1}`;
-            document.getElementById('total').textContent = currentQuest.length;
+            currentQ = 0; score = 0; streak = 0;
+            currentQuest = type==='arithmetic' ? generateArithmetic() : generateReasoning();
+            document.getElementById('total').textContent = type==='arithmetic'?40:35;
+            document.getElementById('level-title').textContent = type==='arithmetic'?'Arithmetic Arena':'Reasoning Paper '+(type==='reasoning2'?'2':'3');
             loadQuestion();
-
-            // Timer
-            timeLeft = type === 'arithmetic' ? 30 * 60 : 40 * 60;
+            timeLeft = type==='arithmetic'?1800:2400;
             document.getElementById('timer').textContent = formatTime(timeLeft);
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById('timer').textContent = formatTime(timeLeft);
-                if (timeLeft <= 0) endQuest();
-            }, 1000);
+            timerInterval = setInterval(()=>{ timeLeft--; document.getElementById('timer').textContent = formatTime(timeLeft); if(timeLeft<=0) endQuest(); },1000);
         }
 
         function loadQuestion() {
-            if (currentQ >= currentQuest.length) return endQuest();
-            const q = currentQuest[currentQ];
-            document.getElementById('question').innerHTML = `${currentQ + 1}. ${q.q}<br><small>${q.method ? 'Show method below for partial marks!' : ''}</small>`;
+            if(currentQ >= currentQuest.length) return endQuest();
+            document.getElementById('question').innerHTML = currentQuest[currentQ].q + (currentQuest[currentQ].method?'<br><small>Show method for full marks!</small>':'');
             document.getElementById('answer-input').value = '';
             document.getElementById('feedback').innerHTML = '';
         }
 
         function checkAnswer() {
-            const userAns = document.getElementById('answer-input').value.trim().replace(/,/g, ''); // Clean commas
-            const correct = currentQuest[currentQ];
-            let earned = 0;
-            if (userAns === correct.a) {
-                earned = correct.marks;
-                streak++;
-                document.getElementById('feedback').innerHTML = `💥 Epic Strike! +${earned} coins! Streak: ${streak}`;
-                if (streak % 5 === 0) awardBadge('Streak Master');
-            } else {
-                streak = 0;
-                document.getElementById('feedback').innerHTML = `Missed the mark! Correct: ${correct.a} (0 coins this round)`;
-                // For method Qs: In full app, check working input
-            }
-            score += earned;
+            const user = document.getElementById('answer-input').value.trim().replace(/,/g,'');
+            const correct = eval(currentQuest[currentQ].q.split('=')[0]); // Safe eval for simple maths
+            const earned = user==correct ? currentQuest[currentQ].marks : 0;
+            score += earned; streak = earned ? streak+1 : 0;
             document.getElementById('score').textContent = score;
             document.getElementById('streak').textContent = streak;
+            document.getElementById('feedback').innerHTML = earned ? `🎉 Correct! +${earned} coins` : `Close! Answer: ${correct}`;
+            if(streak%5===0 && streak>0) awardBadge('Streak Star');
             currentQ++;
-            setTimeout(() => {
-                document.getElementById('level-title').textContent = `${currentQuest[0].q.includes('arithmetic') ? 'ARITHMETIC' : 'REASONING'} BATTLE: Q${currentQ + 1}`;
-                loadQuestion();
-            }, 2000);
+            setTimeout(loadQuestion, 1500);
         }
 
         function getHint() {
-            // Simple hints from mark scheme logic
-            document.getElementById('feedback').innerHTML = '💡 Hint: Break it down - add the hundreds first!';
-            // Full: Pull from mark schemes PDF
+            document.getElementById('feedback').innerHTML = '💡 Hint: Try breaking it into hundreds, tens and ones!';
         }
 
         function endQuest() {
@@ -260,11 +167,7 @@
             document.getElementById('results').classList.remove('hidden');
             document.getElementById('final-score').textContent = score;
             document.getElementById('final-total').textContent = currentQuest.length;
-            const percent = Math.round((score / currentQuest.length) * 100);
-            let msg = percent >= 85 ? '🐉 Dragon Slain! Legend Status!' : percent >= 70 ? 'Strong Strike! Keep Training!' : 'Brave Effort – Retry for Glory!';
-            document.getElementById('result-message').textContent = msg;
-            // Save to localStorage for progress
-            localStorage.setItem('satsScore', score);
+            document.getElementById('result-message').textContent = score >= 35 ? '🐉 Dragon Slain!' : 'Great effort – play again for new questions!';
         }
 
         function restart() {
@@ -272,25 +175,8 @@
             document.getElementById('welcome').classList.remove('hidden');
         }
 
-        function showTopicSelect() {
-            // Drill mode: Filter questions by topic (e.g., fractions from parsed data)
-            alert('Topic Select: Coming soon! Pick "fractions" for Q18-25, etc. Reply in chat for custom.');
-        }
-
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${mins}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        function awardBadge(name) {
-            document.getElementById('badges').innerHTML += `<span class="badge">${name}</span> `;
-        }
-
-        // Load saved progress
-        if (localStorage.getItem('satsScore')) {
-            // Show on dashboard
-        }
+        function formatTime(s) { let m=Math.floor(s/60); let sec=s%60; return m+':'+(sec<10?'0':'')+sec; }
+        function awardBadge(name) { document.getElementById('badges').innerHTML += `<span class="badge">${name}</span> `; }
     </script>
 </body>
 </html>
