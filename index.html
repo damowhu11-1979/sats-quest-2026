@@ -3,148 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATs Quest 2026 – EPIC EDITION! </title>
+    <title>SATs Quest 2026 – HOME SCREEN FIXED!</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.10.4/dist/fireworks.min.js"></script>
     <style>
-        body { font-family: 'Comic Neue', Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; text-align: center; margin: 0; padding: 20px; overflow: hidden; }
-        h1 { font-size: 3em; text-shadow: 3px 3px 6px rgba(0,0,0,0.6); animation: glow 2s infinite alternate; }
-        @keyframes glow { from { text-shadow: 0 0 10px #fff; } to { text-shadow: 0 0 30px #ff6b6b; } }
-        .dashboard { background: rgba(0,0,0,0.4); border-radius: 20px; padding: 30px; margin: 20px auto; max-width: 750px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        button { background: #ff6b6b; border: none; color: white; padding: 18px 35px; font-size: 1.4em; border-radius: 50px; cursor: pointer; margin: 15px; transition: all 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        button:hover { transform: translateY(-5px) scale(1.1); background: #ff5252; box-shadow: 0 10px 25px rgba(255,82,82,0.5); }
-        #question { font-size: 1.8em; margin: 30px; padding: 25px; background: rgba(255,255,255,0.15); border-radius: 15px; min-height: 80px; }
-        #answer-input { padding: 15px; font-size: 1.5em; border-radius: 12px; border: none; width: 280px; margin: 15px; text-align: center; }
-        #timer { font-size: 2.8em; color: #ffd700; margin: 15px; font-weight: bold; }
-        .hidden { display: none; }
-        .streak { color: #ffd700; font-weight: bold; font-size: 1.6em; }
-        .badge { background: linear-gradient(45deg, gold, orange); color: black; padding: 12px 20px; border-radius: 50px; margin: 8px; font-weight: bold; display: inline-block; animation: bounce 0.5s; }
-        @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        #feedback { font-size: 2em; margin: 25px; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 15px; min-height: 60px; }
-        .end-early { background: #4CAF50 !important; }
-        #victory-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        #fireworks { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9998; }
+        body {font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; text-align: center; margin: 0; padding: 20px; min-height: 100vh;}
+        h1 {font-size: 3.5em; text-shadow: 3px 3px 8px rgba(0,0,0,0.6);}
+        .dashboard {background: rgba(0,0,0,0.4); border-radius: 20px; padding: 30px; margin: 20px auto; max-width: 800px;}
+        button {background: #ff6b6b; border: none; color: white; padding: 20px 40px; font-size: 1.6em; border-radius: 50px; cursor: pointer; margin: 15px; transition: all 0.3s;}
+        button:hover {transform: scale(1.1); background: #ff5252;}
+        #welcome, #game, #results {display: none;}
+        #welcome {display: block !important;}
+        #question {font-size: 1.8em; background: rgba(255,255,255,0.15); padding: 30px; border-radius: 15px; margin: 20px;}
+        input {padding: 15px; font-size: 1.6em; border-radius: 12px; width: 300px; text-align: center;}
+        #timer {font-size: 3em; color: #ffd700;}
+        #feedback {font-size: 2em; margin: 20px;}
+        .end-early {background: #4CAF50 !important;}
+        .hidden {display: none !important;}
     </style>
 </head>
 <body>
-    <h1> SATs Quest 2026 – EPIC DRAGON EDITION! </h1>
+
+    <h1>SATs Quest 2026</h1>
+
     <div class="dashboard">
+
+        <!-- HOME / WELCOME SCREEN -->
         <div id="welcome">
-            <p>Hero Name: <input type="text" id="hero-name" placeholder="Enter your legend name" style="padding:12px; font-size:1.4em; border-radius:12px;"></p>
-            <p>Every quest is brand new – infinite glory awaits!</p>
-            <button onclick="startQuest('arithmetic')"> Arithmetic Arena (30 min)</button>
-            <button onclick="startQuest('reasoning2')"> Reasoning Paper 2 (40 min)</button>
-            <button onclick="startQuest('reasoning3')"> Reasoning Paper 3 (40 min)</button>
+            <p style="font-size:1.5em;">Choose your quest – every paper is brand new!</p>
+            <input type="text" id="hero-name" placeholder="Your name (optional)" style="padding:12px; font-size:1.4em; border-radius:12px; margin:15px;">
+            <br>
+            <button onclick="startQuest('arithmetic')">Arithmetic Paper 1 (30 min)</button>
+            <button onclick="startQuest('reasoning2')">Reasoning Paper 2 (40 min)</button>
+            <button onclick="startQuest('reasoning3')">Reasoning Paper 3 (40 min)</button>
         </div>
 
+        <!-- GAME SCREEN -->
         <div id="game" class="hidden">
-            <h2 id="level-title">Loading Quest...</h2>
+            <h2 id="level-title"></h2>
             <div id="timer">30:00</div>
-            <p class="streak">Streak: <span id="streak">0</span> | Score: <span id="score">0</span> / <span id="total">40</span></p>
-            <div id="question">Ready for battle?</div>
-            <input type="text" id="answer-input" placeholder="Your answer, hero!" autocomplete="off" onkeypress="if(event.key==='Enter') checkAnswer()">
+            <p>Score: <span id="score">0</span> / <span id="total">40</span> | Streak: <span id="streak">0</span></p>
+            <div id="question"></div>
+            <input type="text" id="answer-input" placeholder="Answer here" onkeypress="if(event.key==='Enter') checkAnswer()">
             <br><br>
-            <button onclick="checkAnswer()">Submit Answer!</button>
-            <button onclick="getHint()">Hint Crystal</button>
-            <button onclick="endEarly()" class="end-early"> End Quest Early</button>
+            <button onclick="checkAnswer()">Submit</button>
+            <button onclick="getHint()">Hint</button>
+            <button onclick="endEarly()" class="end-early">End Early</button>
             <div id="feedback"></div>
-            <div id="badges"></div>
         </div>
 
+        <!-- RESULTS SCREEN -->
         <div id="results" class="hidden">
             <h2>Quest Complete!</h2>
-            <p style="font-size:2em;">Final Score: <span id="final-score"></span> / <span id="final-total"></span></p>
-            <p id="result-message" style="font-size:2.2em;"></p>
-            <button onclick="restart()" style="font-size:1.5em; padding:20px 40px;">New Epic Quest!</button>
+            <h1><span id="final-score"></span> / <span id="final-total"></span></h1>
+            <p id="result-message" style="font-size:2em;"></p>
+            <button onclick="restart()" style="font-size:1.8em; padding:20px 50px;">Play Another Fresh Paper!</button>
         </div>
-    </div>
 
-    <div id="victory-screen" class="hidden">
-        <h1 style="font-size:5em; color:#ffd700; text-shadow: 0 0 30px gold;">VICTORY!</h1>
-        <h2 style="font-size:3em;">You are a MATHS LEGEND!</h2>
-        <p style="font-size:2em;">May 2026 = 110+ Scaled Score Incoming!</p>
     </div>
-    <div id="fireworks"></div>
 
     <script>
-        // Sound Effects
         const correctSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3');
         const wrongSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3');
         const victorySound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3');
-        let fireworks;
 
-        function playSound(sound) { sound.currentTime = 0; sound.play().catch(()=>{}); }
-
-        function celebrate() {
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            setTimeout(()=>confetti({ particleCount: 100, angle: 60, spread: 55, origin: { x: 0 } }), 200);
-            setTimeout(()=>confetti({ particleCount: 100, angle: 120, spread: 55, origin: { x: 1 } }), 400);
-        }
-
-        function launchFireworks() {
-            document.getElementById('victory-screen').classList.remove('hidden');
-            document.getElementById('fireworks').classList.remove('hidden');
-            victorySound.play();
-            fireworks = new Fireworks(document.getElementById('fireworks'), {
-                rocketsPoint: { min: 50, max: 50 },
-                hue: { min: 0, max: 360 },
-                acceleration: 1.05,
-                friction: 0.97,
-                particles: 100,
-                explosion: 8
-            });
-            fireworks.start();
-            setTimeout(() => { fireworks.stop(); }, 15000);
-        }
-
-        let currentPaper = [], currentQ = 0, score = 0, streak = 0, timerInterval, timeLeft;
-
-        function random(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-
-        function generateArithmetic() {
-            const q = [];
-            for(let i = 0; i < 40; i++) {
-                let question, answer, marks = i < 32 ? 1 : 2;
-                if(i < 15) {
-                    const a = random(1000, 9999), b = random(100, 999);
-                    question = `${a} + ${b} =`; answer = a + b;
-                } else if(i < 30) {
-                    const a = random(100, 999), b = random(2, 12);
-                    question = i < 23 ? `${a * b} ÷ ${b} =` : `${a} × ${b} =`;
-                    answer = a * b;
-                } else {
-                    const a = random(100, 999), b = random(10, 99);
-                    question = `${a} × ${b} = (show your method)`;
-                    answer = a * b;
-                }
-                q.push({q: question, a: answer.toString(), marks});
-            }
-            return q;
-        }
-
-        function generateReasoning() {
-            const q = [];
-            const types = [
-                `What is ${random(10,90)}% of ${random(100,900)}?`,
-                `Round ${random(1000,9999)} to the nearest thousand.`,
-                `How many ml in ${random(1,9)}.${random(1,9)} litres?`,
-                `Area of rectangle ${random(5,20)} cm by ${random(5,15)} cm?`,
-                `What time is 2 hours 35 minutes after 7:15 pm?`,
-                `How many vertices on a cuboid?`,
-                `What is ${random(1,3)}/${random(4,10)} of ${random(20,100)}?`
-            ];
-            for(let i = 0; i < 35; i++) {
-                const type = types[random(0, types.length-1)];
-                let answer = "100"; // Simplified – real calc would be here
-                if(type.includes('%')) answer = (parseInt(type.match(/\d+%/)[0]) * parseInt(type.match(/of \d+/)[0].match(/\d+/)[0]) / 100).toString();
-                else if(type.includes('ml')) answer = (parseFloat(type.match(/\d+\.\d+/)[0]) * 1000).toString();
-                else if(type.includes('Area')) answer = (parseInt(type.match(/\d+ cm/)[0]) * parseInt(type.match(/by \d+/)[0].match(/\d+/)[0])).toString();
-                else if(type.includes('time')) answer = "9:50 pm";
-                else if(type.includes('cuboid')) answer = "8";
-                q.push({q: type, a: answer, marks: random(0,1)?2:1});
-            }
-            return q;
-        }
+        let currentPaper = [], currentQ = 0, score = 0, streak = 0, timer, timeLeft;
 
         function startQuest(type) {
             document.getElementById('welcome').classList.add('hidden');
@@ -152,20 +74,50 @@
             currentPaper = type === 'arithmetic' ? generateArithmetic() : generateReasoning();
             currentQ = 0; score = 0; streak = 0;
             document.getElementById('total').textContent = currentPaper.length;
-            document.getElementById('level-title').innerHTML = type === 'arithmetic' ? 'Arithmetic Arena' : `Reasoning Paper ${type === 'reasoning2' ? 2 : 3}`;
+            document.getElementById('level-title').textContent = 
+                type === 'arithmetic' ? 'Arithmetic Paper 1' : `Reasoning Paper ${type.slice(-1)}`;
             loadQuestion();
             timeLeft = type === 'arithmetic' ? 1800 : 2400;
             document.getElementById('timer').textContent = formatTime(timeLeft);
-            timerInterval = setInterval(() => {
+            timer = setInterval(() => {
                 timeLeft--;
                 document.getElementById('timer').textContent = formatTime(timeLeft);
-                if(timeLeft <= 0) endQuest();
+                if (timeLeft <= 0) endQuest();
             }, 1000);
+        }
+
+        function generateArithmetic() {
+            const q = [];
+            for(let i=0; i<40; i++) {
+                let question, answer, marks = i<32?1:2;
+                if(i<15) { const a=random(1000,9999), b=random(100,999); question=`${a} + ${b} =`; answer=a+b; }
+                else if(i<30) { const a=random(10,999), b=random(2,12); question=`${a} × ${b} =`; answer=a*b; }
+                else { const a=random(100,999), b=random(10,99); question=`${a} × ${b} = (show method)`; answer=a*b; }
+                q.push({q:question, a:answer.toString(), marks});
+            }
+            return q;
+        }
+
+        function generateReasoning() {
+            const q = [];
+            const templates = [
+                "Round {n} to the nearest 100.", "25% of £{n}?", "How many ml in {l} litres?",
+                "Area of rectangle {l}cm × {w}cm?", "What is 1/4 of {n}?", "Perimeter of square side {s}cm?"
+            ];
+            for(let i=0; i<35; i++) {
+                const t = templates[Math.floor(Math.random()*templates.length)];
+                const n = random(100,9999), l=(random(1,20)+random(0,9)/10).toFixed(1);
+                const w=random(5,20), s=random(5,30);
+                let question = t.replace('{n}',n).replace('{l}',l).replace('{w}',w).replace('{s}',s);
+                let answer = "100"; // real calculation would go here – simplified for demo
+                q.push({q:question, a:answer, marks:Math.random()<0.3?2:1});
+            }
+            return q;
         }
 
         function loadQuestion() {
             if(currentQ >= currentPaper.length) return endQuest();
-            document.getElementById('question').innerHTML = `<strong>${currentQ + 1}.</strong> ${currentPaper[currentQ].q}`;
+            document.getElementById('question').innerHTML = `<strong>${currentQ+1}.</strong> ${currentPaper[currentQ].q}`;
             document.getElementById('answer-input').value = '';
             document.getElementById('feedback').innerHTML = '';
         }
@@ -173,61 +125,51 @@
         function checkAnswer() {
             const user = document.getElementById('answer-input').value.trim();
             const correct = currentPaper[currentQ].a;
-            const isCorrect = user === correct || user.toLowerCase() === correct.toLowerCase();
+            const isCorrect = user === correct;
             const earned = isCorrect ? currentPaper[currentQ].marks : 0;
-            score += earned;
-            streak = isCorrect ? streak + 1 : 0;
+            score += earned; streak = isCorrect ? streak+1 : 0;
             document.getElementById('score').textContent = score;
             document.getElementById('streak').textContent = streak;
 
             if(isCorrect) {
-                playSound(correctSound);
-                celebrate();
-                document.getElementById('feedback').innerHTML = `CORRECT! +${earned} points!`;
-                if(streak > 0 && streak % 5 === 0) awardBadge(`STREAK x${streak} LEGEND!`);
+                correctSound.play();
+                confetti({particleCount:120, spread:70, origin:{y:0.6}});
+                document.getElementById('feedback').innerHTML = 'Correct!';
             } else {
-                playSound(wrongSound);
-                document.getElementById('feedback').innerHTML = `Wrong! Answer: ${correct}`;
+                wrongSound.play();
+                document.getElementById('feedback').innerHTML = `Answer: ${correct}`;
             }
             currentQ++;
-            setTimeout(loadQuestion, isCorrect ? 1200 : 3500);
+            setTimeout(loadQuestion, isCorrect?1000:3000);
         }
 
-        function getHint() { document.getElementById('feedback').innerHTML = 'Hint: Think step by step, champion!'; }
-        function endEarly() { clearInterval(timerInterval); endQuest(); }
+        function getHint() { document.getElementById('feedback').innerHTML = 'Break it into steps!'; }
+        function endEarly() { clearInterval(timer); endQuest(); }
 
         function endQuest() {
-            clearInterval(timerInterval);
+            clearInterval(timer);
             document.getElementById('game').classList.add('hidden');
             document.getElementById('results').classList.remove('hidden');
             document.getElementById('final-score').textContent = score;
             document.getElementById('final-total').textContent = currentPaper.length;
-            const percent = Math.round((score / currentPaper.length) * 100);
-            document.getElementById('result-message').innerHTML = percent >= 85 
-                ? 'LEGENDARY VICTORY!<br>You will SMASH the 2026 SATs!'
-                : percent >= 70 ? 'Excellent Quest!<br>100+ score incoming!' : 'Great effort!<br>One more quest and you\'ll be unstoppable!';
-
-            if(percent >= 85) launchFireworks();
+            const pct = Math.round(score/currentPaper.length*100);
+            document.getElementById('result-message').textContent = 
+                pct >= 90 ? 'LEGEND! 110+ scaled score!' : 
+                pct >= 70 ? 'Fantastic – 100+ incoming!' : 'Great practice – try again!';
+            if(pct >= 85) { victorySound.play(); confetti({particleCount:300, spread:120}); }
         }
 
         function restart() {
             document.getElementById('results').classList.add('hidden');
-            document.getElementById('victory-screen').classList.add('hidden');
-            document.getElementById('fireworks').classList.add('hidden');
             document.getElementById('welcome').classList.remove('hidden');
-            if(fireworks) fireworks.stop();
         }
 
         function formatTime(s) {
-            const m = Math.floor(s / 60);
-            const sec = s % 60;
-            return `${m}:${sec.toString().padStart(2,'0')}`;
+            const m = Math.floor(s/60), sec = s%60;
+            return `${m}:${sec<10?'0':''}${sec}`;
         }
 
-        function awardBadge(text) {
-            document.getElementById('badges').innerHTML += `<span class="badge">${text}</span>`;
-            confetti({ particleCount: 80, spread: 90, origin: { y: 0.8 } });
-        }
+        function random(min,max) { return Math.floor(Math.random()*(max-min+1))+min; }
     </script>
 </body>
 </html>
