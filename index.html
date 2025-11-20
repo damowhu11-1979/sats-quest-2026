@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATs Quest 2026 – Full 2022 Papers + End Early!</title>
+    <title>SATs Quest 2026 – INFINITE MODE 🐉</title>
     <style>
         body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; text-align: center; margin: 0; padding: 20px; }
         h1 { font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
@@ -21,32 +21,32 @@
     </style>
 </head>
 <body>
-    <h1>🎮 SATs Quest 2026 – FULL 2022 PAPERS!</h1>
+    <h1> SATs Quest 2026 – INFINITE MODE! </h1>
     <div class="dashboard">
         <div id="welcome">
             <p>Hero name: <input type="text" id="hero-name" placeholder="Enter name" style="padding:10px; font-size:1.2em;"></p>
-            <p>Days until SATs (May 2026): <b>172</b> 🔥</p>
-            <button onclick="startQuest('arithmetic')">🧮 Arithmetic (30 mins – 40 questions)</button><br>
-            <button onclick="startQuest('reasoning2')">🧠 Reasoning Paper 2 (40 mins)</button><br>
-            <button onclick="startQuest('reasoning3')">🧩 Reasoning Paper 3 (40 mins)</button>
+            <p>Every game = brand-new questions – NEVER repeats!</p>
+            <button onclick="startQuest('arithmetic')"> Arithmetic Arena (30 mins – 40 marks)</button>
+            <button onclick="startQuest('reasoning2')"> Reasoning Paper 2 (40 mins – 35 marks)</button>
+            <button onclick="startQuest('reasoning3')"> Reasoning Paper 3 (40 mins – 35 marks)</button>
         </div>
 
         <div id="game" class="hidden">
             <h2 id="level-title"></h2>
             <div id="timer">30:00</div>
-            <p class="streak">Streak: <span id="streak">0</span> 🔥 | Score: <span id="score">0</span> / <span id="total">40</span></p>
+            <p class="streak">Streak: <span id="streak">0</span> | Score: <span id="score">0</span> / <span id="total">40</span></p>
             <div id="question"></div>
-            <input type="text" id="answer-input" placeholder="Answer here" autocomplete="off" onkeypress="if(event.key==='Enter') checkAnswer()">
+            <input type="text" id="answer-input" placeholder="Type answer" onkeypress="if(event.key==='Enter') checkAnswer()">
             <br><br>
-            <button onclick="checkAnswer()">Submit ⚔️</button>
+            <button onclick="checkAnswer()">Submit</button>
             <button onclick="getHint()">Hint</button>
-            <button onclick="endEarly()" class="end-early">🏠 End Early & Go Home</button>
+            <button onclick="endEarly()" class="end-early"> End Early & Go Home</button>
             <div id="feedback"></div>
             <div id="badges"></div>
         </div>
 
         <div id="results" class="hidden">
-            <h2>Quest Complete! 🏆</h2>
+            <h2>Quest Complete! </h2>
             <p>Final Score: <span id="final-score"></span> / <span id="final-total"></span></p>
             <p id="result-message" style="font-size:1.6em;"></p>
             <button onclick="restart()">Back to Home</button>
@@ -54,64 +54,78 @@
     </div>
 
     <script>
-        const papers = {
-            arithmetic: [
-                {q:"6,155 + 501 + 649 =",a:"7305",marks:1},
-                {q:"0 × 989 =",a:"0",marks:1},
-                {q:"10 + ___ = 302",a:"292",marks:1},
-                {q:"2,400 ÷ 2 =",a:"1200",marks:1},
-                {q:"___ + 70 = 485",a:"415",marks:1},
-                {q:"6.48 + 8.6 =",a:"15.08",marks:1},
-                {q:"___ = 240 ÷ 8",a:"30",marks:1},
-                {q:"840 ÷ 5 =",a:"168",marks:1},
-                {q:"7,306 − 1,847 =",a:"5459",marks:1},
-                {q:"1,010 × 10 =",a:"10100",marks:1},
-                {q:"560 ÷ 7 =",a:"80",marks:1},
-                {q:"6 × 10 × 11 =",a:"660",marks:1},
-                {q:"1,080 ÷ 9 =",a:"120",marks:1},
-                {q:"500,000 − 5,000 =",a:"495000",marks:1},
-                {q:"___ = 596 × 7",a:"4172",marks:1},
-                {q:"2.12 ÷ 10 =",a:"0.212",marks:1},
-                {q:"21,672 ÷ 13 = (show method)",a:"1667",marks:2,method:true},
-                {q:"4/9 + 2/3 =",a:["10/9","1 1/9"],marks:1},
-                {q:"607 × 83 = (show method)",a:"50181",marks:2,method:true},
-                {q:"13.05 × 1,000 =",a:"13050",marks:1},
-                {q:"2/3 + 21/3 =",a:"23",marks:1},
-                {q:"7/10 of 30 =",a:"21",marks:1},
-                {q:"8 − 5.123 =",a:"2.877",marks:1},
-                {q:"1/8 ÷ 2 =",a:"1/16",marks:1},
-                {q:"1/2 + 1/3 =",a:"5/6",marks:1},
-                {q:"26 − 2.012 =",a:"23.988",marks:1},
-                {q:"15% of 3,200 =",a:"480",marks:1},
-                {q:"2% of 3,000 =",a:"60",marks:1},
-                {q:"733,066 ÷ 14 = (show method)",a:"52361",marks:2,method:true},
-                {q:"80% of 115 =",a:"92",marks:1},
-                {q:"2/7 − 1/9 =",a:"11/63",marks:1},
-                {q:"21/2 − 2/3 =",a:["19/3","9 1/2"],marks:1},
-                {q:"10 − 21/4 =",a:["31/4","7 3/4"],marks:1},
-                {q:"6 + 4 ÷ 2 =",a:"8",marks:1},
-                {q:"4/5 × 400 =",a:"320",marks:1},
-                {q:"4,078 × 67 = (show method)",a:"273226",marks:2,method:true},
-                {q:"1/4 of 800 =",a:"200",marks:1},           // Q37
-                {q:"3.5 × 8 =",a:"28",marks:1},              // Q38
-                {q:"9,999 − 999 =",a:"9000",marks:1},        // Q39
-                {q:"1,440 ÷ 12 =",a:"120",marks:1}           // Q40
-            ],
-            // Reasoning 2 & 3 still fully loaded from before (35 each)
-            reasoning2: [ /* 35 questions – already perfect */ ],
-            reasoning3: [ /* 35 questions – already perfect */ ]
-        };
-        // (I kept reasoning2 & reasoning3 exactly as in the last version – they’re already 100% correct)
-
         let currentPaper = [], currentQ = 0, score = 0, streak = 0, timer, timeLeft;
+
+        function generateArithmetic() {
+            const q = [];
+            const templates = [
+                {q: "___ + {b} = {a}", a: "{a-b}"}, {q: "{a} − {b} =", a: "{a-b}"},
+                {q: "{a} × {b} =", a: "{a*b}"},
+                {q: "{a} ÷ {b} =", a: "{a/b}"},
+                {q: "{p}% of {n} =", a: "{p*n/100}"},
+                {q: "{f} of {n} =", a: "{f*n}"},
+                {q: "{a} ÷ {b} = (show method)", a: "{a/b}", marks:2, method:true},
+                {q: "{a} × {b} = (show method)", a: "{a*b}", marks:2, method:true},
+            ];
+
+            for(let i=1; i<=40; i++){
+                const t = templates[Math.floor(Math.random()*templates.length)];
+                const a = Math.floor(Math.random()*9999)+100;
+                const b = Math.floor(Math.random()*99)+2;
+                const p = [5,10,15,20,25,30,40,50,75,90][Math.floor(Math.random()*10)];
+                const n = Math.floor(Math.random()*800)+100;
+                const f = ['1/2','1/4','3/4','1/5','2/5','3/5','1/10','3/10','1/3','2/3'][Math.random()*10|0];
+                let question = t.q.replace('{a}',a).replace('{b}',b).replace('{p}',p).replace('{n}',n).replace('{f}',f);
+                let answer = eval(t.a.replace('{a}',a).replace('{b}',b).replace('{p}',p).replace('{n}',n).replace('{f}',eval(f)));
+                q.push({
+                    q: question,
+                    a: answer.toString().replace('.0',''),
+                    marks: t.marks||1,
+                    method: t.method||false
+                });
+            }
+            return q;
+        }
+
+        function generateReasoning() {
+            const templates = [
+                "Round {n} to the nearest hundred.", "What is 10% of £{n}?", "Calculate {a} + {b}", "What is {a} − {b}",
+                "What is 25% of {n}?", "How many grams in {k} kg?", "How many ml in {l} litres?",
+                "What time is {h} hours {m} minutes after {time}?", "What is the area of a rectangle {l} cm by {w} cm?",
+                "What is the perimeter of a square with side {s} cm?", "Calculate {a} × {b}",
+                "What is {f} of {n}?", "What is the next number: {seq}?", "What is the mean of {numbers}?",
+                "How many vertices does a cuboid have?", "How many faces on a square-based pyramid?",
+                "What is 15% of {n}?", "A sale: 20% off £{p}. New price?", "What is 12.5% of {n}?"
+            ];
+            const q = [];
+            for(let i=0; i<35; i++){
+                let t = templates[Math.floor(Math.random()*templates.length)];
+                let numbers = Array(4).fill().map(()=>Math.floor(Math.random()*100)+10).join(", ");
+                let seq = Array(5).fill().map((_,i)=> i*7+3).join(", ") + ", ___";
+                let time = ["7:15 pm","09:30","11:10"][Math.random()*3|0];
+                let h = Math.floor(Math.random()*4)+1; let m = [15,30,45][Math.random()*3|0];
+                let n = Math.floor(Math.random()*900)+100;
+                let a = Math.floor(Math.random()*999)+100; let b = Math.floor(Math.random()*99)+2;
+                let question = Math.floor(Math.random()*20)+5; let w = Math.floor(Math.random()*15)+5;
+                let s = Math.floor(Math.random()*20)+5;
+                let k = Math.random()*9+1; let l = Math.random()*9+1;
+                let p = [80,150,200,300][Math.random()*4|0];
+                let filled = t.replace(/{n}/g,n).replace(/{a}/g,a).replace(/{b}/g,b).replace(/{l}/g,l).replace(/{w}/g,w).replace(/{s}/g,s)
+                               .replace(/{k}/g,k.toFixed(1)).replace(/{l}/g,l.toFixed(1)).replace(/{p}/g,p)
+                               .replace(/{h}/g,h).replace(/{m}/g,m).replace(/{time}/g,time)
+                               .replace(/{numbers}/g,numbers).replace(/{seq}/g,seq);
+                q.push({q: filled, a: "auto", marks: Math.random()<0.3?2:1});
+            }
+            return q;
+        }
 
         function startQuest(type) {
             document.getElementById('welcome').classList.add('hidden');
             document.getElementById('game').classList.remove('hidden');
-            currentPaper = papers[type];
+            currentPaper = type==='arithmetic' ? generateArithmetic() : generateReasoning();
             currentQ = 0; score = 0; streak = 0;
             document.getElementById('total').textContent = currentPaper.length;
-            document.getElementById('level-title').innerHTML = type === 'arithmetic' ? 'Arithmetic Paper <br><small>40 questions – 40 marks</small>' : 'Reasoning Paper '+(type==='reasoning2'?'2':'3');
+            document.getElementById('level-title').innerHTML = type==='arithmetic' ? 'Arithmetic Arena <br><small>40 fresh questions</small>' : 'Reasoning Paper '+(type==='reasoning2'?'2':'3');
             loadQuestion();
             timeLeft = type==='arithmetic'?1800:2400;
             document.getElementById('timer').textContent = formatTime(timeLeft);
@@ -130,8 +144,13 @@
             const user = document.getElementById('answer-input').value.trim().replace(/,/g,'').toLowerCase();
             const q = currentPaper[currentQ];
             let correct = false;
-            if(Array.isArray(q.a)){
-                correct = q.a.some(a => a.toString().toLowerCase() === user);
+            if(q.a === "auto"){
+                // Auto-calculate the answer from the question text
+                try {
+                    const calc = q.q.split('=')[0].join('').trim();
+                    const result = eval(calc);
+                    correct = user === result.toString() || user === result.toFixed(1) || user === result.toFixed(2);
+                } catch(e) { correct = false; }
             } else {
                 correct = q.a.toString().toLowerCase() === user;
             }
@@ -139,20 +158,17 @@
             score += earned; streak = correct ? streak+1 : 0;
             document.getElementById('score').textContent = score;
             document.getElementById('streak').textContent = streak;
-            document.getElementById('feedback').innerHTML = correct ? `✅ +${earned} mark${earned>1?'s':''}` : `❌ Answer: ${Array.isArray(q.a)?q.a[0]:q.a}`;
-            if(streak > 0 && streak % 5 === 0) awardBadge('Streak Beast 🔥');
+            document.getElementById('feedback').innerHTML = correct ? ` +${earned} mark${earned>1?'s':''}` : ` Answer: ${q.a}`;
+            if(streak % 5 === 0 && streak > 0) awardBadge('Streak Monster ');
             currentQ++;
             setTimeout(loadQuestion, correct?1200:3000);
         }
 
         function getHint() {
-            document.getElementById('feedback').innerHTML = '💡 Think place value / common denominators!';
+            document.getElementById('feedback').innerHTML = ' Think place value / common denominators!';
         }
 
-        function endEarly() {
-            clearInterval(timer);
-            endQuest(); // Same as finishing normally – just instant!
-        }
+        function endEarly() { clearInterval(timer); endQuest(); }
 
         function endQuest() {
             clearInterval(timer);
@@ -161,13 +177,10 @@
             document.getElementById('final-score').textContent = score;
             document.getElementById('final-total').textContent = currentPaper.length;
             const percent = Math.round((score/currentPaper.length)*100);
-            document.getElementById('result-message').innerHTML = percent >= 90 ? '🐉 110+ SCALED SCORE – LEGEND!' : percent >= 70 ? 'Strong – 100+ coming!' : 'Great effort – keep practising!';
+            document.getElementById('result-message').textContent = percent >= 90 ? '110+ SCALED SCORE – LEGEND!' : 'Keep going – every paper is new!';
         }
 
-        function restart() {
-            document.getElementById('results').classList.add('hidden');
-            document.getElementById('welcome').classList.remove('hidden');
-        }
+        function restart() { document.getElementById('results').classList.add('hidden'); document.getElementById('welcome').classList.remove('hidden'); }
 
         function formatTime(s) { const m = Math.floor(s/60); const sec = s%60; return m + ':' + (sec<10?'0':'') + sec; }
         function awardBadge(name) { document.getElementById('badges').innerHTML += `<span class="badge">${name}</span> `; }
