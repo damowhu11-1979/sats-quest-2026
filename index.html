@@ -3,57 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATs Quest 2026 – OFFICIAL SPEC!</title>
+    <title>SATs Quest 2026 – Official Look!</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body {font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; text-align: center; margin:0; padding:20px; min-height:100vh;}
-        h1 {font-size: 4em; margin:30px; text-shadow: 0 0 20px rgba(255,255,255,0.5);}
-        .container {max-width: 900px; margin:0 auto; background:rgba(0,0,0,0.3); border-radius:30px; padding:40px;}
-        button {background:#ff4757; border:none; color:white; padding:22px 50px; font-size:1.9em; border-radius:60px; cursor:pointer; margin:20px; box-shadow:0 10px 30px rgba(0,0,0,0.4); transition:all 0.3s;}
-        button:hover {transform:translateY(-10px) scale(1.1); background:#ff3742;}
+        body {font-family: Arial, sans-serif; background: #f0f0f0; margin:0; padding:0;}
+        .header {
+            background: linear-gradient(#003087, #005eb8); color: white; padding: 20px; text-align: center;
+            font-size: 1.4em; font-weight: bold; border-top: 8px solid #003087;
+        }
+        .ks2 {background: #005eb8; color:white; padding:10px; font-size:2em; border-radius:8px; display:inline-block; margin:15px 0;}
+        .paper-title {font-size:2.8em; margin:20px 0; color:#000;}
+        .instructions {background:#fff; padding:20px; margin:20px auto; max-width:900px; box-shadow:0 4px 20px rgba(0,0,0,0.1);}
+        table {width:100%; border-collapse:collapse; margin-bottom:30px;}
+        td {border:1px solid #000; padding:12px; font-size:1.3em;}
+        .page {background:white; margin:20px auto; max-width:950px; box-shadow:0 10px 30px rgba(0,0,0,0.15); min-height:100vh;}
+        .question-container {
+            background:white; padding:40px; margin:30px auto; max-width:900px; border:2px solid #ddd;
+            box-shadow:0 8px 25px rgba(0,0,0,0.1); min-height:80vh;
+        }
+        .qnum {float:left; width:80px; font-size:3em; font-weight:bold; color:#003087; margin-right:20px;}
+        .question-text {font-size:2em; margin:40px 0; text-align:left; line-height:1.5;}
+        .answer-box {
+            border: 2px dotted #000; width: 250px; height: 60px; margin: 20px auto; background: #f9f9f9;
+            display: flex; align-items:center; justify-content:center; font-size:1.8em;
+        }
+        .working-box {
+            border: 4px dotted #003087; background: #f8fbff; height: 280px; margin: 30px auto; padding:20px;
+            font-size:1.4em; color:#555; text-align:left; line-height:2;
+        }
+        #answer-input {width:260px; height:64px; font-size:2em; text-align:center; border:2px solid #000;}
+        #timer {font-size:2.5em; color:#d00; font-weight:bold; margin:20px;}
         .hidden {display:none !important;}
-        #question {font-size:2.3em; background:rgba(255,255,255,0.2); padding:40px; border-radius:20px; margin:30px 0; min-height:140px; line-height:1.4;}
-        input#answer-input {padding:20px; font-size:2em; width:340px; border-radius:15px; text-align:center;}
-        #timer {font-size:4em; color:#ffd700; font-weight:bold;}
-        #feedback {font-size:2.5em; margin:30px; min-height:80px;}
-        .end-early {background:#2ed573 !important;}
+        button {background:#005eb8; color:white; padding:15px 30px; font-size:1.6em; border:none; border-radius:8px; cursor:pointer; margin:10px;}
+        button:hover {background:#003087;}
+        .end-early {background:#e74c3c !important;}
     </style>
 </head>
 <body>
 
-    <h1>SATs Quest 2026</h1>
-    <div class="container">
-
-        <!-- HOME -->
-        <div id="welcome">
-            <p style="font-size:2.2em; margin:40px;">Choose your official paper – brand new every time!</p>
-            <button onclick="startQuest('arithmetic')">Arithmetic Paper 1<br><small>40 questions • 30 minutes</small></button>
-            <button onclick="startQuest('reasoning2')">Reasoning Paper 2<br><small>35 questions • 40 minutes</small></button>
-            <button onclick="startQuest('reasoning3')">Reasoning Paper 3<br><small>35 questions • 40 minutes</small></button>
+    <!-- COVER PAGE -->
+    <div id="welcome" class="page">
+        <div class="header">
+            <div style="font-size:1.6em;">2026 national curriculum tests</div>
+            <div class="ks2">Key stage 2</div>
         </div>
+        <div class="instructions">
+            <h1 class="paper-title">Mathematics</h1>
+            <button onclick="startQuest('arithmetic')">Paper 1: Arithmetic<br><small>40 questions • 30 minutes</small></button><br><br>
+            <button onclick="startQuest('reasoning2')">Paper 2: Reasoning<br><small>35 questions • 40 minutes</small></button><br><br>
+            <button onclick="startQuest('reasoning3')">Paper 3: Reasoning<br><small>35 questions • 40 minutes</small></button>
+        </div>
+    </div>
 
-        <!-- GAME -->
-        <div id="game" class="hidden">
-            <h2 id="level-title"></h2>
+    <!-- GAME PAGE -->
+    <div id="game" class="page hidden">
+        <div class="header">
+            <div style="font-size:1.6em;">2026 national curriculum tests</div>
+            <div class="ks2">Key stage 2</div>
+            <h2 id="level-title" style="margin:10px; font-size:2em;"></h2>
+        </div>
+        <div class="question-container">
             <div id="timer">30:00</div>
-            <p style="font-size:1.8em;">Score: <span id="score">0</span> / <span id="total">0</span></p>
-            <div id="question"></div>
-            <input type="text" id="answer-input" placeholder="Your answer" autocomplete="off"
-                   onkeypress="if(event.key==='Enter') checkAnswer()">
-            <br><br>
-            <button onclick="checkAnswer()">Submit</button>
-            <button onclick="endEarly()" class="end-early">End Early</button>
-            <div id="feedback"></div>
-        </div>
+            <p style="font-size:1.6em; color:#000;">Score: <strong id="score">0</strong> / <strong id="total">40</strong></p>
+            
+            <div style="clear:both;"></div>
+            <div class="qnum" id="q-number">1</div>
+            <div class="question-text" id="question"></div>
+            
+            <!-- Working out box (only shown when needed) -->
+            <div class="working-box" id="working-box">
+                Show your working here<br><br>
+                ─────────────────────────────────────<br><br>
+                ─────────────────────────────────────<br><br>
+                ─────────────────────────────────────
+            </div>
 
-        <!-- RESULTS -->
-        <div id="results" class="hidden">
-            <h2>Quest Complete!</h2>
-            <h1 style="font-size:5em;"><span id="final-score">0</span>/<span id="final-total">35</span></h1>
-            <p id="result-message" style="font-size:2.8em;"></p>
-            <button onclick="restart()">Another Paper!</button>
+            <div class="answer-box">
+                <input type="text" id="answer-input" placeholder="" autocomplete="off"
+                       onkeypress="if(event.key==='Enter') checkAnswer()">
+            </div>
+            <br>
+            <button onclick="checkAnswer()">Submit Answer</button>
+            <button onclick="endEarly()" class="end-early">End Test Early</button>
+            <div id="feedback" style="font-size:2em; margin:30px; min-height:60px;"></div>
         </div>
+    </div>
 
+    <!-- RESULTS -->
+    <div id="results" class="page hidden">
+        <div class="header">
+            <div style="font-size:1.6em;">2026 national curriculum tests</div>
+            <div class="ks2">Key stage 2</div>
+        </div>
+        <div class="instructions" style="padding:80px;">
+            <h1 style="font-size:4em;">Test Complete!</h1>
+            <h1 style="font-size:5em; color:#005eb8;"><span id="final-score">0</span> / <span id="final-total">40</span></h1>
+            <p id="result-message" style="font-size:3em; margin:40px;"></p>
+            <button onclick="restart()" style="font-size:2em; padding:20px 50px;">Back to Menu</button>
+        </div>
     </div>
 
     <script>
@@ -68,18 +115,16 @@
         function startQuest(type) {
             document.getElementById('welcome').classList.add('hidden');
             document.getElementById('game').classList.remove('hidden');
-            document.getElementById('results').classList.add('hidden');
-
             paper = type === 'arithmetic' ? generateArithmetic() : generateReasoning();
             q = 0; score = 0;
             document.getElementById('total').textContent = paper.length;
             document.getElementById('final-total').textContent = paper.length;
             document.getElementById('level-title').textContent = 
-                type === 'arithmetic' ? 'Arithmetic Paper 1 (40 questions)' : 
-                type === 'reasoning2' ? 'Reasoning Paper 2 (35 questions)' : 'Reasoning Paper 3 (35 questions)';
-
+                type === 'arithmetic' ? 'Paper 1: Arithmetic' : 
+                type === 'reasoning2' ? 'Paper 2: Reasoning' : 'Paper 3: Reasoning';
+            document.getElementById('working-box').style.display = type === 'arithmetic' ? 'block' : 'none';
             loadQuestion();
-            timeLeft = type === 'arithmetic' ? 1800 : 2400;  // 30 min vs 40 min
+            timeLeft = type === 'arithmetic' ? 1800 : 2400;
             document.getElementById('timer').textContent = formatTime(timeLeft);
             timer = setInterval(() => {
                 timeLeft--;
@@ -90,36 +135,36 @@
 
         function generateArithmetic() {
             const questions = [];
-            for(let i = 1; i <= 40; i++) {  // Exactly 40
+            for(let i = 1; i <= 40; i++) {
                 let text, answer, marks = i <= 32 ? 1 : 2;
                 if(i <= 16) { let a = random(1000,9999), b = random(100,999); text = `${a} + ${b} =`; answer = a + b; }
                 else if(i <= 32) { let a = random(20,999), b = random(2,12); text = `${a} × ${b} =`; answer = a * b; }
-                else { let a = random(101,999), b = random(11,99); text = `${a} × ${b} =<br><small>(show working)</small>`; answer = a * b; }
-                questions.push({text, answer: answer.toString(), marks});
+                else { let a = random(101,999), b = random(11,99); text = `${a} × ${b} =`; answer = a * b; }
+                questions.push({text, answer: answer.toString(), marks, showWorking: i > 32});
             }
             return questions;
         }
 
         function generateReasoning() {
-            const questions = [];
             const templates = [
-                () => { let n = random(100,9999); return {text: `Round ${n} to the nearest 100.`, answer: (Math.round(n/100)*100).toString()}; },
-                () => { let p = [10,20,25,50,75][random(0,4)], n = random(20,400)*5; return {text: `${p}% of ${n} =`, answer: (p*n/100).toString()}; },
-                () => { let l = (random(1,20) + random(0,9)/10).toFixed(1); return {text: `${l} litres = ? ml`, answer: (l*1000).toString()}; },
-                () => { let l = random(6,30), w = random(5,25); return {text: `Area of rectangle ${l} cm × ${w} cm =`, answer: (l*w).toString()}; },
-                () => { let s = random(8,40); return {text: `Perimeter of square with side ${s} cm =`, answer: (s*4).toString()}; },
-                () => { let f = ['1/2','1/4','3/4','1/5','2/5','3/5','1/10'][random(0,6)], n = random(20,500); return {text: `${f} of ${n} =`, answer: Math.round(eval(f)*n).toString()}; }
+                () => { let n = random(100,9999); return {text: `Round ${n} to the nearest 100.`, answer: (Math.round(n/100)*100).toString(), showWorking: true}; },
+                () => { let p = [10,25,50,75][random(0,3)], n = random(20,400)*4; return {text: `${p}% of ${n}`, answer: (p*n/100).toString(), showWorking: true}; },
+                () => { let l = (random(1,15)+random(0,9)/10).toFixed(1); return {text: `Convert ${l} litres into millilitres.`, answer: (l*1000).toString(), showWorking: false}; },
+                () => { let l = random(8,25), w = random(6,20); return {text: `What is the area of a rectangle ${l} cm long and ${w} cm wide?`, answer: (l*w).toString(), showWorking: true}; }
             ];
-            for(let i = 0; i < 35; i++) {  // EXACTLY 35 QUESTIONS
-                const gen = templates[random(0, templates.length-1)]();
-                questions.push({text: gen.text, answer: gen.answer, marks: random(0,1)?2:1});
+            const questions = [];
+            for(let i = 0; i < 35; i++) {
+                const t = templates[random(0, templates.length-1)]();
+                questions.push({text: t.text, answer: t.answer, marks: random(0,1)?2:1, showWorking: t.showWorking});
             }
             return questions;
         }
 
         function loadQuestion() {
             if(q >= paper.length) return endQuest();
-            document.getElementById('question').innerHTML = `<strong>${q+1}.</strong> ${paper[q].text}`;
+            document.getElementById('q-number').textContent = q + 1;
+            document.getElementById('question').innerHTML = paper[q].text;
+            document.getElementById('working-box').style.display = paper[q].showWorking ? 'block' : 'none';
             document.getElementById('answer-input').value = '';
             document.getElementById('feedback').innerHTML = '';
             document.getElementById('answer-input').focus();
@@ -133,14 +178,14 @@
                 score += paper[q].marks;
                 document.getElementById('score').textContent = score;
                 correctSound.play().catch(()=>{});
-                confetti({particleCount:180, spread:80, origin:{y:0.6}});
-                document.getElementById('feedback').innerHTML = '✓ Correct! +' + paper[q].marks;
+                confetti({particleCount:200, spread:90, origin:{y:0.6}});
+                document.getElementById('feedback').innerHTML = '<span style="color:green;">✓ Correct!</span>';
             } else {
                 wrongSound.play().catch(()=>{});
-                document.getElementById('feedback').innerHTML = `✗ Answer: ${correct}`;
+                document.getElementById('feedback').innerHTML = `<span style="color:red;">✗ Incorrect. Answer: ${correct}</span>`;
             }
             q++;
-            setTimeout(loadQuestion, right ? 1000 : 3000);
+            setTimeout(loadQuestion, right ? 1200 : 3500);
         }
 
         function endEarly() { clearInterval(timer); endQuest(); }
@@ -152,8 +197,8 @@
             document.getElementById('final-score').textContent = score;
             const pct = Math.round((score / paper.length) * 100);
             document.getElementById('result-message').innerHTML = 
-                pct >= 90 ? 'MATHS LEGEND!<br>110+ scaled score!' :
-                pct >= 75 ? 'BRILLIANT!<br>100+ incoming!' : 'Great practice – go again!';
+                pct >= 90 ? 'OUTSTANDING!<br>Scaled score 110+' :
+                pct >= 80 ? 'EXCELLENT!<br>Scaled score 100+' : 'Great practice!';
             if(pct >= 85) victorySound.play().catch(()=>{});
         }
 
@@ -163,9 +208,8 @@
         }
 
         function formatTime(s) {
-            const m = Math.floor(s/60);
-            const sec = s % 60;
-            return `${m}:${sec<10?'0':''}${sec}`;
+            const m = Math.floor(s/60), sec = s % 60;
+            return `${m}:${sec < 10 ? '0' : ''}${sec}`;
         }
     </script>
 </body>
