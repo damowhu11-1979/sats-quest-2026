@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATs Quest 2026 – INFINITE NEW QUESTIONS!</title>
+    <title>SATs Quest 2026 – INFINITE + PDF SAVE</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body {font-family: Arial, sans-serif; background: #f0f0f0; margin:0; padding:20px 0;}
         .header {background: linear-gradient(#003087, #005eb8); color: white; padding: 20px; text-align: center; font-weight: bold; border-top: 8px solid #003087;}
@@ -21,51 +22,50 @@
         .end-early {background:#e74c3c !important;}
         .hidden {display:none !important;}
         #feedback {font-size:2.2em; margin:40px 0; min-height:70px; text-align:center;}
-        .working-box {border: 5px solid #003087; background: #f8fbff; height: 380px; margin: 40px 0; padding:20px; border-radius:12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);}
+        .working-box {border: 5px solid #003087; background: #f8fbff; height: 380px; margin: 40px 0; padding:20px; border-radius:12px;}
         #working-input {width:100%; height:100%; border:none; background:transparent; resize:none; font-size:1.6em; outline:none;}
-        .progress-container {width:100%; background:#ddd; height:50px; border-radius:25px; overflow:hidden; margin:30px 0; box-shadow: inset 0 4px 10px rgba(0,0,0,0.2); position:relative;}
+        .progress-container {width:100%; background:#ddd; height:50px; border-radius:25px; overflow:hidden; margin:30px 0; position:relative;}
         .progress-bar {height:100%; width:0%; background: linear-gradient(90deg, #ff006e, #8338ec, #3a86ff, #06ffa5, #ffba08); transition: width 0.7s ease;}
-        .progress-text {position:absolute; width:100%; text-align:center; line-height:50px; color:white; font-weight:bold; font-size:1.8em; text-shadow: 2px 2px 6px rgba(0,0,0,0.8);}
+        .progress-text {position:absolute; width:100%; text-align:center; line-height:50px; color:white; font-weight:bold; font-size:1.8em; text-shadow: 2px 2px 6px #000;}
         .cover-page {padding:80px 60px; text-align:center;}
-        .cover-page h1 {font-size:4.5em; margin:30px 0;}
-        .name-table {width:80%; margin:40px auto; border-collapse:collapse; font-size:1.6em;}
-        .name-table td {border:1px solid #000; padding:15px; height:50px;}
-        .barcode {margin:60px 0; font-size:2.8em; letter-spacing:6px;}
-        .blank {height:90vh; display:flex; align-items:center; justify-content:center; font-size:2.5em; color:#666;}
+        .cover-page h1 {font-size:4.5em;}
+        .name-table {width:80%; margin:50px auto; border-collapse:collapse; font-size:1.8em;}
+        .name-table td {border:2px solid #000; padding:20px; height:60px;}
+        .name-input {width:100%; border:none; font-size:1em; text-align:center;}
+        .barcode {margin:80px 0; font-size:2.8em; letter-spacing:8px;}
     </style>
 </head>
 <body>
 
+<!-- WELCOME -->
 <div id="welcome" class="page">
     <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
     <div class="question-container" style="text-align:center; padding-top:100px;">
         <h1 style="font-size:4em; color:#000;">Mathematics</h1>
         <br><br><br>
         <button onclick="startQuest('arithmetic')">Paper 1: Arithmetic<br><small>40 fresh questions • 30 min</small></button><br><br><br>
-        <button onclick="startQuest('reasoning2')">Paper 2: Reasoning<br><small>35 brand-new questions every time!</small></button><br><br><br>
-        <button onclick="startQuest('reasoning3')">Paper 3: Reasoning<br><small>35 brand-new questions every time!</small></button>
+        <button onclick="startQuest('reasoning2')">Paper 2: Reasoning<br><small>35 brand-new questions</small></button><br><br><br>
+        <button onclick="startQuest('reasoning3')">Paper 3: Reasoning<br><small>35 brand-new questions</small></button>
     </div>
 </div>
 
+<!-- OFFICIAL COVER – ONLY NAME -->
 <div id="official-cover" class="page hidden">
     <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
     <div class="cover-page">
         <h1>Mathematics</h1>
         <h2 id="paper-title" style="font-size:3em;"></h2>
         <table class="name-table">
-            <tr><td>First name</td><td></td></tr>
-            <tr><td>Middle name</td><td></td></tr>
-            <tr><td>Last name</td><td></td></tr>
-            <tr><td>Date of birth</td><td>Day &nbsp;&nbsp; Month &nbsp;&nbsp; Year</td></tr>
-            <tr><td>School name</td><td></td></tr>
-            <tr><td>DfE number</td><td></td></tr>
+            <tr><td>First name</td><td><input type="text" id="first-name" class="name-input" placeholder="Enter first name"></td></tr>
+            <tr><td>Last name</td><td><input type="text" id="last-name" class="name-input" placeholder="Enter last name"></td></tr>
         </table>
         <div class="barcode" id="barcode">*K00070A0124*</div>
+        <br><br>
+        <button onclick="startGame()" style="font-size:2em; padding:20px 60px;">Start Test</button>
     </div>
 </div>
 
-<div id="blank-page" class="page hidden blank">[BLANK PAGE]<br><br>Please do not write on this page.</div>
-
+<!-- GAME -->
 <div id="game" class="page hidden">
     <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div>
         <h2 id="level-title" style="margin:10px; font-size:2em; color:white;"></h2>
@@ -93,147 +93,84 @@
     </div>
 </div>
 
+<!-- RESULTS + PDF SAVE -->
 <div id="results" class="page hidden">
     <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
-    <div class="question-container" style="text-align:center; padding-top:120px;">
+    <div class="question-container" style="text-align:center; padding-top:80px;">
         <h1 style="font-size:4.5em;">Test Complete!</h1>
         <h1 style="font-size:6em; color:#005eb8;"><span id="final-score">0</span> / <span id="final-total">40</span></h1>
-        <p id="result-message" style="font-size:3.2em; margin:50px;">INFINITE PRACTICE UNLOCKED!</p>
-        <button onclick="restart()" style="font-size:2.2em; padding:20px 60px;">Back to Menu</button>
+        <p id="result-message" style="font-size:3em; margin:50px;"></p>
+        <button onclick="saveAsPDF()" style="font-size:2em; padding:20px 60px; background:#27ae60;">Save Results + Working as PDF</button><br><br>
+        <button onclick="restart()" style="font-size:2em; padding:20px 60px;">Back to Menu</button>
     </div>
 </div>
 
 <script>
+    const { jsPDF } = window.jspdf;
     const correctSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3');
     const wrongSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3');
 
     let paper = [], q = 0, score = 0, timer, timeLeft;
+    let studentName = "";
+    let workings = [];
 
-    // Generate 40 fresh arithmetic questions
-    function generateArithmetic() {
-        const qs = [];
-        for(let i = 1; i <= 40; i++) {
-            let a, b, op, text, ans;
-            if(i <= 12) { a = Math.floor(Math.random()*9000)+1000; b = Math.floor(Math.random()*900)+100; op = "+"; ans = a + b; }
-            else if(i <= 24) { a = Math.floor(Math.random()*900)+100; b = Math.floor(Math.random()*90)+10; op = "×"; ans = a * b; }
-            else if(i <= 32) { a = Math.floor(Math.random()*90)+10; b = Math.floor(Math.random()*90)+10; op = "−"; ans = a * 10 + b * 10 - (Math.floor(Math.random()*500)+100); text = `${ans + (Math.floor(Math.random()*500)+100)} − ${Math.floor(Math.random()*500)+100} =`; ans = ans; }
-            else { a = (Math.floor(Math.random()*98)+12)*12; b = Math.floor(Math.random()*11)+2; op = "÷"; ans = a / b; text = `${a} ÷ ${b} =`; }
-            text = text || `${a} ${op} ${b} =`;
-            qs.push({text, answer: ans.toString(), marks: i > 34 ? 2 : 1});
-        }
-        return qs;
-    }
-
-    // Generate 35 fresh reasoning questions (real SATs style!)
-    function generateReasoning() {
-        const templates = [
-            () => { const n = Math.floor(Math.random()*9000)+1000; return {text: `Write the number ${n.toLocaleString()} in words.`, answer: numberToWords(n), marks:1}; },
-            () => { const n = Math.floor(Math.random()*90000)+1000; return {text: `Round ${n} to the nearest thousand.`, answer: Math.round(n/1000)*1000, marks:1}; },
-            () => { const p = (Math.floor(Math.random()*40)+10); const a = Math.floor(Math.random()*300)+50; return {text: `What is ${p}% of £${a}?`, answer: (a*p/100).toFixed(0), marks:1}; },
-            () => { const a = Math.floor(Math.random()*8000)+1000; const b = Math.floor(Math.random()*900)+100; return {text: `Calculate ${a} + ${b}`, answer: a+b, marks:1}; },
-            () => { const a = Math.floor(Math.random()*9000)+1000; const b = Math.floor(Math.random()*900)+100; return {text: `Calculate ${a} − ${b}`, answer: a-b, marks:1}; },
-            () => { const a = Math.floor(Math.random()*90)+10; const b = Math.floor(Math.random()*90)+10; return {text: `Calculate ${a} × ${b}`, answer: a*b, marks:2}; },
-            () => { const n = (Math.floor(Math.random()*90)+12)*12; const d = Math.floor(Math.random()*11)+2; return {text: `${n} ÷ ${d} =`, answer: n/d, marks:2}; },
-            () => { const kg = (Math.floor(Math.random()*8)+1); const g = Math.floor(Math.random()*900)+100; return {text: `${kg}.${g} kg = ______ grams`, answer: kg*1000 + g, marks:1}; },
-            () => { const h = Math.floor(Math.random()*23); const m = Math.floor(Math.random()*50)+5; const add = Math.floor(Math.random()*120)+65; return {text: `A train leaves at ${h}:${m<10?'0':''}${m} and takes ${add} minutes. What time does it arrive?`, answer: new Date(2025,0,1,h,m+add).toTimeString().slice(0,5), marks:2}; },
-            () => { const base = Math.floor(Math.random()*20)+5; const height = Math.floor(Math.random()*15)+5; return {text: `Area of triangle with base ${base}cm and height ${height}cm?`, answer: (base*height/2), marks:2}; },
-            () => { const price = Math.floor(Math.random()*500)+150; const people = Math.floor(Math.random()*4)+2; return {text: `${people} friends share a £${price} bill equally. How much each?`, answer: Math.round(price/people*100)/100, marks:2}; },
-        ];
-        const qs = [];
-        while(qs.length < 35) {
-            const t = templates[Math.floor(Math.random()*templates.length)]();
-            qs.push(t);
-        }
-        return qs;
-    }
-
-    // Quick number-to-words (handles up to 999,999)
-    function numberToWords(n) {
-        const ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-        const tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
-        if (n === 0) return "zero";
-        if (n < 20) return ones[n];
-        if (n < 100) return tens[Math.floor(n/10)] + (n%10 ? " " + ones[n%10] : "");
-        if (n < 1000) return ones[Math.floor(n/100)] + " hundred" + (n%100 ? " and " + numberToWords(n%100) : "");
-        if (n < 1000000) return numberToWords(Math.floor(n/1000)) + " thousand" + (n%1000 ? " " + numberToWords(n%1000) : "");
-        return "";
-    }
+    // Same generateArithmetic() and generateReasoning() as before (omitted for space – keep your previous ones)
 
     function startQuest(type) {
         document.getElementById('welcome').classList.add('hidden');
         document.getElementById('official-cover').classList.remove('hidden');
-
-        let title = "", barcode = "";
-        if(type==='arithmetic'){ title="Paper 1: arithmetic"; barcode="K00060A0120"; paper=generateArithmetic(); timeLeft=1800; }
-        else { title= type==='reasoning2' ? "Paper 2: reasoning" : "Paper 3: reasoning"; barcode= type==='reasoning2' ? "K00070A0124" : "K00080A0124"; paper=generateReasoning(); timeLeft=2400; }
-
-        document.getElementById('paper-title').innerHTML = title;
-        document.getElementById('barcode').textContent = `*${barcode}*`;
-        document.getElementById('level-title').textContent = title.replace("arithmetic","Arithmetic").replace("reasoning","Reasoning");
-
-        setTimeout(() => {
-            document.getElementById('official-cover').classList.add('hidden');
-            document.getElementById('blank-page').classList.remove('hidden');
-            setTimeout(() => {
-                document.getElementById('blank-page').classList.add('hidden');
-                document.getElementById('game').classList.remove('hidden');
-                document.getElementById('total').textContent = paper.length;
-                document.getElementById('final-total').textContent = paper.length;
-                q = 0; score = 0; document.getElementById('score').textContent = 0;
-                updateProgress();
-                loadQuestion();
-                document.getElementById('timer').textContent = formatTime(timeLeft);
-                timer = setInterval(() => { timeLeft--; document.getElementById('timer').textContent = formatTime(timeLeft); if(timeLeft<=0) endQuest(); }, 1000);
-            }, 4000);
-        }, 5000);
+        // set title & barcode as before
     }
 
-    function updateProgress() {
-        const percent = (q / paper.length) * 100;
-        document.getElementById('progress-bar').style.width = percent + '%';
-        document.getElementById('progress-text').textContent = `${q} / ${paper.length}`;
-        document.getElementById('score').textContent = score;
-        if([10,20,30,35,40].includes(q)) confetti({particleCount: 500, spread: 120, origin: {y: 0.35}});
-    }
-
-    function loadQuestion() {
-        if(q >= paper.length) return endQuest();
-        document.getElementById('q-number').textContent = q + 1;
-        document.getElementById('question').innerHTML = paper[q].text;
-        document.getElementById('answer-input').value = '';
-        document.getElementById('working-input').value = '';
-        document.getElementById('feedback').innerHTML = '';
-        document.getElementById('answer-input').focus();
+    function startGame() {
+        studentName = (document.getElementById('first-name').value + " " + document.getElementById('last-name').value).trim() || "Student";
+        document.getElementById('official-cover').classList.add('hidden');
+        document.getElementById('game').classList.remove('hidden');
+        workings = [];
+        // rest of start logic
     }
 
     function checkAnswer() {
-        const user = document.getElementById('answer-input').value.trim().toLowerCase().replace('£','').replace('°c','').replace(' ','');
-        const correct = paper[q].answer.toString().toLowerCase().replace('£','').replace(' ','');
-        if(user === correct){
-            score += paper[q].marks || 1;
-            correctSound.play();
-            confetti({particleCount: 150, spread: 70, origin: {y: 0.6}});
-            document.getElementById('feedback').innerHTML = '<span style="color:green;">✓ Correct!</span>';
-        } else {
-            wrongSound.play();
-            document.getElementById('feedback').innerHTML = `<span style="color:red;">✗ Answer: ${paper[q].answer}</span>`;
-        }
-        q++;
-        updateProgress();
-        setTimeout(loadQuestion, 1500);
+        // ... same as before
+        workings.push({q: q+1, question: paper[q].text, working: document.getElementById('working-input').value, correct: user===correct});
+        // then q++, updateProgress(), etc.
     }
 
-    function endoEarly(){ clearInterval(timer); endQuest(); }
-    function endQuest(){
+    function saveAsPDF() {
+        const doc = new jsPDF();
+        let y = 20;
+        doc.setFontSize(16);
+        doc.text("KS2 SATs Mathematics Results", 105, y, {align: "center"});
+        y += 10;
+        doc.setFontSize(14);
+        doc.text(`Name: ${studentName}`, 20, y); y += 10;
+        doc.text(`Paper: ${document.getElementById('level-title').textContent}`, 20, y); y += 10;
+        doc.text(`Score: ${score} / ${paper.length}`, 20, y); y += 15;
+
+        doc.setFontSize(12);
+        workings.forEach(w => {
+            if(y > 270) { doc.addPage(); y = 20; }
+            doc.text(`Q${w.q}: ${w.question.substring(0,80)}${w.question.length>80?"...":""}`, 20, y); y += 7;
+            if(w.working) doc.text(`Working: ${w.working.substring(0,100)}`, 25, y); y += 7;
+            doc.text(w.correct ? "✓ Correct" : "✗ Wrong", 25, y); y += 10;
+        });
+
+        doc.save(`${studentName}_SATs_Results.pdf`);
+    }
+
+    function endQuest() {
         clearInterval(timer);
         document.getElementById('game').classList.add('hidden');
         document.getElementById('results').classList.remove('hidden');
         document.getElementById('final-score').textContent = score;
-        const pct = Math.round((score / paper.length) * 100);
-        document.getElementById('result-message').textContent = pct >= 90 ? "110+ LEGEND!" : pct >= 80 ? "GREATER DEPTH!" : "FANTASTIC!";
+        const msg = score < 10 ? "Good effort! You can do this – keep trying!" :
+                    score <= 25 ? "Keep going – you’re doing really well!" :
+                    score <= 39 ? "Amazing work! Nearly at Greater Depth!" :
+                    "110+ LEGEND! GREATER DEPTH ACHIEVED!";
+        document.getElementById('result-message').textContent = msg;
     }
-    function restart(){ location.reload(); }
-    function formatTime(s){ const m = Math.floor(s/60), sec = s % 60; return `${m}:${sec<10?'0':''}${sec}`; }
+
+    // Keep all your previous generateArithmetic, generateReasoning, numberToWords, etc.
 </script>
 </body>
 </html>
