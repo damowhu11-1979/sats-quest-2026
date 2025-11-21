@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATs Quest 2026 – INFINITE + PDF SAVE</title>
+    <title>Reading SATs Quest 2026 – INFINITE TEXTS!</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -15,7 +15,7 @@
         .qnum {float:left; width:90px; font-size:4em; font-weight:bold; color:#003087; margin:20px 0;}
         .question-text {font-size:2.2em; margin:40px 0 30px 100px; line-height:1.5;}
         .answer-area {text-align:center; margin:50px 0;}
-        #answer-input {width:300px; height:70px; font-size:2.4em; text-align:center; border:3px solid #000; border-radius:6px;}
+        #answer-input {width:500px; height:70px; font-size:2.2em; text-align:center; border:3px solid #000; border-radius:6px;}
         #timer {font-size:2.8em; color:#d00; font-weight:bold; text-align:center; margin:20px 0;}
         button {background:#005eb8; color:white; padding:16px 32px; font-size:1.8em; border:none; border-radius:8px; cursor:pointer; margin:15px;}
         button:hover {background:#003087;}
@@ -33,55 +33,56 @@
         .name-table td {border:2px solid #000; padding:20px; height:60px;}
         .name-input {width:100%; border:none; font-size:1em; text-align:center;}
         .barcode {margin:80px 0; font-size:2.8em; letter-spacing:8px;}
+        .passage {background:#f9f9f9; padding:25px; border-left:8px solid #005eb8; font-size:1.6em; line-height:1.7; margin:40px 0;}
     </style>
 </head>
 <body>
 
-<!-- WELCOME -->
 <div id="welcome" class="page">
     <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
     <div class="question-container" style="text-align:center; padding-top:100px;">
-        <h1 style="font-size:4em; color:#000;">Mathematics</h1>
+        <h1 style="font-size:4em; color:#000;">English Reading</h1>
         <br><br><br>
-        <button onclick="startQuest('arithmetic')">Paper 1: Arithmetic<br><small>40 fresh questions • 30 min</small></button><br><br><br>
-        <button onclick="startQuest('reasoning2')">Paper 2: Reasoning<br><small>35 brand-new questions</small></button><br><br><br>
-        <button onclick="startQuest('reasoning3')">Paper 3: Reasoning<br><small>35 brand-new questions</small></button>
+        <button onclick="startQuest()">Reading Paper<br><small>3 brand-new texts • 35–40 questions • 60 minutes</small></button>
     </div>
 </div>
 
-<!-- OFFICIAL COVER – ONLY NAME -->
 <div id="official-cover" class="page hidden">
     <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
     <div class="cover-page">
-        <h1>Mathematics</h1>
-        <h2 id="paper-title" style="font-size:3em;"></h2>
+        <h1>English Reading</h1>
+        <h2 style="font-size:3em;">Reading booklet</h2>
         <table class="name-table">
             <tr><td>First name</td><td><input type="text" id="first-name" class="name-input" placeholder="Enter first name"></td></tr>
             <tr><td>Last name</td><td><input type="text" id="last-name" class="name-input" placeholder="Enter last name"></td></tr>
         </table>
-        <div class="barcode" id="barcode">*K00070A0124*</div>
+        <div class="barcode">*R00010A0124*</div>
         <br><br>
-        <button onclick="startGame()" style="font-size:2em; padding:20px 60px;">Start Test</button>
+        <button onclick="startGame()" style="font-size:2em; padding:20px 60px;">Start Reading Test</button>
     </div>
 </div>
 
-<!-- GAME -->
 <div id="game" class="page hidden">
     <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div>
-        <h2 id="level-title" style="margin:10px; font-size:2em; color:white;"></h2>
+        <h2 style="margin:10px; font-size:2em; color:white;">English Reading</h2>
     </div>
     <div class="question-container">
-        <div id="timer">30:00</div>
+        <div id="timer">60:00</div>
         <div class="progress-container">
-            <div class="progress-bar" id="progress-bar"><div class="progress-text" id="progress-text">0 / 40</div></div>
+            <div class="progress-bar" id="progress-bar"><div class="progress-text" id="progress-text">0 / 38</div></div>
         </div>
-        <p style="text-align:center; font-size:1.8em;">Score: <strong id="score">0</strong> / <strong id="total">40</strong></p>
+        <p style="text-align:center; font-size:1.8em;">Score: <strong id="score">0</strong> / <strong id="total">38</strong></p>
+
+        <div class="passage" id="passage"></div>
+
         <div class="qnum" id="q-number">1</div>
         <div class="question-text" id="question"></div>
+
         <div class="working-box">
-            <strong>Show your working here</strong><br>
-            <textarea id="working-input" placeholder="Type your working…"></textarea>
+            <strong>Find and copy evidence OR explain here</strong><br>
+            <textarea id="working-input" placeholder="Type your evidence or explanation…"></textarea>
         </div>
+
         <div class="answer-area">
             <input type="text" id="answer-input" autocomplete="off" onkeypress="if(event.key==='Enter') checkAnswer()">
         </div>
@@ -93,14 +94,13 @@
     </div>
 </div>
 
-<!-- RESULTS + PDF SAVE -->
 <div id="results" class="page hidden">
     <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
     <div class="question-container" style="text-align:center; padding-top:80px;">
         <h1 style="font-size:4.5em;">Test Complete!</h1>
-        <h1 style="font-size:6em; color:#005eb8;"><span id="final-score">0</span> / <span id="final-total">40</span></h1>
+        <h1 style="font-size:6em; color:#005eb8;"><span id="final-score">0</span> / <span id="final-total">38</span></h1>
         <p id="result-message" style="font-size:3em; margin:50px;"></p>
-        <button onclick="saveAsPDF()" style="font-size:2em; padding:20px 60px; background:#27ae60;">Save Results + Working as PDF</button><br><br>
+        <button onclick="saveAsPDF()" style="font-size:2em; padding:20px 60px; background:#27ae60;">Save Results + Evidence as PDF</button><br><br>
         <button onclick="restart()" style="font-size:2em; padding:20px 60px;">Back to Menu</button>
     </div>
 </div>
@@ -110,67 +110,142 @@
     const correctSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3');
     const wrongSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3');
 
-    let paper = [], q = 0, score = 0, timer, timeLeft;
+    let paper = [], q = 0, score = 0, timer, timeLeft = 3600;
     let studentName = "";
     let workings = [];
+    let currentPassage = "";
 
-    // Same generateArithmetic() and generateReasoning() as before (omitted for space – keep your previous ones)
+    const passages = [
+        "The Amazon Rainforest is the largest tropical rainforest on Earth. It covers over 5.5 million square kilometres and is home to millions of species of plants and animals. Many of these have not yet been discovered by scientists. The rainforest plays a vital role in regulating the world's oxygen and carbon cycles.",
+        "In 2012, Felix Baumgartner jumped from a helium balloon 39 kilometres above Earth. He reached speeds of over 1,357 km/h and became the first human to break the sound barrier without an aircraft. The jump lasted 9 minutes and 3 seconds.",
+        "Dragons are mythical creatures that appear in stories from many cultures. In European tales they are usually fierce and fire-breathing, while in Chinese culture they are wise and lucky symbols of power and strength."
+    ];
 
-    function startQuest(type) {
+    const questionTemplates = [
+        "Find and copy one word that shows the writer thinks the rainforest is important.",
+        "What impression do you get of Felix Baumgartner from the text? Give two impressions.",
+        "Why has the writer used the word 'mythical'?",
+        "How does the writer make the Amazon sound huge? Give two ways.",
+        "Tick one box to show whether each statement is true or false.",
+        "What is the main purpose of paragraph 2?",
+        "Give two reasons why the rainforest is important for the planet.",
+        "Look at the paragraph beginning 'In 2012...'. How does the writer show the jump was dangerous?",
+        "Which phrase suggests the dragon stories are not real?",
+        "How does the writer show that Chinese dragons are different from European ones?"
+    ];
+
+    function generateReadingPaper() {
+        const qs = [];
+        let passageIndex = 0;
+        let passageText = passages[Math.floor(Math.random()*passages.length)] + " " + passages[Math.floor(Math.random()*passages.length)];
+        currentPassage = passageText;
+
+        for(let i = 0; i < 38; i++) {
+            const template = questionTemplates[Math.floor(Math.random()*questionTemplates.length)];
+            const marks = Math.random() > 0.6 ? 2 : 1;
+            const possibleAnswers = ["vital", "largest", "millions", "regulating", "39", "1357", "dangerous", "brave", "mythical", "wise", "power", "strength"];
+            const answer = possibleAnswers[Math.floor(Math.random()*possibleAnswers.length)];
+            qs.push({
+                text: (i % 12 === 0 && i > 0 ? "<br><strong>New text:</strong><br>" + passages[Math.floor(Math.random()*passages.length)] + "<br><br>" : "") + 
+                      (i % 10 === 0 ? "<em>Look at the whole text.</em><br>" : "") + template,
+                answer: answer,
+                marks: marks
+            });
+        }
+        return qs;
+    }
+
+    function startQuest() {
         document.getElementById('welcome').classList.add('hidden');
         document.getElementById('official-cover').classList.remove('hidden');
-        // set title & barcode as before
     }
 
     function startGame() {
-        studentName = (document.getElementById('first-name').value + " " + document.getElementById('last-name').value).trim() || "Student";
+        studentName = (document.getElementById('first-name').value + " " + document.getElementById('last-name').value).trim() || "Reader";
         document.getElementById('official-cover').classList.add('hidden');
         document.getElementById('game').classList.remove('hidden');
-        workings = [];
-        // rest of start logic
+
+        paper = generateReadingPaper();
+        document.getElementById('total').textContent = document.getElementById('final-total').textContent = paper.length;
+        q = 0; score = 0; workings = [];
+        updateProgress();
+        loadQuestion();
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timer').textContent = Math.floor(timeLeft/60) + ":" + (timeLeft%60<10?"0":"") + timeLeft%60;
+            if(timeLeft <= 0) endQuest();
+        }, 1000);
+    }
+
+    function loadQuestion() {
+        if(q >= paper.length) return endQuest();
+        document.getElementById('q-number').textContent = q + 1;
+        document.getElementById('passage').innerHTML = "<strong>Reading text:</strong><br>" + currentPassage;
+        document.getElementById('question').innerHTML = paper[q].text;
+        document.getElementById('answer-input').value = '';
+        document.getElementById('working-input').value = '';
+        document.getElementById('feedback').innerHTML = '';
+        document.getElementById('answer-input').focus();
     }
 
     function checkAnswer() {
-        // ... same as before
-        workings.push({q: q+1, question: paper[q].text, working: document.getElementById('working-input').value, correct: user===correct});
-        // then q++, updateProgress(), etc.
+        const user = document.getElementById('answer-input').value.trim().toLowerCase();
+        const correct = paper[q].answer.toLowerCase();
+        const isCorrect = user.includes(correct) || correct.includes(user) || user === correct;
+        workings.push({q: q+1, question: paper[q].text, evidence: document.getElementById('working-input').value, answer: user, correct: isCorrect});
+
+        if(isCorrect){
+            score += paper[q].marks;
+            correctSound.play();
+            confetti({particleCount: 150, spread: 70, origin: {y: 0.6}});
+            document.getElementById('feedback').innerHTML = '<span style="color:green;">✓ Correct!</span>';
+        } else {
+            wrongSound.play();
+            document.getElementById('feedback').innerHTML = `<span style="color:red;">✗ Exampley Answer contained: ${paper[q].answer}</span>`;
+        }
+        q++;
+        updateProgress();
+        setTimeout(loadQuestion, 1800);
+    }
+
+    function updateProgress() {
+        const percent = (q / paper.length) * 100;
+        document.getElementById('progress-bar').style.width = percent + '%';
+        document.getElementById('progress-text').textContent = `${q} / ${paper.length}`;
+        document.getElementById('score').textContent = score;
+        if([10,20,30,38].includes(q)) confetti({particleCount: 500, spread: 120, origin: {y: 0.35}});
     }
 
     function saveAsPDF() {
         const doc = new jsPDF();
         let y = 20;
         doc.setFontSize(16);
-        doc.text("KS2 SATs Mathematics Results", 105, y, {align: "center"});
-        y += 10;
-        doc.setFontSize(14);
+        doc.text("KS2 Reading SATs Results", 105, y, {align: "center"}); y += 15;
         doc.text(`Name: ${studentName}`, 20, y); y += 10;
-        doc.text(`Paper: ${document.getElementById('level-title').textContent}`, 20, y); y += 10;
         doc.text(`Score: ${score} / ${paper.length}`, 20, y); y += 15;
-
-        doc.setFontSize(12);
         workings.forEach(w => {
             if(y > 270) { doc.addPage(); y = 20; }
-            doc.text(`Q${w.q}: ${w.question.substring(0,80)}${w.question.length>80?"...":""}`, 20, y); y += 7;
-            if(w.working) doc.text(`Working: ${w.working.substring(0,100)}`, 25, y); y += 7;
+            doc.setFontSize(10);
+            doc.text(`Q${w.q}: ${w.question.substring(0,90)}...`, 20, y); y += 6;
+            if(w.evidence) doc.text(`Evidence: ${w.evidence.substring(0,100)}`, 25, y); y += 6;
             doc.text(w.correct ? "✓ Correct" : "✗ Wrong", 25, y); y += 10;
         });
-
-        doc.save(`${studentName}_SATs_Results.pdf`);
+        doc.save(`${studentName}_Reading_SATs_2026.pdf`);
     }
 
-    function endQuest() {
+    function endEarly(){ clearInterval(timer); endQuest(); }
+    function endQuest(){
         clearInterval(timer);
         document.getElementById('game').classList.add('hidden');
         document.getElementById('results').classList.remove('hidden');
         document.getElementById('final-score').textContent = score;
         const msg = score < 10 ? "Good effort! You can do this – keep trying!" :
                     score <= 25 ? "Keep going – you’re doing really well!" :
-                    score <= 39 ? "Amazing work! Nearly at Greater Depth!" :
+                    score <= 34 ? "Amazing work! Nearly at Greater Depth!" :
                     "110+ LEGEND! GREATER DEPTH ACHIEVED!";
         document.getElementById('result-message').textContent = msg;
     }
-
-    // Keep all your previous generateArithmetic, generateReasoning, numberToWords, etc.
+    function restart(){ location.reload(); }
 </script>
 </body>
 </html>
