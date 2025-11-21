@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATs Quest 2026 – FINAL PERFECTION</title>
+    <title>SATs Quest 2026 – INFINITE NEW QUESTIONS!</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body {font-family: Arial, sans-serif; background: #f0f0f0; margin:0; padding:20px  morbidity0;}
+        body {font-family: Arial, sans-serif; background: #f0f0f0; margin:0; padding:20px 0;}
         .header {background: linear-gradient(#003087, #005eb8); color: white; padding: 20px; text-align: center; font-weight: bold; border-top: 8px solid #003087;}
         .ks2 {background: #005eb8; color:white; padding:12px 20px; font-size:2.2em; border-radius:10px; display:inline-block; margin:15px 0;}
         .page {background:white; margin:20px auto; max-width:950px; box-shadow:0 10px 30px rgba(0,0,0,0.2);}
@@ -21,16 +21,11 @@
         .end-early {background:#e74c3c !important;}
         .hidden {display:none !important;}
         #feedback {font-size:2.2em; margin:40px 0; min-height:70px; text-align:center;}
-
-        /* ALWAYS-VISIBLE WORKING OUT BOX */
         .working-box {border: 5px solid #003087; background: #f8fbff; height: 380px; margin: 40px 0; padding:20px; border-radius:12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);}
-        #working-input {width:100%; height:100%; border:none; background:transparent; resize:none; font-size:1.6em; outline:none; font-family: Arial, sans-serif;}
-
-        /* EPIC RAINBOW PROGRESS BAR */
-        .progress-container {width:100%; background:#ddd; height:50px; border-radius:25px; overflow:hidden; margin:30px 0; box-shadow: inset 0 4px 10px rgba(0,0,0,0.2);}
+        #working-input {width:100%; height:100%; border:none; background:transparent; resize:none; font-size:1.6em; outline:none;}
+        .progress-container {width:100%; background:#ddd; height:50px; border-radius:25px; overflow:hidden; margin:30px 0; box-shadow: inset 0 4px 10px rgba(0,0,0,0.2); position:relative;}
         .progress-bar {height:100%; width:0%; background: linear-gradient(90deg, #ff006e, #8338ec, #3a86ff, #06ffa5, #ffba08); transition: width 0.7s ease;}
         .progress-text {position:absolute; width:100%; text-align:center; line-height:50px; color:white; font-weight:bold; font-size:1.8em; text-shadow: 2px 2px 6px rgba(0,0,0,0.8);}
-
         .cover-page {padding:80px 60px; text-align:center;}
         .cover-page h1 {font-size:4.5em; margin:30px 0;}
         .name-table {width:80%; margin:40px auto; border-collapse:collapse; font-size:1.6em;}
@@ -41,27 +36,19 @@
 </head>
 <body>
 
-<!-- WELCOME -->
 <div id="welcome" class="page">
-    <div class="header">
-        <div style="font-size:1.6em;">2026 national curriculum tests</div>
-        <div class="ks2">Key stage 2</div>
-    </div>
+    <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
     <div class="question-container" style="text-align:center; padding-top:100px;">
         <h1 style="font-size:4em; color:#000;">Mathematics</h1>
         <br><br><br>
-        <button onclick="startQuest('arithmetic')">Paper 1: Arithmetic<br><small>40 questions • 30 minutes</small></button><br><br><br>
-        <button onclick="startQuest('reasoning2')">Paper 2: Reasoning<br><small>2022 official • 35 questions</small></button><br><br><br>
-        <button onclick="startQuest('reasoning3')">Paper 3: Reasoning<br><small>2022 official • 35 questions</small></button>
+        <button onclick="startQuest('arithmetic')">Paper 1: Arithmetic<br><small>40 fresh questions • 30 min</small></button><br><br><br>
+        <button onclick="startQuest('reasoning2')">Paper 2: Reasoning<br><small>35 brand-new questions every time!</small></button><br><br><br>
+        <button onclick="startQuest('reasoning3')">Paper 3: Reasoning<br><small>35 brand-new questions every time!</small></button>
     </div>
 </div>
 
-<!-- OFFICIAL COVER -->
 <div id="official-cover" class="page hidden">
-    <div class="header">
-        <div style="font-size:1.6em;">2022 national curriculum tests</div>
-        <div class="ks2">Key stage 2</div>
-    </div>
+    <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
     <div class="cover-page">
         <h1>Mathematics</h1>
         <h2 id="paper-title" style="font-size:3em;"></h2>
@@ -79,34 +66,22 @@
 
 <div id="blank-page" class="page hidden blank">[BLANK PAGE]<br><br>Please do not write on this page.</div>
 
-<!-- GAME -->
 <div id="game" class="page hidden">
-    <div class="header">
-        <div style="font-size:1.6em;">2026 national curriculum tests</div>
-        <div class="ks2">Key stage 2</div>
+    <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div>
         <h2 id="level-title" style="margin:10px; font-size:2em; color:white;"></h2>
     </div>
     <div class="question-container">
         <div id="timer">30:00</div>
-
-        <!-- RAINBOW PROGRESS BAR -->
         <div class="progress-container">
-            <div class="progress-bar" id="progress-bar">
-                <div class="progress-text" id="progress-text">0 / 40</div>
-            </div>
+            <div class="progress-bar" id="progress-bar"><div class="progress-text" id="progress-text">0 / 40</div></div>
         </div>
-
         <p style="text-align:center; font-size:1.8em;">Score: <strong id="score">0</strong> / <strong id="total">40</strong></p>
-        
         <div class="qnum" id="q-number">1</div>
         <div class="question-text" id="question"></div>
-
-        <!-- ALWAYS VISIBLE WORKING OUT BOX -->
         <div class="working-box">
             <strong>Show your working here</strong><br>
-            <textarea id="working-input" placeholder="Type or draw your working... (you can type anything!)"></textarea>
+            <textarea id="working-input" placeholder="Type your working…"></textarea>
         </div>
-
         <div class="answer-area">
             <input type="text" id="answer-input" autocomplete="off" onkeypress="if(event.key==='Enter') checkAnswer()">
         </div>
@@ -118,16 +93,12 @@
     </div>
 </div>
 
-<!-- RESULTS -->
 <div id="results" class="page hidden">
-    <div class="header">
-        <div style="font-size:1.6em;">2026 national curriculum tests</div>
-        <div class="ks2">Key stage 2</div>
-    </div>
+    <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
     <div class="question-container" style="text-align:center; padding-top:120px;">
         <h1 style="font-size:4.5em;">Test Complete!</h1>
         <h1 style="font-size:6em; color:#005eb8;"><span id="final-score">0</span> / <span id="final-total">40</span></h1>
-        <p id="result-message" style="font-size:3.2em; margin:50px;"></p>
+        <p id="result-message" style="font-size:3.2em; margin:50px;">INFINITE PRACTICE UNLOCKED!</p>
         <button onclick="restart()" style="font-size:2.2em; padding:20px 60px;">Back to Menu</button>
     </div>
 </div>
@@ -138,25 +109,54 @@
 
     let paper = [], q = 0, score = 0, timer, timeLeft;
 
-    // FULL 2022 PAPER 2 (35 questions)
-    const paper2_2022 = [ /* same 35 questions as before – omitted for brevity but included in full code */ 
-        {text: "A shop has an offer: Buy one box for £1.90, get the second box half price.<br>Ali buys two boxes of cereal.<br>How much must he pay altogether?", answer: "2.85", marks:1},
-        {text: "Write the number 5,325 in words.", answer: "five thousand three hundred and twenty five", marks:1},
-        // ... all 35 real 2022 questions
-    ];
-
-    const paper3_2022 = paper2_2022;
-
+    // Generate 40 fresh arithmetic questions
     function generateArithmetic() {
         const qs = [];
         for(let i = 1; i <= 40; i++) {
-            let a, b, text, ans;
-            if(i <= 15) { a = Math.floor(Math.random()*9000)+1000; b = Math.floor(Math.random()*900)+100; text = `${a} + ${b} =`; ans = a + b; }
-            else if(i <= 30) { a = Math.floor(Math.random()*900)+100; b = Math.floor(Math.random()*90)+10; text = `${a} × ${b} =`; ans = a * b; }
-            else { a = (Math.floor(Math.random()*90)+10)*12; b = Math.floor(Math.random()*11)+2; text = `${a} ÷ ${b} =`; ans = a / b; }
-            qs.push({text, answer: ans.toString(), marks: i > 35 ? 2 : 1});
+            let a, b, op, text, ans;
+            if(i <= 12) { a = Math.floor(Math.random()*9000)+1000; b = Math.floor(Math.random()*900)+100; op = "+"; ans = a + b; }
+            else if(i <= 24) { a = Math.floor(Math.random()*900)+100; b = Math.floor(Math.random()*90)+10; op = "×"; ans = a * b; }
+            else if(i <= 32) { a = Math.floor(Math.random()*90)+10; b = Math.floor(Math.random()*90)+10; op = "−"; ans = a * 10 + b * 10 - (Math.floor(Math.random()*500)+100); text = `${ans + (Math.floor(Math.random()*500)+100)} − ${Math.floor(Math.random()*500)+100} =`; ans = ans; }
+            else { a = (Math.floor(Math.random()*98)+12)*12; b = Math.floor(Math.random()*11)+2; op = "÷"; ans = a / b; text = `${a} ÷ ${b} =`; }
+            text = text || `${a} ${op} ${b} =`;
+            qs.push({text, answer: ans.toString(), marks: i > 34 ? 2 : 1});
         }
         return qs;
+    }
+
+    // Generate 35 fresh reasoning questions (real SATs style!)
+    function generateReasoning() {
+        const templates = [
+            () => { const n = Math.floor(Math.random()*9000)+1000; return {text: `Write the number ${n.toLocaleString()} in words.`, answer: numberToWords(n), marks:1}; },
+            () => { const n = Math.floor(Math.random()*90000)+1000; return {text: `Round ${n} to the nearest thousand.`, answer: Math.round(n/1000)*1000, marks:1}; },
+            () => { const p = (Math.floor(Math.random()*40)+10); const a = Math.floor(Math.random()*300)+50; return {text: `What is ${p}% of £${a}?`, answer: (a*p/100).toFixed(0), marks:1}; },
+            () => { const a = Math.floor(Math.random()*8000)+1000; const b = Math.floor(Math.random()*900)+100; return {text: `Calculate ${a} + ${b}`, answer: a+b, marks:1}; },
+            () => { const a = Math.floor(Math.random()*9000)+1000; const b = Math.floor(Math.random()*900)+100; return {text: `Calculate ${a} − ${b}`, answer: a-b, marks:1}; },
+            () => { const a = Math.floor(Math.random()*90)+10; const b = Math.floor(Math.random()*90)+10; return {text: `Calculate ${a} × ${b}`, answer: a*b, marks:2}; },
+            () => { const n = (Math.floor(Math.random()*90)+12)*12; const d = Math.floor(Math.random()*11)+2; return {text: `${n} ÷ ${d} =`, answer: n/d, marks:2}; },
+            () => { const kg = (Math.floor(Math.random()*8)+1); const g = Math.floor(Math.random()*900)+100; return {text: `${kg}.${g} kg = ______ grams`, answer: kg*1000 + g, marks:1}; },
+            () => { const h = Math.floor(Math.random()*23); const m = Math.floor(Math.random()*50)+5; const add = Math.floor(Math.random()*120)+65; return {text: `A train leaves at ${h}:${m<10?'0':''}${m} and takes ${add} minutes. What time does it arrive?`, answer: new Date(2025,0,1,h,m+add).toTimeString().slice(0,5), marks:2}; },
+            () => { const base = Math.floor(Math.random()*20)+5; const height = Math.floor(Math.random()*15)+5; return {text: `Area of triangle with base ${base}cm and height ${height}cm?`, answer: (base*height/2), marks:2}; },
+            () => { const price = Math.floor(Math.random()*500)+150; const people = Math.floor(Math.random()*4)+2; return {text: `${people} friends share a £${price} bill equally. How much each?`, answer: Math.round(price/people*100)/100, marks:2}; },
+        ];
+        const qs = [];
+        while(qs.length < 35) {
+            const t = templates[Math.floor(Math.random()*templates.length)]();
+            qs.push(t);
+        }
+        return qs;
+    }
+
+    // Quick number-to-words (handles up to 999,999)
+    function numberToWords(n) {
+        const ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+        const tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+        if (n === 0) return "zero";
+        if (n < 20) return ones[n];
+        if (n < 100) return tens[Math.floor(n/10)] + (n%10 ? " " + ones[n%10] : "");
+        if (n < 1000) return ones[Math.floor(n/100)] + " hundred" + (n%100 ? " and " + numberToWords(n%100) : "");
+        if (n < 1000000) return numberToWords(Math.floor(n/1000)) + " thousand" + (n%1000 ? " " + numberToWords(n%1000) : "");
+        return "";
     }
 
     function startQuest(type) {
@@ -165,12 +165,11 @@
 
         let title = "", barcode = "";
         if(type==='arithmetic'){ title="Paper 1: arithmetic"; barcode="K00060A0120"; paper=generateArithmetic(); timeLeft=1800; }
-        else if(type==='reasoning2'){ title="Paper 2: reasoning"; barcode="K00070A0124"; paper=paper2_2022; timeLeft=2400; }
-        else { title="Paper 3: reasoning"; barcode="K00080A0124"; paper=paper3_2022; timeLeft=2400; }
+        else { title= type==='reasoning2' ? "Paper 2: reasoning" : "Paper 3: reasoning"; barcode= type==='reasoning2' ? "K00070A0124" : "K00080A0124"; paper=generateReasoning(); timeLeft=2400; }
 
         document.getElementById('paper-title').innerHTML = title;
         document.getElementById('barcode').textContent = `*${barcode}*`;
-        document.getElementById('level-title').textContent = title.replace("arithmetic", "Arithmetic").replace("reasoning", "Reasoning");
+        document.getElementById('level-title').textContent = title.replace("arithmetic","Arithmetic").replace("reasoning","Reasoning");
 
         setTimeout(() => {
             document.getElementById('official-cover').classList.add('hidden');
@@ -181,15 +180,10 @@
                 document.getElementById('total').textContent = paper.length;
                 document.getElementById('final-total').textContent = paper.length;
                 q = 0; score = 0; document.getElementById('score').textContent = 0;
-                document.getElementById('working-input').value = '';
                 updateProgress();
                 loadQuestion();
                 document.getElementById('timer').textContent = formatTime(timeLeft);
-                timer = setInterval(() => {
-                    timeLeft--;
-                    document.getElementById('timer').textContent = formatTime(timeLeft);
-                    if(timeLeft <= 0) endQuest();
-                }, 1000);
+                timer = setInterval(() => { timeLeft--; document.getElementById('timer').textContent = formatTime(timeLeft); if(timeLeft<=0) endQuest(); }, 1000);
             }, 4000);
         }, 5000);
     }
@@ -199,7 +193,7 @@
         document.getElementById('progress-bar').style.width = percent + '%';
         document.getElementById('progress-text').textContent = `${q} / ${paper.length}`;
         document.getElementById('score').textContent = score;
-        if([10,20,30,35,40].includes(q)) confetti({particleCount: 400, spread: 120, origin: { y: 0.4 }});
+        if([10,20,30,35,40].includes(q)) confetti({particleCount: 500, spread: 120, origin: {y: 0.35}});
     }
 
     function loadQuestion() {
@@ -207,18 +201,18 @@
         document.getElementById('q-number').textContent = q + 1;
         document.getElementById('question').innerHTML = paper[q].text;
         document.getElementById('answer-input').value = '';
-        document.getElementById('feedback').innerHTML = '';
         document.getElementById('working-input').value = '';
+        document.getElementById('feedback').innerHTML = '';
         document.getElementById('answer-input').focus();
     }
 
     function checkAnswer() {
-        const user = document.getElementById('answer-input').value.trim().toLowerCase().replace('£','');
-        const correct = paper[q].answer.toString().toLowerCase();
+        const user = document.getElementById('answer-input').value.trim().toLowerCase().replace('£','').replace('°c','').replace(' ','');
+        const correct = paper[q].answer.toString().toLowerCase().replace('£','').replace(' ','');
         if(user === correct){
             score += paper[q].marks || 1;
             correctSound.play();
-            confetti({particleCount: 150, spread: 70, origin: { y: 0.6 }});
+            confetti({particleCount: 150, spread: 70, origin: {y: 0.6}});
             document.getElementById('feedback').innerHTML = '<span style="color:green;">✓ Correct!</span>';
         } else {
             wrongSound.play();
@@ -229,14 +223,14 @@
         setTimeout(loadQuestion, 1500);
     }
 
-    function endEarly(){ clearInterval(timer); endQuest(); }
+    function endoEarly(){ clearInterval(timer); endQuest(); }
     function endQuest(){
         clearInterval(timer);
         document.getElementById('game').classList.add('hidden');
         document.getElementById('results').classList.remove('hidden');
         document.getElementById('final-score').textContent = score;
         const pct = Math.round((score / paper.length) * 100);
-        document.getElementById('result-message').textContent = pct >= 90 ? "110+ LEGEND!" : pct >= 80 ? "GREATER DEPTH!" : "BRILLIANT!";
+        document.getElementById('result-message').textContent = pct >= 90 ? "110+ LEGEND!" : pct >= 80 ? "GREATER DEPTH!" : "FANTASTIC!";
     }
     function restart(){ location.reload(); }
     function formatTime(s){ const m = Math.floor(s/60), sec = s % 60; return `${m}:${sec<10?'0':''}${sec}`; }
