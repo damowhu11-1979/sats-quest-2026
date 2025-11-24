@@ -7,34 +7,33 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-  body{margin:0;background:#e5e5e5;font-family:Arial,sans-serif;overflow:hidden;height:100vh;}
-  .page{width:100vw;height:100vh;display:flex;flex-direction:column;background:white;box-sizing:border-box;}
-  .header{background:black;color:white;padding:15px 0;text-align:center;font-size:16px;font-weight:bold;}
-  .ks2{background:#005eb8;color:white;padding:15px 60px;border-radius:50px;font-size:36px;display:inline-block;margin:20px 0;}
-  .title{font-size:56px;text-align:center;margin:30px 0 20px;}
-  .subtitle{font-size:32px;text-align:center;margin-bottom:40px;}
-  .name-table{width:60%;margin:0 auto 60px;border-collapse:collapse;font-size:20px;}
-  .name-table td{border:2px solid black;padding:20px;text-align:center;}
-  .name-table input{width:100%;border:none;font-size:20px;text-align:center;height:60px;}
-  button{background:#005eb8;color:white;border:none;padding:20px 80px;font-size:28px;border-radius:12px;cursor:pointer;}
-  button:hover{background:#003087;}
-  #timer{font-size:40px;color:#c00;text-align:center;margin:20px 0;}
-  .progress{height:40px;background:#ddd;border-radius:20px;overflow:hidden;margin:20px auto;width:90%;position:relative;}
+  body{margin:0;background:white;font-family:Arial,sans-serif;overflow:hidden;height:100vh;display:flex;flex-direction:column;}
+  .header{background:black;color:white;padding:12px 0;text-align:center;font-size:16px;font-weight:bold;}
+  .ks2{background:#005eb8;color:white;padding:15px 70px;border-radius:50px;font-size:38px;display:inline-block;margin:30px 0;}
+  .title{font-size:60px;text-align:center;margin:40px 0 20px;font-weight:bold;}
+  .subtitle{font-size:34px;text-align:center;margin-bottom:50px;}
+  .name-table{width:70%;margin:0 auto;border-collapse:collapse;font-size:20px;}
+  .name-table td{border:2px solid black;padding:18px;text-align:center;}
+  .name-table input{width:100%;border:none;font-size:20px;text-align:center;height:55px;}
+  .start-btn{background:#005eb8;color:white;border:none;padding:22px 90px;font-size:32px;border-radius:12px;cursor:pointer;margin-top:100px;}
+  .start-btn:hover{background:#003087;}
+  #timer{font-size:42px;color:#c00;text-align:center;margin:20px 0;}
+  .progress{height:40px;background:#ddd;border-radius:20px;overflow:hidden;margin:15px auto;width:90%;position:relative;}
   .bar{height:100%;width:0%;background:linear-gradient(90deg,#ff006e,#8338ec,#3a86ff,#06ffa5,#ffba08);transition:width 0.6s;}
-  .prog{position:absolute;width:100%;text-align:center;line-height:40px;color:white;font-weight:bold;font-size:22px;text-shadow:2px 2px 8px #000;}
+  .prog{position:absolute;width:100%;text-align:center;line-height:40px;color:white;font-weight:bold;font-size:24px;}
   .score{text-align:center;font-size:28px;margin:10px 0;}
-  .main-area{flex:1;display:flex;align-items:center;justify-content:center;gap:40px;padding:20px;box-sizing:border-box;}
-  .qnum{font-size:100px;font-weight:bold;color:#003087;}
-  .qtext{font-size:42px;line-height:1.4;max-width:70%;text-align:left;}
-  .working-area{width:100%;height:160px;margin:20px 0;padding:0 60px;}
-  .working-label{text-align:center;font-size:24px;margin-bottom:10px;font-weight:bold;}
+  .main-area{flex:1;display:flex;align-items:center;justify-content:center;gap:50px;padding:20px;}
+  .qnum{font-size:110px;font-weight:bold;color:#003087;}
+  .qtext{font-size:44px;line-height:1.4;max-width:65%;}
+  .working-area{width:100%;height:170px;margin:20px 0;padding:0 60px;}
+  .working-label{text-align:center;font-size:26px;margin-bottom:10px;font-weight:bold;}
   .working{border:4px dotted #003087;background:#f8fbff;border-radius:10px;height:100%;padding:15px;box-sizing:border-box;}
   #working{width:100%;height:100%;border:none;background:transparent;font-size:24px;resize:none;outline:none;}
   .answer-area{text-align:center;margin:30px 0;}
-  #answer-input{width:400px;height:80px;font-size:40px;text-align:center;border:4px solid black;border-radius:12px;}
+  #answer-input{width:420px;height:85px;font-size:42px;text-align:center;border:4px solid black;border-radius:12px;}
   .btn-area{text-align:center;margin:20px 0;}
-  .end-btn{background:#c00!important;}
-  #feedback{text-align:center;font-size:38px;min-height:70px;margin:20px 0;}
+  .end-btn{background:#c00!important;padding:18px 40px;font-size:28px;border-radius:12px;}
+  #feedback{text-align:center;font-size:40px;min-height:70px;margin:20px 0;}
   .hidden{display:none!important;}
 </style>
 </head>
@@ -42,17 +41,17 @@
 
 <div id="welcome" class="page">
   <div class="header">2026 national curriculum tests</div>
-  <div style="text-align:center;padding-top:30px;"><div class="ks2">Key stage 2</div></div>
-  <div style="text-align:center;margin-top:80px;">
+  <div style="text-align:center;margin-top:40px;"><div class="ks2">Key stage 2</div></div>
+  <div style="text-align:center;margin-top:100px;">
     <div class="title">Mathematics</div>
-    <button onclick="go('arithmetic')">Paper 1: arithmetic<br><small>40 questions • 30 minutes</small></button><br><br>
-    <button onclick="go('reasoning')">Paper 2 / Paper 3: reasoning<br><small>35 real questions • 40 minutes</small></button>
+    <button class="start-btn" onclick="go('arithmetic')">Paper 1: arithmetic<br><small>40 questions • 30 minutes</small></button><br><br>
+    <button class="start-btn" onclick="go('reasoning')">Paper 2 / Paper 3: reasoning<br><small>35 real questions • 40 minutes</small></button>
   </div>
 </div>
 
 <div id="cover" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
-  <div style="text-align:center;padding-top:25px;"><div class="ks2">Key stage 2</div></div>
+  <div style="text-align:center;margin-top:30px;"><div class="ks2">Key stage 2</div></div>
   <div style="text-align:center;margin-top:60px;">
     <div class="title">Mathematics</div>
     <div class="subtitle" id="papertitle"></div>
@@ -60,7 +59,7 @@
       <tr><td>First name</td><td colspan="2"><input id="fn" placeholder="First name"></td></tr>
       <tr><td>Last name</td><td colspan="2"><input id="ln" placeholder="Last name"></td></tr>
     </table>
-    <button onclick="start()" style="margin-top:80px;">Start Test</button>
+    <button class="start-btn" onclick="start()">Start Test</button>
   </div>
 </div>
 
@@ -86,22 +85,21 @@
   </div>
 
   <div class="btn-area">
-    <button onclick="check()">Submit Answer</button>
+    <button class="start-btn" onclick="check()">Submit Answer</button>
     <button class="end-btn" onclick="end()">End Test Early</button>
   </div>
-
   <div id="feedback"></div>
 </div>
 
 <div id="endpage" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
-  <div style="text-align:center;padding-top:80px;"><div class="ks2">Key stage 2</div></div>
-  <div style="text-align:center;padding-top:100px;">
+  <div style="text-align:center;margin-top:80px;"><div class="ks2">Key stage 2</div></div>
+  <div style="text-align:center;margin-top:120px;">
     <h1 style="font-size:80px;">Test Complete!</h1>
-    <h1 style="font-size:100px;color:#005eb8;" id="final">0 / 35</h1>
-    <h2 style="font-size:45px;margin:50px 0;" id="msg"></h2>
-    <button style="background:#27ae60;padding:25px 90px;font-size:32pt;" onclick="pdf()">Save as PDF</button><br><br>
-    <button onclick="location.reload()">Back to Menu</button>
+    <h1 style="font-size:110px;color:#005eb8;" id="final">0 / 35</h1>
+    <h2 style="font-size:48px;margin:60px 0;" id="msg"></h2>
+    <button class="start-btn" style="background:#27ae60;" onclick="pdf()">Save as PDF</button><br><br>
+    <button class="start-btn" onclick="location.reload()">Back to Menu</button>
   </div>
 </div>
 
@@ -117,7 +115,7 @@ const reasoningBank = [
   {t:"456 × 7 =",a:"3192",m:2},
   {t:"12.5% of 800 =",a:"100",m:1},
   {t:"Volume of cuboid 6 × 4 × 5 cm =",a:"120",m:2},
-  // Add more – always picks 35 random
+  // Add as many as you want!
 ];
 
 function go(t){
@@ -173,8 +171,8 @@ function check(){
   let c = paper[q].a;
   let ok = u===c;
   work.push({q:q+1, w:document.getElementById('working').value, ok});
-  if(ok){score += paper[q].m||1; confetti({particleCount:300,spread:100}); document.getElementById('feedback').innerHTML='<span style="color:green;">Correct!</span>';}
-  else document.getElementById('feedback').innerHTML=`<span style="color:red;">Answer: ${c}</span>`;
+  if(ok){score += paper[q].m||1; confetti({particleCount:300,spread:120}); document.getElementById('feedback').innerHTML='<span style="color:green;">✓ Correct!</span>';}
+  else document.getElementById('feedback').innerHTML=`<span style="color:red;">✗ Answer: ${c}</span>`;
   document.getElementById('score').textContent = score;
   document.getElementById('prog').textContent = (q+1)+"/"+paper.length;
   document.getElementById('bar').style.width = ((q+1)/paper.length*100)+"%";
@@ -187,18 +185,18 @@ function end(){
   document.getElementById('game').classList.add('hidden');
   document.getElementById('endpage').classList.remove('hidden');
   document.getElementById('final').textContent = score+" / "+paper.length;
-  document.getElementById('msg').textContent = score <= 25 ? "Good effort – keep going!" : score <= 30 ? "So close to Greater Depth!" : "Greater Depth achieved! Legend!";
+  document.getElementById('msg').textContent = score <= 25 ? "Brilliant effort – keep practising!" : score <= 30 ? "So close to Greater Depth!" : "Greater Depth ACHIEVED! You’re a legend!";
 }
 
 function pdf(){
   const doc = new jsPDF();
-  doc.setFontSize(18); doc.text("SATs Results – " + name, 105, 20, {align:"center"});
+  doc.setFontSize(20); doc.text("SATs Results – " + name, 105, 20, {align:"center"});
   doc.text("Score: " + score + " / " + paper.length, 105, 35, {align:"center"});
   let y = 60;
   work.forEach(w => {
     if(y > 260){doc.addPage(); y=20;}
     doc.setFontSize(11);
-    doc.text(`Q${w.q} ${w.ok?"Correct":"Incorrect"}`, 15, y);
+    doc.text(`Q${w.q} ${w.ok?"✓":"✗"}`, 15, y);
     if(w.w) doc.text(w.w.substring(0,180), 20, y+8);
     y += 25;
   });
