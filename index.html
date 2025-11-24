@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>KS2 SATs 2026 – Official 2022 Replica</title>
+<title>KS2 SATs 2026 – Official 2022 Look</title>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -11,23 +11,17 @@
   body,html{height:100%;overflow:hidden;font-family:Arial,Helvetica,sans-serif;background:white;}
   .page{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0 15px;}
 
-  /* OFFICIAL 2022 HEADER */
   .header{background:#000;color:#fff;padding:14px 0;text-align:center;font-weight:bold;font-size:18px;width:100%;border-radius:0 0 25px 25px;}
-
-  /* Blue Key stage 2 badge */
   .ks2{background:#005eb8;color:white;padding:12px 70px;border-radius:50px;font-size:38px;font-weight:bold;margin:25px 0;}
-
   .title{font-size:62px;font-weight:bold;text-align:center;margin:15px 0;}
   .subtitle{font-size:34px;text-align:center;margin-bottom:30px;}
 
-  /* Single name box only */
   .namebox{width:85%;max-width:600px;margin:20px 0;}
   .namebox input{width:100%;border:3px solid #000;padding:18px;font-size:30px;text-align:center;border-radius:8px;}
 
   button{background:#005eb8;color:white;border:none;border-radius:12px;padding:18px 40px;font-size:32px;cursor:pointer;margin:15px 0;width:85%;max-width:460px;}
   button:hover{background:#003087;}
 
-  /* GAME SCREEN – FITS 100% IN YOUR RED BOX */
   #timer{font-size:46px;color:#c00;margin:10px 0;font-weight:bold;}
   .progress{width:90%;max-width:800px;height:38px;background:#ddd;border-radius:19px;overflow:hidden;position:relative;margin:8px auto;}
   .bar{height:100%;width:0%;background:linear-gradient(90deg,#ff006e,#8338ec,#3a86ff,#06ffa5,#ffba08);transition:width 0.6s;}
@@ -51,32 +45,25 @@
 
   .hidden{display:none !important;}
 
-  /* Mobile & small laptop perfection */
   @media (max-width:1024px){
     .ks2{font-size:32px;padding:10px 50px;}
     .title{font-size:50px;}
-    .subtitle{font-size:28px;}
     .namebox input{font-size:26px;padding:16px;}
-    button{font-size:28px;padding:16px;}
     #timer{font-size:40px;}
     .qnum{font-size:90px;}
-    .qtext{font-size:36px;max-width:60%;}
-    #working{font-size:22px;}
+    .qtext{font-size:36px;}
     #answer-input{height:70px;font-size:40px;}
     .working-area{height:120px;}
-    .question-area{max-height:25vh;}
   }
   @media (max-width:768px){
     .qtext{font-size:34px;text-align:center;max-width:90%;}
     .qnum{font-size:80px;}
     .question-area{gap:20px;flex-direction:column;text-align:center;}
-    .working-area{height:110px;}
   }
 </style>
 </head>
 <body>
 
-<!-- WELCOME -->
 <div id="welcome" class="page">
   <div class="header">2026 national curriculum tests</div>
   <div class="ks2">Key stage 2</div>
@@ -85,7 +72,6 @@
   <button onclick="go('reasoning')">Paper 2 / Paper 3: reasoning<br><small>35 questions • 40 minutes</small></button>
 </div>
 
-<!-- COVER – single name only -->
 <div id="cover" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
   <div class="ks2">Key stage 2</div>
@@ -97,7 +83,6 @@
   <button onclick="start()">Start Test</button>
 </div>
 
-<!-- GAME – fits perfectly in red box -->
 <div id="game" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
   <div class="ks2">Key stage 2</div>
@@ -124,15 +109,14 @@
   <div id="feedback"></div>
 </div>
 
-<!-- END SCREEN -->
 <div id="endpage" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
   <div class="ks2">Key stage 2</div>
   <h1 style="font-size:70px;margin-top:80px;">Test Complete!</h1>
   <h1 style="font-size:110px;color:#005eb8;" id="final">0 / 40</h1>
   <h2 style="font-size:48px;margin:50px 0;" id="msg"></h2>
-  <button style="background:#27ae60;padding:22px 80px;font-size:34px;" onclick="pdf()">Save as PDF</button><br><br>
-  <button onclick="location.reload()">Back to Menu</button>
+  <button style="background:#27ae60;padding:22px 80px;font-size:34px;" onclick="saveAndHome()">Save as PDF & Return Home</button><br><br>
+  <button onclick="home()">Back to Menu</button>
 </div>
 
 <script>
@@ -141,15 +125,41 @@ let q=0, score=0, timeLeft, timer, name="", work=[], paper=[], type="";
 
 const reasoningBank = [
   {t:"15% of 240 =",a:"36",m:1},
+  {t:"What is 0.4 × 0.7?",a:"0.28",m:1},
   {t:"24 × 18 =",a:"432",m:2},
   {t:"528 ÷ 12 =",a:"44",m:1},
   {t:"456 × 7 =",a:"3192",m:2},
   {t:"12.5% of 800 =",a:"100",m:1},
-  {t:"Volume of cuboid 6 × 4 × 5 cm =",a:"120",m:2},
   {t:"3/5 of 45 =",a:"27",m:1},
-  {t:"0.4 × 0.7 =",a:"0.28",m:1},
+  {t:"Volume of cuboid 6 × 4 × 5 cm =",a:"120",m:2},
   {t:"Area of triangle base 12cm height 8cm =",a:"48",m:2},
-  {t:"350 spaces, 70% full =",a:"245",m:2}
+  {t:"350 car park spaces. 70% full. How many cars?",a:"245",m:2},
+  {t:"Film starts 6:45pm, lasts 2 hours 35 minutes. Finish time?",a:"9:20",m:2},
+  {t:"Point (3,5) translated 4 right, 2 up =",a:"(7,7)",m:2},
+  {t:"A box costs £1.90. Buy one get second half price. Two boxes cost?",a:"2.85",m:1},
+  {t:"Write 0.75 as a fraction in simplest form",a:"3/4",m:1},
+  {t:"What is 3/8 of 96?",a:"36",m:1},
+  {t:"Round 5.762 to 2 decimal places",a:"5.76",m:1},
+  {t:"What is 10% of £360?",a:"36",m:1},
+  {t:"How many minutes in 3¼ hours?",a:"195",m:1},
+  {t:"Perimeter of rectangle 8cm by 5cm =",a:"26",m:1},
+  {t:"What temperature is 15°C lower than 8°C?",a:"-7",m:1},
+  {t:"What is ¾ + ⅝?",a:"1 3/8",m:1},
+  {t:"How many grams in 2.5kg?",a:"2500",m:1},
+  {t:"What is 180° - 137°?",a:"43",m:1},
+  {t:"What is 999 ÷ 9?",a:"111",m:1},
+  {t:"What is the mode of: 3, 7, 3, 8, 3, 9?",a:"3",m:1},
+  {t:"What is 0.2 × 0.9?",a:"0.18",m:1},
+  {t:"How many faces on a cube?",a:"6",m:1},
+  {t:"What is 15 × 12?",a:"180",m:1},
+  {t:"What is 480 ÷ 15?",a:"32",m:1},
+  {t:"What is 1/3 of 150?",a:"50",m:1},
+  {t:"What is 8²?",a:"64",m:1},
+  {t:"What is 125% of 80?",a:"100",m:1},
+  {t:"What is 0.05 as a fraction?",a:"1/20",m:1},
+  {t:"What is 600ml as litres?",a:"0.6",m:1},
+  {t:"What is 4.25 + 2.8?",a:"7.05",m:1}
+  // Exactly 35 questions every time!
 ];
 
 function go(t){
@@ -158,27 +168,39 @@ function go(t){
   document.getElementById('cover').classList.remove('hidden');
   document.getElementById('papertitle').innerHTML = t==='arithmetic'?'Paper 1: arithmetic':'Paper 2 / Paper 3: reasoning';
 }
+
 function start(){
   name=document.getElementById('name').value.trim()||"Student";
-  paper=type==='arithmetic'?genArith():shuffle([...reasoningBank]).slice(0,35);
+  paper=type==='arithmetic'?genArith():shuffle([...reasoningBank]);
   timeLeft=type==='arithmetic'?1800:2400;
   document.getElementById('total').textContent=paper.length;
   document.getElementById('cover').classList.add('hidden');
   document.getElementById('game').classList.remove('hidden');
-  q=0;score=0;work=[];loadQ();startTimer();
+  q=0;score=0;work=[];
+  loadQ();startTimer();
 }
+
 function genArith(){
-  let a=[];for(let i=1;i<=40;i++){
+  let a=[];
+  for(let i=1;i<=40;i++){
     let x=Math.floor(Math.random()*8999)+1001;
     let y=i<=20?Math.floor(Math.random()*899)+101:Math.floor(Math.random()*89)+11;
     a.push({t:(i<=20?x+" + "+y+" =":x+" × "+y+" ="),a:(i<=20?x+y:x*y).toString(),m:1});
-  }return a;
+  }
+  return a;
 }
+
 function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
 function startTimer(){
-  timer=setInterval(()=>{timeLeft--;let m=Math.floor(timeLeft/60),s=timeLeft%60;
-    document.getElementById('timer').textContent=m+":"+(s<10?"0":"")+s;if(timeLeft<=0)end();},1000);
+  timer=setInterval(()=>{
+    timeLeft--;
+    let m=Math.floor(timeLeft/60),s=timeLeft%60;
+    document.getElementById('timer').textContent=m+":"+(s<10?"0":"")+s;
+    if(timeLeft<=0)end();
+  },1000);
 }
+
 function loadQ(){
   if(q>=paper.length)return end();
   document.getElementById('qnum').textContent=q+1;
@@ -187,19 +209,26 @@ function loadQ(){
   document.getElementById('working').value='';
   document.getElementById('feedback').innerHTML='';
 }
+
 function check(){
   let u=document.getElementById('answer-input').value.trim().toLowerCase();
-  let c=paper[q]. cover.toString().toLowerCase();
+  let c=paper[q].a.toString().toLowerCase();
   let ok=u===c;
   work.push({q:q+1,question:paper[q].t,working:document.getElementById('working').value,ok});
-  if(ok){score+=paper[q].m||1;confetti({particleCount:300,spread:120});
-    document.getElementById('feedback').innerHTML='<span style="color:green;">Correct!</span>';}
-  else document.getElementById('feedback').innerHTML=`<span style="color:red;">Incorrect – answer: ${paper[q].a}</span>`;
+  if(ok){
+    score+=paper[q].m||1;
+    confetti({particleCount:300,spread:120});
+    document.getElementById('feedback').innerHTML='<span style="color:green;">Correct!</span>';
+  } else {
+    document.getElementById('feedback').innerHTML=`<span style="color:red;">Incorrect – answer: ${paper[q].a}</span>`;
+  }
   document.getElementById('score').textContent=score;
   document.getElementById('prog').textContent=(q+1)+"/"+paper.length;
   document.getElementById('bar').style.width=((q+1)/paper.length*100)+"%";
-  q++;setTimeout(loadQ,ok?1200:3500);
+  q++;
+  setTimeout(loadQ,ok?1200:3500);
 }
+
 function end(){
   clearInterval(timer);
   document.getElementById('game').classList.add('hidden');
@@ -207,15 +236,28 @@ function end(){
   document.getElementById('final').textContent=score+" / "+paper.length;
   document.getElementById('msg').innerHTML=score<20?"Keep practising!":score<32?"Almost Greater Depth!":"GREATER DEPTH<br>ACHIEVED!";
 }
-function pdf(){
-  const doc=new jsPDF();doc.setFontSize(20);
+
+function home(){
+  document.getElementById('endpage').classList.add('hidden');
+  document.getElementById('welcome').classList.remove('hidden');
+}
+
+function saveAndHome(){
+  const doc=new jsPDF();
+  doc.setFontSize(20);
   doc.text("SATs Results – "+name,105,20,{align:"center"});
   doc.text("Score: "+score+" / "+paper.length,105,35,{align:"center"});
-  let y=50;work.forEach(w=>{if(y>270){doc.addPage();y=20;}
-    doc.setFontSize(10);doc.text(`Q${w.q}: ${w.ok?"Correct":"Incorrect"}`,15,y);
+  let y=50;
+  work.forEach(w=>{
+    if(y>270){doc.addPage();y=20;}
+    doc.setFontSize(10);
+    doc.text(`Q${w.q}: ${w.ok?"Correct":"Incorrect"}`,15,y);
     doc.text(doc.splitTextToSize(w.question.replace(/<br>/g," "),180),20,y+8);
-    if(w.working)doc.text("Working: "+w.working.substring(0,180),20,y+20);y+=35;});
+    if(w.working)doc.text("Working: "+w.working.substring(0,180),20,y+20);
+    y+=35;
+  });
   doc.save(name+"_SATs_2026.pdf");
+  setTimeout(home, 1000); // Return home after save
 }
 </script>
 </body>
