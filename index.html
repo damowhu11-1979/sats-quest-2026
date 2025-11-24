@@ -3,37 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SATs Quest 2026 – Official 2022 Look</title>
+<title>KS2 SATs 2026 – Final Perfect Version</title>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-  body{margin:0;background:white;font-family:Arial,sans-serif;overflow:hidden;height:100vh;display:flex;flex-direction:column;}
-  .header{background:black;color:white;padding:12px 0;text-align:center;font-size:16px;font-weight:bold;}
-  .ks2{background:#005eb8;color:white;padding:15px 70px;border-radius:50px;font-size:38px;display:inline-block;margin:30px 0;}
-  .title{font-size:60px;text-align:center;margin:40px 0 20px;font-weight:bold;}
-  .subtitle{font-size:34px;text-align:center;margin-bottom:50px;}
-  .name-table{width:70%;margin:0 auto;border-collapse:collapse;font-size:20px;}
-  .name-table td{border:2px solid black;padding:18px;text-align:center;}
-  .name-table input{width:100%;border:none;font-size:20px;text-align:center;height:55px;}
-  .start-btn{background:#005eb8;color:white;border:none;padding:22px 90px;font-size:32px;border-radius:12px;cursor:pointer;margin-top:100px;}
-  .start-btn:hover{background:#003087;}
-  #timer{font-size:42px;color:#c00;text-align:center;margin:20px 0;}
-  .progress{height:40px;background:#ddd;border-radius:20px;overflow:hidden;margin:15px auto;width:90%;position:relative;}
-  .bar{height:100%;width:0%;background:linear-gradient(90deg,#ff006e,#8338ec,#3a86ff,#06ffa5,#ffba08);transition:width 0.6s;}
-  .prog{position:absolute;width:100%;text-align:center;line-height:40px;color:white;font-weight:bold;font-size:24px;}
-  .score{text-align:center;font-size:28px;margin:10px 0;}
-  .main-area{flex:1;display:flex;align-items:center;justify-content:center;gap:50px;padding:20px;}
-  .qnum{font-size:110px;font-weight:bold;color:#003087;}
-  .qtext{font-size:44px;line-height:1.4;max-width:65%;}
-  .working-area{width:100%;height:170px;margin:20px 0;padding:0 60px;}
-  .working-label{text-align:center;font-size:26px;margin-bottom:10px;font-weight:bold;}
-  .working{border:4px dotted #003087;background:#f8fbff;border-radius:10px;height:100%;padding:15px;box-sizing:border-box;}
-  #working{width:100%;height:100%;border:none;background:transparent;font-size:24px;resize:none;outline:none;}
-  .answer-area{text-align:center;margin:30px 0;}
-  #answer-input{width:420px;height:85px;font-size:42px;text-align:center;border:4px solid black;border-radius:12px;}
-  .btn-area{text-align:center;margin:20px 0;}
-  .end-btn{background:#c00!important;padding:18px 40px;font-size:28px;border-radius:12px;}
-  #feedback{text-align:center;font-size:40px;min-height:70px;margin:20px 0;}
+  body{margin:0;background:#f0f0f0;font-family:Arial,sans-serif;overflow:hidden;}
+  .page{width:100vw;height:100vh;display:flex;flex-direction:column;background:white;box-sizing:border-box;}
+  .header{background:#003087;color:white;padding:10px 0;text-align:center;font-size:14px;}
+  .ks2{background:#005eb8;color:white;padding:8px 40px;border-radius:30px;font-size:28px;display:inline-block;margin:10px 0;}
+  .cover-content{text-align:center;padding-top:80px;}
+  .title{font-size:48px;margin:20px 0;}
+  .subtitle{font-size:28px;margin:20px 0;}
+  .name-table{width:60%;margin:40px auto;border-collapse:collapse;font-size:18px;}
+  .name-table td{border:2px solid black;padding:12px;text-align:center;}
+  .name-table input{width:100%;border:none;font-size:18px;text-align:center;height:40px;}
+  button{background:#005eb8;color:white;border:none;padding:15px 50px;font-size:24px;border-radius:12px;cursor:pointer;margin:10px;}
+  button:hover{background:#003087;}
+  #timer{font-size:36px;color:#d00;text-align:center;margin:10px 0;}
+  .progress-container{width:90%;margin:10px auto;height:30px;background:#ddd;border-radius:15px;overflow:hidden;position:relative;}
+  .bar{height:100%;width:0%;background:linear-gradient(90deg,#ff006e,#8338ec,#3a86ff,#06ffa5,#ffba08);transition:width 0.5s;}
+  .prog{position:absolute;width:100%;text-align:center;line-height:30px;color:white;font-weight:bold;font-size:18px;}
+  .score{text-align:center;font-size:22px;margin:5px 0;}
+  .question-area{flex:1;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
+  .qnum{font-size:80px;font-weight:bold;color:#003087;margin-right:30px;}
+  .qtext{font-size:36px;line-height:1.4;}
+  .working-area{padding:0 40px 10px;height:180px;}
+  .working-box{border:4px dotted #003087;height:100%;background:#f8fbff;border-radius:8px;padding:10px;box-sizing:border-box;}
+  #working{width:100%;height:100%;border:none;background:transparent;font-size:20px;resize:none;outline:none;}
+  .answer-area{text-align:center;padding:10px 0;}
+  #answer-input{width:380px;height:70px;font-size:36px;text-align:center;border:4px solid black;border-radius:10px;}
+  .btn-area{text-align:center;padding:10px 0;}
+  .end-btn{background:#c00!important;}
+  #feedback{text-align:center;font-size:32px;min-height:50px;padding:10px;}
   .hidden{display:none!important;}
 </style>
 </head>
@@ -41,25 +42,25 @@
 
 <div id="welcome" class="page">
   <div class="header">2026 national curriculum tests</div>
-  <div style="text-align:center;margin-top:40px;"><div class="ks2">Key stage 2</div></div>
-  <div style="text-align:center;margin-top:100px;">
+  <div style="text-align:center;padding-top:20px;"><div class="ks2">Key stage 2</div></div>
+  <div class="cover-content">
     <div class="title">Mathematics</div>
-    <button class="start-btn" onclick="go('arithmetic')">Paper 1: arithmetic<br><small>40 questions • 30 minutes</small></button><br><br>
-    <button class="start-btn" onclick="go('reasoning')">Paper 2 / Paper 3: reasoning<br><small>35 real questions • 40 minutes</small></button>
+    <button onclick="go('arithmetic')">Paper 1: arithmetic<br><small>40 questions • 30 minutes</small></button><br><br>
+    <button onclick="go('reasoning')">Paper 2 / Paper 3: reasoning<br><small>35 real questions • 40 minutes</small></button>
   </div>
 </div>
 
 <div id="cover" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
-  <div style="text-align:center;margin-top:30px;"><div class="ks2">Key stage 2</div></div>
-  <div style="text-align:center;margin-top:60px;">
+  <div style="text-align:center;padding-top:20px;"><div class="ks2">Key stage 2</div></div>
+  <div class="cover-content">
     <div class="title">Mathematics</div>
     <div class="subtitle" id="papertitle"></div>
     <table class="name-table">
       <tr><td>First name</td><td colspan="2"><input id="fn" placeholder="First name"></td></tr>
       <tr><td>Last name</td><td colspan="2"><input id="ln" placeholder="Last name"></td></tr>
     </table>
-    <button class="start-btn" onclick="start()">Start Test</button>
+    <button onclick="start()">Start Test</button>
   </div>
 </div>
 
@@ -67,39 +68,40 @@
   <div class="header">2026 national curriculum tests</div>
   <div style="text-align:center;"><div class="ks2">Key stage 2</div></div>
   <div id="timer">40:00</div>
-  <div class="progress"><div class="bar" id="bar"><div class="prog" id="prog">0 / 35</div></div></div>
+  <div class="progress-container"><div class="bar" id="bar"><div class="prog" id="prog">0 / 35</div></div></div>
   <div class="score">Score: <strong id="score">0</strong> / <strong id="total">35</strong></div>
 
-  <div class="main-area">
+  <div class="question-area">
     <div class="qnum" id="qnum">1</div>
     <div class="qtext" id="question"></div>
   </div>
 
   <div class="working-area">
-    <div class="working-label">Show your working</div>
-    <div class="working"><textarea id="working"></textarea></div>
+    <div style="text-align:center;font-size:20px;margin-bottom:5px;"><strong>Show your working</strong></div>
+    <div class="working-box"><textarea id="working"></textarea></div>
   </div>
 
   <div class="answer-area">
-    <input type="text" id="answer-input" placeholder="Answer">
+    <input type="text" id="answer-input" placeholder="Answer" autocomplete="off">
   </div>
 
   <div class="btn-area">
-    <button class="start-btn" onclick="check()">Submit Answer</button>
+    <button onclick="check()">Submit Answer</button>
     <button class="end-btn" onclick="end()">End Test Early</button>
   </div>
+
   <div id="feedback"></div>
 </div>
 
 <div id="endpage" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
-  <div style="text-align:center;margin-top:80px;"><div class="ks2">Key stage 2</div></div>
-  <div style="text-align:center;margin-top:120px;">
-    <h1 style="font-size:80px;">Test Complete!</h1>
-    <h1 style="font-size:110px;color:#005eb8;" id="final">0 / 35</h1>
-    <h2 style="font-size:48px;margin:60px 0;" id="msg"></h2>
-    <button class="start-btn" style="background:#27ae60;" onclick="pdf()">Save as PDF</button><br><br>
-    <button class="start-btn" onclick="location.reload()">Back to Menu</button>
+  <div style="text-align:center;padding-top:100px;"><div class="ks2">Key stage 2</div></div>
+  <div style="text-align:center;padding-top:80px;">
+    <h1 style="font-size:70px;">Test Complete!</h1>
+    <h1 style="font-size:100px;color:#005eb8;" id="final">0 / 35</h1>
+    <h2 style="font-size:50px;margin:50px 0;" id="msg"></h2>
+    <button style="background:#27ae60;padding:20px 80px;font-size:30px;" onclick="pdf()">Save as PDF</button><br><br>
+    <button onclick="location.reload()">Back to Menu</button>
   </div>
 </div>
 
@@ -111,10 +113,16 @@ const reasoningBank = [
   {t:"15% of 240 =",a:"36",m:1},
   {t:"A shop has an offer.<br>Buy one box for £1.90<br>Get the second box half price.<br>Ali buys two boxes.<br>How much must he pay altogether?",a:"2.85",m:1},
   {t:"24 × 18 =",a:"432",m:2},
-  {t:"3/5 of 45 =",a:"27",m:1},
+  {t:"528 ÷ 12 =",a:"44",m:1},
+  {t:"Film starts 6:45pm and lasts 2 hours 35 minutes.<br>What time does it finish?",a:"9:20",m:2},
   {t:"456 × 7 =",a:"3192",m:2},
   {t:"12.5% of 800 =",a:"100",m:1},
+  {t:"Point (3,5) translated 4 right, 2 up =",a:"(7,7)",m:2},
   {t:"Volume of cuboid 6 × 4 × 5 cm =",a:"120",m:2},
+  {t:"3/5 of 45 =",a:"27",m:1},
+  {t:"What is 0.4 × 0.7?",a:"0.28",m:1},
+  {t:"Area of triangle base 12 cm height 8 cm =",a:"48",m:2},
+  {t:"350 spaces, 70% full =",a:"245",m:2},
   // Add as many as you want!
 ];
 
@@ -122,7 +130,7 @@ function go(t){
   type=t;
   document.getElementById('welcome').classList.add('hidden');
   document.getElementById('cover').classList.remove('hidden');
-  document.getElementById('papertitle').innerHTML = t==='arithmetic'?'Paper 1: arithmetic':'Paper 2: reasoning';
+  document.getElementById('papertitle').innerHTML = t==='arithmetic'?'Paper 1: arithmetic':'Paper 2 / Paper 3: reasoning';
 }
 
 function start(){
@@ -141,7 +149,7 @@ function genArith(){
   for(let i=1;i<=40;i++){
     let x = Math.floor(Math.random()*8999)+1001;
     let y = i<=20 ? Math.floor(Math.random()*899)+101 : Math.floor(Math.random()*89)+11;
-    a.push({t:i<=20?x+" + "+y+" =":x+" × "+y+" =",a:(i<=20?x+y:x*y).toString(),m:i>35?2:1});
+    a.push({t:(i<=20?x+" + "+y+" =":x+" × "+y+" ="), a:(i<=20?x+y:x*y).toString(), m:1});
   }
   return a;
 }
@@ -167,12 +175,12 @@ function loadQ(){
 }
 
 function check(){
-  let u = document.getElementById('answer-input').value.trim();
-  let c = paper[q].a;
+  let u = document.getElementById('answer-input').value.trim().toLowerCase();
+  let c = paper[q].a.toString().toLowerCase();
   let ok = u===c;
-  work.push({q:q+1, w:document.getElementById('working').value, ok});
+  work.push({q:q+1, question:paper[q].t, working:document.getElementById('working').value, ok});
   if(ok){score += paper[q].m||1; confetti({particleCount:300,spread:120}); document.getElementById('feedback').innerHTML='<span style="color:green;">✓ Correct!</span>';}
-  else document.getElementById('feedback').innerHTML=`<span style="color:red;">✗ Answer: ${c}</span>`;
+  else document.getElementById('feedback').innerHTML=`<span style="color:red;">✗ Correct answer: ${paper[q].a}</span>`;
   document.getElementById('score').textContent = score;
   document.getElementById('prog').textContent = (q+1)+"/"+paper.length;
   document.getElementById('bar').style.width = ((q+1)/paper.length*100)+"%";
@@ -185,20 +193,26 @@ function end(){
   document.getElementById('game').classList.add('hidden');
   document.getElementById('endpage').classList.remove('hidden');
   document.getElementById('final').textContent = score+" / "+paper.length;
-  document.getElementById('msg').textContent = score <= 25 ? "Brilliant effort – keep practising!" : score <= 30 ? "So close to Greater Depth!" : "Greater Depth ACHIEVED! You’re a legend!";
+  const msg = score <= 25 ? "Good effort! Keep going – you’re improving!" :
+              score <= 30 ? "Reach for the stars – almost Greater Depth!" :
+              "Outstanding! Greater Depth achieved!";
+  document.getElementById('msg').textContent = msg;
 }
 
 function pdf(){
   const doc = new jsPDF();
-  doc.setFontSize(20); doc.text("SATs Results – " + name, 105, 20, {align:"center"});
+  doc.setFontSize(18);
+  doc.text("SATs Results – " + name, 105, 20, {align:"center"});
+  doc.setFontSize(16);
   doc.text("Score: " + score + " / " + paper.length, 105, 35, {align:"center"});
-  let y = 60;
+  let y = 50;
   work.forEach(w => {
-    if(y > 260){doc.addPage(); y=20;}
-    doc.setFontSize(11);
-    doc.text(`Q${w.q} ${w.ok?"✓":"✗"}`, 15, y);
-    if(w.w) doc.text(w.w.substring(0,180), 20, y+8);
-    y += 25;
+    if(y > 270){ doc.addPage(); y = 20; }
+    doc.setFontSize(10);
+    doc.text(`Q${w.q}: ${w.ok?"✓":"✗"}`, 15, y);
+    doc.text(doc.splitTextToSize(w.question.replace(/<br>/g," "), 180), 25, y+5);
+    if(w.working) doc.text("Working: " + w.working.substring(0,200), 25, y+20);
+    y += 35;
   });
   doc.save(name + "_SATs_2026.pdf");
 }
