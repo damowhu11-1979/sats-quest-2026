@@ -3,51 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>KS2 SATs 2026 – Mobile Perfect</title>
+<title>KS2 SATs 2026 – Perfect 2022 Look</title>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-  body,html{margin:0;padding:0;height:100%;font-family:Arial,sans-serif;background:white;overflow:hidden;}
-  .page{height:100vh;display:flex;flex-direction:column;box-sizing:border-box;padding:10px 15px;}
-  .header{background:black;color:white;text-align:center;padding:12px;font-size:16px;font-weight:bold;border-radius:0 0 15px 15px;}
-  .ks2{background:#005eb8;color:white;padding:12px 40px;border-radius:40px;font-size:32px;display:inline-block;margin:20px auto;}
-  .title{font-size:11vw;text-align:center;margin:20px 0 10px;font-weight:bold;}
-  .subtitle{font-size:6.5vw;text-align:center;margin-bottom:30px;}
-  .name-table{width:100%;max-width:500px;margin:20px auto;border-collapse:collapse;font-size:5vw;}
-  .name-table td{border:2px solid black;padding:12px;text-align:center;}
-  .name-table input{width:100%;border:none;font-size:5.5vw;text-align:center;height:50px;}
-  button{background:#005eb8;color:white;border:none;padding:16px 30px;font-size:6vw;border-radius:12px;margin:10px auto;display:block;width:90%;max-width:400px;}
+  *{box-sizing:border-box;}
+  body,html{margin:0;padding:0;height:100%;font-family:Arial,Helvetica,sans-serif;background:white;overflow:hidden;}
+  .page{height:100vh;display:flex;flex-direction:column;}
+
+  /* Header – exactly like 2022 papers */
+  .header{background:#000;color:white;padding:12px 20px;text-align:center;font-weight:bold;font-size:16px;border-radius:0 0 20px 20px;}
+  .ks2{background:#005eb8;color:white;padding:12px 60px;border-radius:40px;font-size:36px;display:inline-block;margin:20px auto;font-weight:bold;}
+
+  /* Titles */
+  .title{font-size:58px;font-weight:bold;text-align:center;margin:30px 0 10px;}
+  .subtitle{font-size:32px;text-align:center;margin-bottom:40px;}
+
+  /* Name input – single line only */
+  .name-box{width:80%;max-width:600px;margin:40px auto;}
+  .name-box input{width:100%;border:3px solid black;padding:20px;font-size:28px;text-align:center;border-radius:8px;}
+
+  /* Buttons */
+  button{background:#005eb8;color:white;border:none;border-radius:12px;padding:18px 40px;font-size:28px;cursor:pointer;margin:15px auto;display:block;width:80%;max-width:500px;}
   button:hover{background:#003087;}
-  .big-btn{padding:20px!important;font-size:7vw!important;}
-  #timer{font-size:9vw;color:#c00;text-align:center;margin:10px 0;}
-  .progress{height:40px;background:#ddd;border-radius:20px;overflow:hidden;margin:10px auto;position:relative;width:90%;}
+  .big-btn{padding:22px 40px !important;font-size:32px !important;}
+
+  /* Game screen */
+  #timer{font-size:48px;color:#c00;text-align:center;margin:15px 0;font-weight:bold;}
+  .progress{width:90%;max-width:800px;height:40px;background:#ddd;border-radius:20px;margin:10px auto;overflow:hidden;position:relative;}
   .bar{height:100%;width:0%;background:linear-gradient(90deg,#ff006e,#8338ec,#3a86ff,#06ffa5,#ffba08);transition:width 0.6s;}
-  .prog{position:absolute;width:100%;text-align:center;line-height:40px;color:white;font-weight:bold;font-size:6vw;}
-  .score{text-align:center;font-size:6vw;margin:8px 0;}
-  .main-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:10px;}
-  .qnum{font-size:20vw;font-weight:bold;color:#003087;}
-  .qtext{font-size:7.5vw;line-height:1.4;text-align:center;max-width:95%;}
-  .working-area{width:100%;height:150px;margin:15px 0;}
-  .working-label{text-align:center;font-size:6vw;margin-bottom:8px;font-weight:bold;}
-  .working{border:4px dotted #003087;background:#f8fbff;border-radius:10px;height:100%;padding:10px;box-sizing:border-box;}
-  #working{width:100%;height:100%;border:none;background:transparent;font-size:6vw;resize:none;outline:none;}
-  #answer-input{width:90%;max-width:400px;height:70px;font-size:8vw;text-align:center;border:4px solid black;border-radius:12px;margin:20px auto;display:block;}
-  .btn-area button{width:90%;max-width:400px;margin:10px auto;font-size:6.5vw;padding:18px;}
-  .end-btn{background:#c00!important;}
-  #feedback{font-size:8vw;text-align:center;margin:15px 0;min-height:60px;}
-  .hidden{display:none!important;}
-  @media (min-width:768px){
-    .title{font-size:60px;}
-    .subtitle{font-size:34px;}
-    .name-table{font-size:20px;}
-    .name-table input{font-size:20px;height:55px;}
-    button{font-size:28px;padding:20px 50px;}
-    #timer{font-size:42px;}
-    .prog{font-size:24px;}
-    .qnum{font-size:110px;}
-    .qtext{font-size:44px;}
-    #working{font-size:24px;}
-    #answer-input{height:85px;font-size:42px;}
+  .prog{position:absolute;width:100%;text-align:center;line-height:40px;color:white;font-weight:bold;font-size:24px;text-shadow:1px 1px 3px #000;}
+  .score{text-align:center;font-size:28px;margin:10px;}
+
+  .main-area{flex:1;display:flex;align-items:center;justify-content:center;gap:40px;padding:20px;}
+  .qnum{font-size:120px;font-weight:bold;color:#003087;}
+  .qtext{font-size:46px;line-height:1.4;max-width:70%;text-align:left;}
+
+  .working-area{width:100%;max-width:900px;margin:20px auto;}
+  .working-label{text-align:center;font-size:26px;margin-bottom:8px;font-weight:bold;}
+  .working{border:4px dotted #003087;background:#f8fbff;border-radius:10px;height:180px;padding:15px;}
+  #working{width:100%;height:100%;border:none;background:transparent;font-size:26px;resize:none;outline:none;}
+
+  #answer-input{width:90%;max-width:500px;height:90px;font-size:48px;text-align:center;border:4px solid black;border-radius:12px;margin:30px auto;display:block;}
+  .btn-area{text-align:center;}
+  .end-btn{background:#c00 !important;}
+
+  #feedback{text-align:center;font-size:42px;margin:20px;min-height:60px;}
+
+  .hidden{display:none !important;}
+
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    .ks2{font-size:28px;padding:10px 40px;}
+    .title{font-size:42px;}
+    .subtitle{font-size:24px;}
+    .name-box input{font-size:24px;padding:16px;}
+    button{font-size:24px;padding:16px;}
+    #timer{font-size:36px;}
+    .qnum{font-size:90px;}
+    .qtext{font-size:36px;text-align:center;max-width:90%;}
+    #working{font-size:22px;}
+    #answer-input{height:75px;font-size:40px;}
+    .prog{font-size:20px;}
   }
 </style>
 </head>
@@ -55,7 +72,7 @@
 
 <div id="welcome" class="page">
   <div class="header">2026 national curriculum tests</div>
-  <div style="text-align:center;margin-top:20px;"><div class="ks2">Key stage 2</div></div>
+  <div style="text-align:center;margin-top:30px;"><div class="ks2">Key stage 2</div></div>
   <div class="title">Mathematics</div>
   <button class="big-btn" onclick="go('arithmetic')">Paper 1: arithmetic<br><small>40 questions • 30 minutes</small></button>
   <button class="big-btn" onclick="go('reasoning')">Paper 2 / Paper 3: reasoning<br><small>35 questions • 40 minutes</small></button>
@@ -63,12 +80,12 @@
 
 <div id="cover" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
-  <div style="text-align:center;margin-top:15px;"><div class="ks2">Key stage 2</div></div>
+  <div style="text-align:center;margin-top:25px;"><div class="ks2">Key stage 2</div></div>
   <div class="title">Mathematics</div>
   <div class="subtitle" id="papertitle"></div>
-  <table class="name-table">
-    <tr><td colspan="3"><input id="name" placeholder="Enter your full name"></td></tr>
-  </table>
+  <div class="name-box">
+    <input type="text" id="name" placeholder="Enter your full name here" autocomplete="off">
+  </div>
   <button class="big-btn" onclick="start()">Start Test</button>
 </div>
 
@@ -78,17 +95,19 @@
   <div id="timer">40:00</div>
   <div class="progress"><div class="bar" id="bar"><div class="prog" id="prog">0 / 35</div></div></div>
   <div class="score">Score: <strong id="score">0</strong> / <strong id="total">35</strong></div>
+
   <div class="main-area">
     <div class="qnum" id="qnum">1</div>
     <div class="qtext" id="question"></div>
   </div>
+
   <div class="working-area">
     <div class="working-label">Show your working</div>
     <div class="working"><textarea id="working"></textarea></div>
   </div>
-  <div class="answer-area">
-    <input type="text" id="answer-input" placeholder="Answer">
-  </div>
+
+  <input type="text" id="answer-input" placeholder="Answer">
+
   <div class="btn-area">
     <button onclick="check()">Submit Answer</button>
     <button class="end-btn" onclick="end()">End Test Early</button>
@@ -98,12 +117,12 @@
 
 <div id="endpage" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
-  <div style="text-align:center;margin-top:80px;"><div class="ks2">Key stage 2</div></div>
-  <div style="text-align:center;margin-top:120px;">
-    <h1 style="font-size:80px;">Test Complete!</h1>
+  <div style="text-align:center;margin-top:60px;"><div class="ks2">Key stage 2</div></div>
+  <div style="text-align:center;margin-top:100px;">
+    <h1 style="font-size:70px;">Test Complete!</h1>
     <h1 style="font-size:110px;color:#005eb8;" id="final">0 / 35</h1>
-    <h2 style="font-size:48px;margin:60px 0;" id="msg"></h2>
-    <button style="background:#27ae60;padding:25px 90px;font-size:32pt;" onclick="pdf()">Save as PDF</button><br><br>
+    <h2 style="font-size:48px;" id="msg"></h2>
+    <button style="background:#27ae60;font-size:32px;padding:20px 80px;" onclick="pdf()">Save as PDF</button><br><br>
     <button onclick="location.reload()">Back to Menu</button>
   </div>
 </div>
@@ -123,16 +142,17 @@ const reasoningBank = [
   {t:"Point (3,5) translated 4 right, 2 up =",a:"(7,7)",m:2},
   {t:"Volume of cuboid 6 × 4 × 5 cm =",a:"120",m:2},
   {t:"3/5 of 45 =",a:"27",m:1},
-  {t:"What is 0.4 × 0.7?",a:"0.28",m:1},
-  {t:"Area of triangle base 12 cm height 8 cm =",a:"48",m:2},
-  {t:"350 spaces, 70% full =",a:"245",m:2},
+  {t:"0.4 × 0.7 =",a:"0.28",m:1},
+  {t:"Area of triangle: base 12cm, height 8cm =",a:"48",m:2},
+  {t:"350 car park spaces, 70% full =",a:"245",m:2},
+  // Add more real past questions here!
 ];
 
 function go(t){
-  type=t;
+  type = t;
   document.getElementById('welcome').classList.add('hidden');
   document.getElementById('cover').classList.remove('hidden');
-  document.getElementById('papertitle').innerHTML = t==='arithmetic'?'Paper 1: arithmetic':'Paper 2: reasoning';
+  document.getElementById('papertitle').innerHTML = t==='arithmetic' ? 'Paper 1: arithmetic' : 'Paper 2 / Paper 3: reasoning';
 }
 
 function start(){
@@ -156,19 +176,25 @@ function genArith(){
   return a;
 }
 
-function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 function startTimer(){
-  timer=setInterval(()=>{
+  timer = setInterval(()=>{
     timeLeft--;
-    let m=Math.floor(timeLeft/60), s=timeLeft%60;
+    let m = Math.floor(timeLeft/60), s = timeLeft%60;
     document.getElementById('timer').textContent = m+":"+(s<10?"0":"")+s;
     if(timeLeft<=0) end();
   },1000);
 }
 
 function loadQ(){
-  if(q>=paper.length) return end();
+  if(q >= paper.length) return end();
   document.getElementById('qnum').textContent = q+1;
   document.getElementById('question').innerHTML = paper[q].t;
   document.getElementById('answer-input').value = '';
@@ -177,43 +203,49 @@ function loadQ(){
 }
 
 function check(){
-  let u = document.getElementById('answer-input').value.trim().toLowerCase();
-  let c = paper[q].a.toString().toLowerCase();
-  let ok = u===c;
-  work.push({q:q+1, question:paper[q].t, working:document.getElementById('working').value, ok});
-  if(ok){score += paper[q].m||1; confetti({particleCount:300,spread:120}); document.getElementById('feedback').innerHTML='<span style="color:green;">✓ Correct!</span>';}
-  else document.getElementById('feedback').innerHTML=`<span style="color:red;">✗ Correct answer: ${paper[q].a}</span>`;
+  let userAns = document.getElementById('answer-input').value.trim().toLowerCase();
+  let correct = paper[q].a.toString().toLowerCase();
+  let correctBool = userAns === correct;
+  work.push({q:q+1, question:paper[q].t, working:document.getElementById('working').value, ok:correctBool});
+
+  if(correctBool){
+    score += paper[q].m || 1;
+    confetti({particleCount:300, spread:100, origin:{y:0.6}});
+    document.getElementById('feedback').innerHTML = '<span style="color:green;">Correct!</span>';
+  } else {
+    document.getElementById('feedback').innerHTML = `<span style="color:red;">Incorrect – answer: ${paper[q].a}</span>`;
+  }
+
   document.getElementById('score').textContent = score;
   document.getElementById('prog').textContent = (q+1)+"/"+paper.length;
   document.getElementById('bar').style.width = ((q+1)/paper.length*100)+"%";
   q++;
-  setTimeout(loadQ, ok?1200:3500);
+  setTimeout(loadQ, correctBool?1200:3500);
 }
 
 function end(){
   clearInterval(timer);
   document.getElementById('game').classList.add('hidden');
   document.getElementById('endpage').classList.remove('hidden');
-  document.getElementById('final').textContent = score+" / "+paper.length;
-  const msg = score <= 25 ? "Good effort! Keep going – you’re improving!" :
-              score <= 30 ? "Reach for the stars – almost Greater Depth!" :
-              "Outstanding! Greater Depth achieved!";
-  document.getElementById('msg').textContent = msg;
+  document.getElementById('final').textContent = score + " / " + paper.length;
+  document.getElementById('msg').textContent = 
+    score <= 25 ? "Great effort – keep practising!" :
+    score <= 30 ? "So close to Greater Depth!" :
+    "Greater Depth ACHIEVED! Amazing work!";
 }
 
 function pdf(){
   const doc = new jsPDF();
-  doc.setFontSize(18);
+  doc.setFontSize(20);
   doc.text("SATs Results – " + name, 105, 20, {align:"center"});
-  doc.setFontSize(16);
   doc.text("Score: " + score + " / " + paper.length, 105, 35, {align:"center"});
   let y = 50;
   work.forEach(w => {
     if(y > 270){ doc.addPage(); y = 20; }
     doc.setFontSize(10);
-    doc.text(`Q${w.q}: ${w.ok?"✓":"✗"}`, 15, y);
-    doc.text(doc.splitTextToSize(w.question.replace(/<br>/g," "), 180), 25, y+5);
-    if(w.working) doc.text("Working: " + w.working.substring(0,200), 25, y+20);
+    doc.text(`Q${w.q}: ${w.ok?"Correct":"Incorrect"}`, 15, y);
+    doc.text(doc.splitTextToSize(w.question.replace(/<br>/g," "), 180), 20, y+8);
+    if(w.working) doc.text("Working: "+w.working.substring(0,180), 20, y+20);
     y += 35;
   });
   doc.save(name + "_SATs_2026.pdf");
