@@ -163,7 +163,7 @@ const p3 = [
 
 function go(t){type=t;document.getElementById('welcome').classList.add('hidden');document.getElementById('cover').classList.remove('hidden');
   document.getElementById('papertitle').innerHTML= t==='arithmetic'?'Paper 1: Arithmetic':t==='p2'?'Paper 2: Reasoning':'Paper 3: Reasoning';
-  document.getElementById('code').textContent= t==='arithmetic'?'*K00060A0120*':t==='p2'?'*K00070A0124*':'*K00080A0124*';}
+  document.getElementById('code').textContent= t==='arithmetic'?'':t==='p2'?'*K00070A0124*':'*K00080A0124*';}
 function start(){
   name=(document.getElementById('fn').value+" "+document.getElementById('ln').value).trim()||"Student";
   paper=type==='arithmetic'?genArith():(type==='p2'?p2:p3);
