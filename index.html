@@ -3,72 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>KS2 SATs 2026 – Official 2022 Look</title>
+<title>KS2 SATs 2026 – Official 2022 Replica</title>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body,html{height:100%;overflow:hidden;font-family:Arial,Helvetica,sans-serif;background:white;}
-  .page{height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 15px;}
+  .page{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0 15px;}
 
-  /* OFFICIAL 2022 HEADER – black with rounded bottom */
-  .header{background:#000;color:#fff;padding:15px 0;text-align:center;font-weight:bold;font-size:18px;width:100%;border-radius:0 0 25px 25px;}
+  /* OFFICIAL 2022 HEADER */
+  .header{background:#000;color:#fff;padding:14px 0;text-align:center;font-weight:bold;font-size:18px;width:100%;border-radius:0 0 25px 25px;}
 
-  /* Blue "Key stage 2" badge – exact match */
-  .ks2{background:#005eb8;color:white;padding:14px 80px;border-radius:50px;font-size:40px;font-weight:bold;margin:30px 0 20px;}
+  /* Blue Key stage 2 badge */
+  .ks2{background:#005eb8;color:white;padding:12px 70px;border-radius:50px;font-size:38px;font-weight:bold;margin:25px 0;}
 
-  .title{font-size:60px;font-weight:bold;text-align:center;margin:20px 0 10px;}
-  .subtitle{font-size:34px;text-align:center;margin-bottom:40px;font-weight:normal;}
+  .title{font-size:62px;font-weight:bold;text-align:center;margin:15px 0;}
+  .subtitle{font-size:34px;text-align:center;margin-bottom:30px;}
 
-  /* Single-line name box only */
-  .namebox{width:90%;max-width:650px;margin:30px 0;}
-  .namebox input{width:100%;border:3px solid #000;padding:22px;font-size:32px;text-align:center;border-radius:8px;}
+  /* Single name box only */
+  .namebox{width:85%;max-width:600px;margin:20px 0;}
+  .namebox input{width:100%;border:3px solid #000;padding:18px;font-size:30px;text-align:center;border-radius:8px;}
 
-  button{background:#005eb8;color:white;border:none;border-radius:12px;padding:22px 50px;font-size:34px;cursor:pointer;margin:20px 0;width:90%;max-width:500px;}
+  button{background:#005eb8;color:white;border:none;border-radius:12px;padding:18px 40px;font-size:32px;cursor:pointer;margin:15px 0;width:85%;max-width:460px;}
   button:hover{background:#003087;}
 
-  /* Game screen */
-  #timer{font-size:52px;color:#c00;text-align:center;margin:15px 0;font-weight:bold;}
-  .progress{width:90%;max-width:900px;height:45px;background:#ddd;border-radius:22px;overflow:hidden;position:relative;margin:10px auto;}
+  /* GAME SCREEN – FITS 100% IN YOUR RED BOX */
+  #timer{font-size:46px;color:#c00;margin:10px 0;font-weight:bold;}
+  .progress{width:90%;max-width:800px;height:38px;background:#ddd;border-radius:19px;overflow:hidden;position:relative;margin:8px auto;}
   .bar{height:100%;width:0%;background:linear-gradient(90deg,#ff006e,#8338ec,#3a86ff,#06ffa5,#ffba08);transition:width 0.6s;}
-  .prog{position:absolute;width:100%;text-align:center;line-height:45px;color:white;font-weight:bold;font-size:28px;text-shadow:1px 1px 4px #000;}
-  .score{text-align:center;font-size:32px;margin:10px;}
+  .prog{position:absolute;width:100%;text-align:center;line-height:38px;color:white;font-weight:bold;font-size:24px;text-shadow:1px 1px 3px #000;}
+  .score{font-size:28px;margin:6px 0;}
 
-  .question-area{flex:1;display:flex;align-items:center;justify-content:center;gap:40px;width:100%;padding:20px;}
-  .qnum{font-size:140px;font-weight:bold;color:#003087;}
-  .qtext{font-size:50px;line-height:1.4;text-align:left;max-width:70%;}
+  .question-area{flex:1;display:flex;align-items:center;justify-content:center;gap:30px;width:100%;max-height:28vh;overflow:hidden;}
+  .qnum{font-size:110px;font-weight:bold;color:#003087;flex-shrink:0;}
+  .qtext{font-size:44px;line-height:1.35;text-align:left;max-width:65%;word-wrap:break-word;}
 
-  .working-area{width:90%;max-width:900px;margin:20px 0;height:170px;}
-  .working-label{font-size:30px;text-align:center;margin-bottom:10px;font-weight:bold;}
-  .working{border:4px dotted #003087;background:#f8fbff;border-radius:12px;height:100%;padding:15px;}
-  #working{width:100%;height:100%;border:none;background:transparent;font-size:28px;resize:none;outline:none;}
+  .working-area{width:90%;max-width:800px;margin:10px 0;height:135px;flex-shrink:0;}
+  .working-label{font-size:26px;text-align:center;margin-bottom:6px;font-weight:bold;}
+  .working{border:4px dotted #003087;background:#f8fbff;border-radius:10px;height:100%;padding:10px;}
+  #working{width:100%;height:100%;border:none;background:transparent;font-size:24px;resize:none;outline:none;}
 
-  #answer-input{width:90%;max-width:520px;height:95px;font-size:52px;text-align:center;border:4px solid #000;border-radius:12px;margin:30px auto;display:block;}
-  .btn-area button{width:85%;max-width:480px;margin:10px auto;font-size:32px;padding:20px;}
+  #answer-input{width:85%;max-width:460px;height:78px;font-size:46px;text-align:center;border:4px solid #000;border-radius:12px;margin:12px auto;display:block;flex-shrink:0;}
+
+  .btn-area button{width:80%;max-width:420px;margin:8px auto;font-size:28px;padding:16px;}
   .end-btn{background:#c00 !important;}
-  #feedback{font-size:46px;text-align:center;margin:20px 0;min-height:70px;}
+  #feedback{font-size:40px;text-align:center;margin:10px 0;min-height:50px;flex-shrink:0;}
 
   .hidden{display:none !important;}
 
-  /* Mobile perfection on phones & tablets */
-  @media (max-width:768px){
-    .ks2{font-size:32px;padding:12px 60px;}
-    .title{font-size:48px;}
+  /* Mobile & small laptop perfection */
+  @media (max-width:1024px){
+    .ks2{font-size:32px;padding:10px 50px;}
+    .title{font-size:50px;}
     .subtitle{font-size:28px;}
-    .namebox input{font-size:28px;padding:18px;}
-    button{font-size:28px;padding:18px;}
-    #timer{font-size:42px;}
-    .qnum{font-size:100px;}
-    .qtext{font-size:38px;text-align:center;max-width:95%;}
-    #working{font-size:24px;}
-    #answer-input{height:80px;font-size:42px;}
-    .prog{font-size:24px;}
+    .namebox input{font-size:26px;padding:16px;}
+    button{font-size:28px;padding:16px;}
+    #timer{font-size:40px;}
+    .qnum{font-size:90px;}
+    .qtext{font-size:36px;max-width:60%;}
+    #working{font-size:22px;}
+    #answer-input{height:70px;font-size:40px;}
+    .working-area{height:120px;}
+    .question-area{max-height:25vh;}
+  }
+  @media (max-width:768px){
+    .qtext{font-size:34px;text-align:center;max-width:90%;}
+    .qnum{font-size:80px;}
+    .question-area{gap:20px;flex-direction:column;text-align:center;}
+    .working-area{height:110px;}
   }
 </style>
 </head>
 <body>
 
-<!-- WELCOME SCREEN -->
+<!-- WELCOME -->
 <div id="welcome" class="page">
   <div class="header">2026 national curriculum tests</div>
   <div class="ks2">Key stage 2</div>
@@ -77,7 +85,7 @@
   <button onclick="go('reasoning')">Paper 2 / Paper 3: reasoning<br><small>35 questions • 40 minutes</small></button>
 </div>
 
-<!-- COVER PAGE – single name line only -->
+<!-- COVER – single name only -->
 <div id="cover" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
   <div class="ks2">Key stage 2</div>
@@ -89,13 +97,13 @@
   <button onclick="start()">Start Test</button>
 </div>
 
-<!-- MAIN GAME -->
+<!-- GAME – fits perfectly in red box -->
 <div id="game" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
   <div class="ks2">Key stage 2</div>
-  <div id="timer">40:00</div>
-  <div class="progress"><div class="bar" id="bar"><div class="prog" id="prog">0 / 35</div></div></div>
-  <div class="score">Score: <strong id="score">0</strong> / <strong id="total">35</strong></div>
+  <div id="timer">30:00</div>
+  <div class="progress"><div class="bar" id="bar"><div class="prog" id="prog">0 / 40</div></div></div>
+  <div class="score">Score: <strong id="score">0</strong> / <strong id="total">40</strong></div>
 
   <div class="question-area">
     <div class="qnum" id="qnum">1</div>
@@ -107,7 +115,7 @@
     <div class="working"><textarea id="working"></textarea></div>
   </div>
 
-  <input type="text" id="answer-input" placeholder="Answer" autocomplete="off">
+  <input type="text" id="answer-input" placeholder="Answer">
 
   <div class="btn-area">
     <button onclick="check()">Submit Answer</button>
@@ -120,10 +128,10 @@
 <div id="endpage" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
   <div class="ks2">Key stage 2</div>
-  <h1 style="font-size:80px;margin-top:100px;">Test Complete!</h1>
-  <h1 style="font-size:120px;color:#005eb8;" id="final">0 / 35</h1>
-  <h2 style="font-size:50px;margin:60px 0;" id="msg"></h2>
-  <button style="background:#27ae60;padding:25px 90px;font-size:36px;" onclick="pdf()">Save as PDF</button><br><br>
+  <h1 style="font-size:70px;margin-top:80px;">Test Complete!</h1>
+  <h1 style="font-size:110px;color:#005eb8;" id="final">0 / 40</h1>
+  <h2 style="font-size:48px;margin:50px 0;" id="msg"></h2>
+  <button style="background:#27ae60;padding:22px 80px;font-size:34px;" onclick="pdf()">Save as PDF</button><br><br>
   <button onclick="location.reload()">Back to Menu</button>
 </div>
 
@@ -131,118 +139,83 @@
 const { jsPDF } = window.jspdf;
 let q=0, score=0, timeLeft, timer, name="", work=[], paper=[], type="";
 
-//  ";
-
 const reasoningBank = [
   {t:"15% of 240 =",a:"36",m:1},
-  {t:"A shop has an offer.<br>Buy one box for £1.90<br>Get the second box half price.<br>Ali buys two boxes.<br>How much must he pay altogether?",a:"2.85",m:1},
   {t:"24 × 18 =",a:"432",m:2},
   {t:"528 ÷ 12 =",a:"44",m:1},
-  {t:"Film starts 6:45pm and lasts 2 hours 35 minutes.<br>What time does it finish?",a:"9:20",m:2},
   {t:"456 × 7 =",a:"3192",m:2},
   {t:"12.5% of 800 =",a:"100",m:1},
-  {t:"Point (3,5) translated 4 right, 2 up =",a:"(7,7)",m:2},
   {t:"Volume of cuboid 6 × 4 × 5 cm =",a:"120",m:2},
   {t:"3/5 of 45 =",a:"27",m:1},
   {t:"0.4 × 0.7 =",a:"0.28",m:1},
-  {t:"Area of triangle base 12 cm height 8 cm =",a:"48",m:2},
+  {t:"Area of triangle base 12cm height 8cm =",a:"48",m:2},
   {t:"350 spaces, 70% full =",a:"245",m:2}
-  // Add as many as you like – it will always pick 35 random!
 ];
 
 function go(t){
-  type = t;
+  type=t;
   document.getElementById('welcome').classList.add('hidden');
   document.getElementById('cover').classList.remove('hidden');
-  document.getElementById('papertitle').innerHTML = t==='arithmetic' ? 'Paper 1: arithmetic' : 'Paper 2 / Paper 3: reasoning';
+  document.getElementById('papertitle').innerHTML = t==='arithmetic'?'Paper 1: arithmetic':'Paper 2 / Paper 3: reasoning';
 }
-
 function start(){
-  name = document.getElementById('name').value.trim() || "Student";
-  paper = type==='arithmetic' ? genArith() : shuffle([...reasoningBank]).slice(0,35);
-  timeLeft = type==='arithmetic'?1800:2400;
-  document.getElementById('total').textContent = paper.length;
+  name=document.getElementById('name').value.trim()||"Student";
+  paper=type==='arithmetic'?genArith():shuffle([...reasoningBank]).slice(0,35);
+  timeLeft=type==='arithmetic'?1800:2400;
+  document.getElementById('total').textContent=paper.length;
   document.getElementById('cover').classList.add('hidden');
   document.getElementById('game').classList.remove('hidden');
-  q=0; score=0; work=[];
-  loadQ(); startTimer();
+  q=0;score=0;work=[];loadQ();startTimer();
 }
-
 function genArith(){
-  let a = [];
-  for(let i=1;i<=40;i++){
-    let x = Math.floor(Math.random()*8999)+1001;
-    let y = i<=20 ? Math.floor(Math.random()*899)+101 : Math.floor(Math.random()*89)+11;
-    a.push({t:(i<=20?x+" + "+y+" =":x+" × "+y+" ="), a:(i<=20?x+y:x*y).toString(), m:1});
-  }
-  return a;
+  let a=[];for(let i=1;i<=40;i++){
+    let x=Math.floor(Math.random()*8999)+1001;
+    let y=i<=20?Math.floor(Math.random()*899)+101:Math.floor(Math.random()*89)+11;
+    a.push({t:(i<=20?x+" + "+y+" =":x+" × "+y+" ="),a:(i<=20?x+y:x*y).toString(),m:1});
+  }return a;
 }
-
 function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-
 function startTimer(){
-  timer=setInterval(()=>{
-    timeLeft--;
-    let m=Math.floor(timeLeft/60), s=timeLeft%60;
-    document.getElementById('timer').textContent = m+":"+(s<10?"0":"")+s;
-    if(timeLeft<=0) end();
-  },1000);
+  timer=setInterval(()=>{timeLeft--;let m=Math.floor(timeLeft/60),s=timeLeft%60;
+    document.getElementById('timer').textContent=m+":"+(s<10?"0":"")+s;if(timeLeft<=0)end();},1000);
 }
-
 function loadQ(){
-  if(q>=paper.length) return end();
-  document.getElementById('qnum').textContent = q+1;
-  document.getElementById('question').innerHTML = paper[q].t;
-  document.getElementById('answer-input').value = '';
-  document.getElementById('working').value = '';
-  document.getElementById('feedback').innerHTML = '';
+  if(q>=paper.length)return end();
+  document.getElementById('qnum').textContent=q+1;
+  document.getElementById('question').innerHTML=paper[q].t;
+  document.getElementById('answer-input').value='';
+  document.getElementById('working').value='';
+  document.getElementById('feedback').innerHTML='';
 }
-
 function check(){
-  let u = document.getElementById('answer-input').value.trim().toLowerCase();
-  let c = paper[q].a.toString().toLowerCase();
-  let ok = u===c;
-  work.push({q:q+1, question:paper[q].t, working:document.getElementById('working').value, ok});
-  if(ok){
-    score += paper[q].m||1;
-    confetti({particleCount:300,spread:120});
-    document.getElementById('feedback').innerHTML='<span style="color:green;">Correct!</span>';
-  } else {
-    document.getElementById('feedback').innerHTML=`<span style="color:red;">Incorrect – answer: ${paper[q].a}</span>`;
-  }
-  document.getElementById('score').textContent = score;
-  document.getElementById('prog').textContent = (q+1)+"/"+paper.length;
-  document.getElementById('bar').style.width = ((q+1)/paper.length*100)+"%";
-  q++;
-  setTimeout(loadQ, ok?1200:3500);
+  let u=document.getElementById('answer-input').value.trim().toLowerCase();
+  let c=paper[q]. cover.toString().toLowerCase();
+  let ok=u===c;
+  work.push({q:q+1,question:paper[q].t,working:document.getElementById('working').value,ok});
+  if(ok){score+=paper[q].m||1;confetti({particleCount:300,spread:120});
+    document.getElementById('feedback').innerHTML='<span style="color:green;">Correct!</span>';}
+  else document.getElementById('feedback').innerHTML=`<span style="color:red;">Incorrect – answer: ${paper[q].a}</span>`;
+  document.getElementById('score').textContent=score;
+  document.getElementById('prog').textContent=(q+1)+"/"+paper.length;
+  document.getElementById('bar').style.width=((q+1)/paper.length*100)+"%";
+  q++;setTimeout(loadQ,ok?1200:3500);
 }
-
 function end(){
   clearInterval(timer);
   document.getElementById('game').classList.add('hidden');
   document.getElementById('endpage').classList.remove('hidden');
-  document.getElementById('final').textContent = score+" / "+paper.length;
-  document.getElementById('msg').textContent = 
-    score <= 25 ? "Great effort – keep practising!" :
-    score <= 30 ? "So close to Greater Depth!" :
-    "Greater Depth ACHIEVED – LEGEND!";
+  document.getElementById('final').textContent=score+" / "+paper.length;
+  document.getElementById('msg').innerHTML=score<20?"Keep practising!":score<32?"Almost Greater Depth!":"GREATER DEPTH<br>ACHIEVED!";
 }
-
 function pdf(){
-  const doc = new jsPDF();
-  doc.setFontSize(20);
-  doc.text("SATs Results – " + name, 105, 20, {align:"center"});
-  doc.text("Score: " + score + " / " + paper.length, 105, 35, {align:"center"});
-  let y = 50;
-  work.forEach(w => {
-    if(y > 270){ doc.addPage(); y = 20; }
-    doc.setFontSize(10);
-    doc.text(`Q${w.q}: ${w.ok?"Correct":"Incorrect"}`, 15, y);
-    doc.text(doc.splitTextToSize(w.question.replace(/<br>/g," "), 180), 20, y+8);
-    if(w.working) doc.text("Working: "+w.working.substring(0,180), 20, y+20);
-    y += 35;
-  });
-  doc.save(name + "_SATs_2026.pdf");
+  const doc=new jsPDF();doc.setFontSize(20);
+  doc.text("SATs Results – "+name,105,20,{align:"center"});
+  doc.text("Score: "+score+" / "+paper.length,105,35,{align:"center"});
+  let y=50;work.forEach(w=>{if(y>270){doc.addPage();y=20;}
+    doc.setFontSize(10);doc.text(`Q${w.q}: ${w.ok?"Correct":"Incorrect"}`,15,y);
+    doc.text(doc.splitTextToSize(w.question.replace(/<br>/g," "),180),20,y+8);
+    if(w.working)doc.text("Working: "+w.working.substring(0,180),20,y+20);y+=35;});
+  doc.save(name+"_SATs_2026.pdf");
 }
 </script>
 </body>
