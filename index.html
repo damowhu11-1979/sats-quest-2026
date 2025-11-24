@@ -3,45 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SATs Quest 2026 – Perfect Official Layout</title>
+<title>SATs Quest 2026 – FINAL PERFECTION</title>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-  body {margin:0; background:#f8f8f8; font-family:Arial, sans-serif;}
-  .header {background:linear-gradient(#003087,#005eb8); color:white; padding:15px; text-align:center; font-weight:bold;}
-  .ks2 {background:#005eb8; color:white; padding:15px 40px; font-size:2.8em; border-radius:15px; display:inline-block; margin:20px 0;}
-  .page {background:white; width:900px; margin:30px auto; box-shadow:0 10px 40px rgba(0,0,0,0.2); padding-bottom:40px;}
-  button {background:#005eb8; color:white; border:none; padding:18px 40px; font-size:1.8em; border-radius:10px; cursor:pointer;}
-  button:hover {background:#003087;}
-  .hidden {display:none!important;}
-  .cover {text-align:center; padding-top:80px;}
-  .name-table {width:70%; margin:40px auto; border-collapse:collapse; font-size:1.6em;}
-  .name-table td {border:2px solid #000; padding:15px;}
-  .name-input {width:100%; border:none; text-align:center; font-size:1em; height:50px;}
-  .barcode {font-size:2.8em; letter-spacing:8px; margin:60px 0;}
-  #timer {font-size:3em; color:#c00; text-align:center; margin:20px 0;}
-  .progress {height:50px; background:#ddd; border-radius:25px; overflow:hidden; position:relative; margin:20px auto; width:80%;}
-  .bar {height:100%; width:0%; background:linear-gradient(90deg,#ff006e,#8338ec,#3a86ff,#06ffa5,#ffba08); transition:width 0.8s;}
-  .progtext {position:absolute; width:100%; text-align:center; line-height:50px; color:white; font-weight:bold; font-size:1.8em; text-shadow:2px 2px 6px #000;}
-  .question-area {padding:0 80px; margin-top:40px;}
-  #qnum {float:left; font-size:5em; font-weight:bold; color:#003087; width:100px; margin-top:20px;}
-  #question {margin-left:120px; font-size:2.4em; line-height:1.4; min-height:120px;}
-  .working-box {clear:both; border:4px dotted #003087; height:340px; margin:40px 80px; padding:20px; background:#f8fbff; border-radius:8px;}
-  #working {width:100%; height:100%; border:none; background:transparent; font-size:1.8em; resize:none; outline:none;}
-  .answer-area {text-align:center; margin:40px 0;}
-  #answer-input {width:360px; height:80px; font-size:2.6em; text-align:center; border:4px solid #000; border-radius:10px;}
-  #feedback {font-size:2.4em; text-align:center; margin:30px 0; min-height:60px;}
-  .btn-area {text-align:center; margin:30px 0;}
-  .end-early {background:#c00!important;}
+body{margin:0;background:#f0f0f0;font-family:Arial,sans-serif;}
+.header{background:linear-gradient(#003087,#005eb8);color:#fff;padding:20px;text-align:center;}
+.ks2{background:#005eb8;color:#fff;padding:12px 30px;font-size:2.5em;border-radius:12px;display:inline-block;margin:15px 0;}
+.page{background:#fff;margin:20px auto;max-width:950px;box-shadow:0 10px 30px rgba(0,0,0,0.2);border-radius:12px;overflow:hidden;}
+button{background:#005eb8;color:#fff;border:none;padding:20px 50px;font-size:2em;border-radius:12px;cursor:pointer;margin:20px;}
+button:hover{background:#003087;}
+.hidden{display:none!important;}
+.cover{padding:100px 40px;text-align:center;}
+.cover h1{font-size:5em;margin:30px 0;}
+table{width:80%;margin:40px auto;border-collapse:collapse;font-size:1.8em;}
+td{border:2px solid #000;padding:20px;}
+input{width:100%;border:none;text-align:center;font-size:1em;height:60px;}
+.barcode{font-size:3.2em;letter-spacing:10px;margin:70px 0;}
+#timer{font-size:3.5em;color:#c00;margin:20px;}
+.progress{height:60px;background:#ddd;border-radius:30px;overflow:hidden;position:relative;margin:30px 0;}
+.bar{height:100%;width:0%;background:linear-gradient(90deg,#ff006e,#8338ec,#3a86ff,#06ffa5,#ffba08);transition:width 0.8s;}
+.prog{position:absolute;width:100%;text-align:center;line-height:60px;color:#fff;font-weight:bold;font-size:2em;text-shadow:2px 2px 8px #000;}
+#question{font-size:2.6em;line-height:1.5;margin:40px 0;}
+textarea{width:100%;height:300px;padding:20px;font-size:1.8em;border:5px dotted #003087;border-radius:12px;resize:none;}
+#answer-input{width:400px;height:80px;font-size:2.6em;text-align:center;border:4px solid #000;border-radius:12px;}
+#feedback{font-size:2.6em;margin:40px;text-align:center;}
 </style>
 </head>
 <body>
 
 <div id="welcome" class="page">
   <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
-  <div style="text-align:center; padding:100px 20px;">
-    <h1 style="font-size:5em; color:#000;">Mathematics</h1>
-    <button onclick="go('arithmetic')">Paper 1: Arithmetic<br><small>40 random • 30 min</small></button><br><br>
+  <div style="text-align:center;padding:100px 20px;">
+    <h1 style="font-size:4.8em;color:#000;">Mathematics</h1>
+    <button onclick="go('arithmetic')">Paper 1: Arithmetic<br><small>40 random questions • 30 min</small></button><br><br>
     <button onclick="go('reasoning')">Random Reasoning Paper<br><small>35 random real questions • 40 min</small></button>
   </div>
 </div>
@@ -49,12 +44,9 @@
 <div id="cover" class="page hidden">
   <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
   <div class="cover">
-    <h1 style="font-size:4.5em;">Mathematics</h1>
-    <h2 id="papertitle" style="font-size:3em; margin:40px 0;"></h2>
-    <table class="name-table">
-      <tr><td>First name</td><td><input class="name-input" id="fn"></td></tr>
-      <tr><td>Last name</td><td><input class="name-input" id="ln"></td></tr>
-    </table>
+    <h1>Mathematics</h1>
+    <h2 id="papertitle" style="font-size:3.5em;"></h2>
+    <table><tr><td>First name</td><td><input id="fn"></td></tr><tr><td>Last name</td><td><input id="ln"></td></tr></table>
     <div class="barcode" id="code">*K00070A0124*</div>
     <button onclick="start()">START TEST</button>
   </div>
@@ -62,64 +54,73 @@
 
 <div id="game" class="page hidden">
   <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
-  <div id="timer">40:00</div>
-  <div class="progress"><div class="bar" id="bar"><div class="progtext" id="prog">0 / 35</div></div></div>
-  <div style="text-align:center; font-size:2em;">Score: <strong id="score">0</strong> / <strong id="total">35</strong></div>
-
-  <div class="question-area">
-    <div id="qnum">1</div>
-    <div id="question">Loading...</div>
-    
-    <div class="working-box">
-      <strong style="display:block; margin-bottom:10px; font-size:1.8em;">Show your working</strong>
+  <div style="padding:40px;text-align:center;">
+    <div id="timer">40:00</div>
+    <div class="progress"><div class="bar" id="bar"><div class="prog" id="prog">0 / 35</div></div></div>
+    <div style="font-size:2.2em;">Score: <b id="score">0</b> / <b id="total">35</b></div>
+    <h2 style="font-size:4.5em;color:#003087;" id="qnum">1</h2>
+    <div id="question"></div>
+    <div style="margin:50px 0;"><strong style="font-size:2em;">Show your working</strong><br>
       <textarea id="working"></textarea>
     </div>
-
-    <div class="answer-area">
-      <input type="text" id="answer-input" placeholder="Answer" autocomplete="off">
-    </div>
-
-    <div class="btn-area">
-      <button onclick="check()">Submit Answer</button>
-      <button onclick="end()" class="end-early">End Test Early</button>
-    </div>
-
+    <input type="text" id="answer-input" placeholder="Answer" autocomplete="off"><br><br>
+    <button onclick="check()">Submit</button>
+    <button onclick="end()" style="background:#c00;">End Early</button>
     <div id="feedback"></div>
   </div>
 </div>
 
-<div id="results" class="page hidden">
+<div id="endpage" class="page hidden">
   <div class="header"><div style="font-size:1.6em;">2026 national curriculum tests</div><div class="ks2">Key stage 2</div></div>
-  <div style="text-align:center; padding:120px;">
+  <div style="text-align:center;padding:120px;">
     <h1 style="font-size:5.5em;">Test Complete!</h1>
-    <h1 style="font-size:7em; color:#005eb8;" id="final">0 / 35</h1>
-    <h2 style="font-size:3.5em;" id="msg">Legend!</h2>
-    <button onclick="pdf()" style="background:#27ae60; padding:20px 60px; font-size:2em;">Save as PDF</button><br><br>
-    <button onclick="location.reload()">Back to Menu</button>
+    <h1 style="font-size:7em;color:#005eb8;" id="final">0 / 35</h1>
+    <h2 style="font-size:3.5em;" id="msg"></h2>
+    <button onclick="pdf()" style="background:#27ae60;">Save as PDF</button><br><br>
+    <button onclick="location.reload()">Menu</button>
   </div>
 </div>
 
 <script>
 const { jsPDF } = window.jspdf;
-let q=0, score=0, timeLeft, timer, name="", workings=[], paper=[], type="";
+let q=0, score=0, timeLeft, timer, name="", work=[], paper=[], type="";
 
-const reasoningBank = [ /* same 30+ real questions as before – they all work perfectly */ 
+const reasoningBank = [
   {t:"A shop has an offer.<br>Buy one box for £1.90<br>Get the second box half price.<br>Ali buys two boxes.<br>How much must he pay altogether?",a:"2.85",m:1},
   {t:"Write 3,405 in words.",a:"three thousand four hundred and five",m:1},
   {t:"Round 5,768 to the nearest thousand.",a:"6000",m:1},
   {t:"What is 10% of £360?",a:"36",m:1},
-  {t:"15% of 240 =",a:"36",m:1},
+  {t:"Calculate 1,234 + 989.",a:"2223",m:1},
+  {t:"Put these temperatures in order from coldest: –4°C, 3°C, –1°C, 7°C",a:"-4,-1,3,7",m:1},
+  {t:"36 pencils cost £5.40. Cost of one pencil?",a:"15p",m:1},
+  {t:"½ of ¾ =",a:"3/8",m:1},
+  {t:"3.2 kg = ___ grams",a:"3200",m:1},
+  {t:"Lines of symmetry in regular pentagon?",a:"5",m:1},
   {t:"528 ÷ 12 =",a:"44",m:1},
+  {t:"Perimeter of rectangle 8cm × 5cm?",a:"26",m:1},
+  {t:"Film starts 6:45pm, lasts 2h 35min. Finish time?",a:"9:20",m:2},
+  {t:"15% of 240 =",a:"36",m:1},
+  {t:"Train 180km in 3h. Speed?",a:"60",m:2},
   {t:"3/5 of 45 =",a:"27",m:1},
   {t:"24 × 18 =",a:"432",m:2},
-  {t:"Film starts 6:45pm, lasts 2h 35min. Finish time?",a:"9:20",m:2},
-  {t:"Train 180km in 3h. Speed?",a:"60",m:2},
+  {t:"Area of triangle base 12cm height 8cm?",a:"48",m:2},
+  {t:"3 apples £1.20. 10 apples cost?",a:"4",m:2},
+  {t:"Ribbon 50m, 18.75m used. Left?",a:"31.25",m:2},
   {t:"1,000 more than 29,999?",a:"30999",m:1},
   {t:"456 × 7 =",a:"3192",m:2},
-  {t:"⅖ of 60 =",a:"24",m:1},
+  {t:"350 spaces, 70% full?",a:"245",m:2},
+  {t:"Match 95 min from 7:30pm?",a:"9:05",m:2},
+  {t:"Volume cuboid 6×4×5 cm?",a:"120",m:2},
   {t:"12.5% of 800 =",a:"100",m:1},
-  {t:"Point (3,5) translated 4 right, 2 up?",a:"(7,7)",m:2}
-  // add as many as you like!
+  {t:"Rectangle area 48cm², width 6cm. Length?",a:"8",m:2},
+  {t:"Point (3,5) → 4 right 2 up?",a:"(7,7)",m:2},
+  {t:"£90 with 1/3 off?",a:"60",m:2},
+  {t:"⅖ of 60 =",a:"24",m:1},
+  {t:"What is 9 squared?",a:"81",m:1},
+  {t:"Roman numeral for 49?",a:"XLIX",m:1},
+  {t:"What is 0.4 × 0.7?",a:"0.28",m:1},
+  {t:"How many minutes in 3½ hours?",a:"210",m:1},
+  {t:"45 × ___ = 360",a:"8",m:1}
 ];
 
 function go(t){type=t;document.getElementById('welcome').classList.add('hidden');document.getElementById('cover').classList.remove('hidden');
@@ -128,54 +129,57 @@ function go(t){type=t;document.getElementById('welcome').classList.add('hidden')
 
 function start(){
   name = (document.getElementById('fn').value + " " + document.getElementById('ln').value).trim() || "Student";
-  paper = type==='arithmetic' ? genArith() : getRandomReasoning();
+  paper = type==='arithmetic'?genArith():getRandomReasoning();
   timeLeft = type==='arithmetic'?1800:2400;
-  document.getElementById('total').textContent = paper.length;
   document.getElementById('cover').classList.add('hidden');
   document.getElementById('game').classList.remove('hidden');
-  q=0; score=0; workings=[];
-  loadQuestion(); startTimer();
+  document.getElementById('total').textContent = paper.length;
+  q=0; score=0; work=[];
+  loadQ(); startTimer();
 }
 
-function genArith(){let a=[];for(let i=1;i<=40;i++){let x=Math.floor(Math.random()*8999)+1001;let y=i<=20?Math.floor(Math.random()*899)+101:Math.floor(Math.random()*89)+11;a.push({t:i<=20?x+" + "+y:x+" × "+y,a:(i<=20?x+y:x*y).toString(),m:i>35?2:1});}return a;}
-function getRandomReasoning(){let s=[...reasoningBank];for(let i=s.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[s[i],s[j]]=[s[j],s[i]];}return s.slice(0,35);}
+function genArith(){
+  let a=[];for(let i=1;i<=40;i++){
+    let x=Math.floor(Math.random()*8999)+1001;
+    let y=i<=20?Math.floor(Math.random()*899)+101:Math.floor(Math.random()*89)+11;
+    a.push({t:i<=20?x+" + "+y+" =":x+" × "+y+" =",a:(i<=20?x+y:x*y).toString(),m:i>35?2:1});
+  }return a;
+}
+
+function getRandomReasoning(){
+  let s=[...reasoningBank];for(let i=s.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[s[i],s[j]]=[s[j],s[i]];}return s.slice(0,35);
+}
 
 function startTimer(){timer=setInterval(()=>{timeLeft--;let m=Math.floor(timeLeft/60),s=timeLeft%60;document.getElementById('timer').textContent=m+":"+(s<10?"0":"")+s;if(timeLeft<=0)end();},1000);}
 
-function loadQuestion(){
-  if(q>=paper.length) return end();
-  document.getElementById('qnum').textContent = q+1;
-  document.getElementById('question').innerHTML = paper[q].t;
-  document.getElementById('answer-input').value = '';
-  document.getElementById('working').value = '';
-  document.getElementById('feedback').innerHTML = '';
-}
+function loadQ(){if(q>=paper.length)return end();
+  document.getElementById('qnum').textContent=q+1;
+  document.getElementById('question').innerHTML=paper[q].t;
+  document.getElementById('answer-input').value='';document.getElementById('working').value='';document.getElementById('feedback').innerHTML='';}
 
 function check(){
-  let user = document.getElementById('answer-input').value.trim().toLowerCase();
-  let correct = paper[q].a.toString().toLowerCase();
-  let ok = user===correct;
-  workings.push({q:q+1, working:document.getElementById('working').value, correct:ok});
-  if(ok){score += paper[q].m||1; confetti({particleCount:200, spread:90}); document.getElementById('feedback').innerHTML='<span style="color:green;">✓ Correct!</span>';}
-  else document.getElementById('feedback').innerHTML=`<span style="color:red;">✗ Correct answer: ${paper[q].a}</span>`;
-  document.getElementById('score').textContent = score;
-  document.getElementById('prog').textContent = (q+1)+"/"+paper.length;
-  document.getElementById('bar').style.width = ((q+1)/paper.length*100)+"%";
-  q++;
-  setTimeout(loadQuestion, ok?1200:3500);
-}
+  let u=document.getElementById('answer-input').value.trim().toLowerCase();
+  let c=paper[q].a.toString().toLowerCase();
+  let ok=u===c;
+  work.push({q:q+1,w:document.getElementById('working').value,ok:ok});
+  if(ok){score+=paper[q].m||1;confetti({particleCount:200,spread:90});document.getElementById('feedback').innerHTML='<span style="color:green;">Correct!</span>';}
+  else document.getElementById('feedback').innerHTML=`<span style="color:red;">Incorrect – answer: ${paper[q].a}</span>`;
+  document.getElementById('score').textContent=score;
+  document.getElementById('prog').textContent=(q+1)+"/"+paper.length;
+  document.getElementById('bar').style.width=((q+1)/paper.length*100)+"%";
+  q++;setTimeout(loadQ,ok?1200:3500);}
 
-function end(){clearInterval(timer);document.getElementById('game').classList.add('hidden');document.getElementById('results').classList.remove('hidden');
-  document.getElementById('final').textContent = score + " / " + paper.length;
-  document.getElementById('msg').textContent = score >= 60 ? "Greater Depth LEGEND!" : "Brilliant effort!";}
+function end(){clearInterval(timer);document.getElementById('game').classList.add('hidden');document.getElementById('endpage').classList.remove('hidden');
+  document.getElementById('final').textContent=score+" / "+paper.length;
+  let msg = score <= 25 ? "Good effort! You can do this – keep trying!" :
+            score <= 30 ? "Reach for the stars – you’re getting closer!" :
+            "Well done! Greater Depth achieved!";
+  document.getElementById('msg').textContent = msg;}
 
 function pdf(){
-  const doc = new jsPDF();
-  doc.setFontSize(16); doc.text("SATs Results – " + name, 105, 20, null, null, "center");
-  doc.text("Score: " + score + "/" + paper.length, 105, 35, null, null, "center");
-  let y = 60;
-  workings.forEach(w => {if(y>270){doc.addPage(); y=20;} doc.setFontSize(11); doc.text(`Q${w.q} ${w.correct?"✓":"✗"}`,20,y); y+=10; if(w.working) doc.text(w.working.substring(0,120),25,y); y+=15;});
-  doc.save(name + "_SATs_2026.pdf");
+  const d=new jsPDF();let y=20;d.text("SATs Results – "+name,105,y,{align:"center"});y+=20;d.text("Score: "+score+"/"+paper.length,105,y,{align:"center"});y+=20;
+  work.forEach(w=>{if(y>270){d.addPage();y=20;}d.setFontSize(11);d.text(`Q${w.q} ${w.ok?"Correct":"Incorrect"}`,20,y);y+=10;if(w.w)d.text(w.w.substring(0,120),25,y);y+=15;});
+  d.save(name+"_SATs_2026.pdf");
 }
 </script>
 </body>
