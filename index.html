@@ -9,53 +9,58 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body,html{height:100vh;overflow:hidden;font-family:Arial,Helvetica,sans-serif;background:white;}
-  .page{height:100vh;display:flex;flex-direction:column;padding:0 15px;}
+  .page{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:20px 15px;}
 
-  /* Exact 2022 header + blue badge */
-  .header{background:#000;color:#fff;padding:14px 0;text-align:center;font-weight:bold;font-size:18px;width:100%;border-radius:0 0 25px 25px;}
-  .ks2{background:#005eb8;color:white;padding:12px 70px;border-radius:50px;font-size:38px;font-weight:bold;margin:20px 0 10px;}
+  /* OFFICIAL 2022 HEADER */
+  .header{background:#000;color:#fff;padding:16px 0;text-align:center;font-weight:bold;font-size:19px;width:100%;border-radius:0 0 30px 30px;}
+  .ks2{background:#005eb8;color:white;padding:14px 80px;border-radius:60px;font-size:44px;font-weight:bold;margin:30px 0 20px;box-shadow:0 4px 10px rgba(0,0,0,0.2);}
 
-  .title{font-size:62px;font-weight:bold;text-align:center;margin:10px 0;}
-  .subtitle{font-size:34px;text-align:center;margin-bottom:20px;}
+  .title{font-size:68px;font-weight:bold;text-align:center;margin:20px 0 10px;}
+  .subtitle{font-size:38px;text-align:center;margin-bottom:40px;}
 
-  .namebox{width:85%;max-width:600px;margin:20px 0;}
-  .namebox input{width:100%;border:3px solid #000;padding:18px;font-size:30px;text-align:center;border-radius:8px;}
+  .namebox{width:80%;max-width:700px;margin:40px 0;}
+  .namebox input{width:100%;border:3px solid #000;padding:20px;font-size:34px;text-align:center;border-radius:10px;}
 
-  button{background:#005eb8;color:white;border:none;border-radius:12px;padding:18px 40px;font-size:32px;cursor:pointer;margin:15px 0;width:85%;max-width:460px;}
+  button{background:#005eb8;color:white;border:none;border-radius:15px;padding:22px 50px;font-size:36px;cursor:pointer;margin:20px 0;width:80%;max-width:500px;box-shadow:0 4px 10px rgba(0,0,0,0.2);}
   button:hover{background:#003087;}
 
-  /* GAME SCREEN – GUARANTEED QUESTION VISIBILITY */
-  #timer{font-size:48px;color:#c00;margin:8px 0;font-weight:bold;}
-  .progress{width:90%;max-width:800px;height:38px;background:#ddd;border-radius:19px;overflow:hidden;position:relative;margin:6px auto;}
+  #timer{font-size:52px;color:#c00;margin:15px 0;font-weight:bold;}
+  .progress{width:85%;max-width:900px;height:45px;background:#ddd;border-radius:22px;overflow:hidden;position:relative;margin:10px auto;}
   .bar{height:100%;width:0%;background:linear-gradient(90deg,#ff006e,#8338ec,#3a86ff,#06ffa5,#ffba08);transition:width 0.6s;}
-  .prog{position:absolute;width:100%;text-align:center;line-height:38px;color:white;font-weight:bold;font-size:24px;text-shadow:1px 1px 3px #000;}
-  .score{font-size:28px;margin:6px 0;text-align:center;}
+  .prog{position:absolute;width:100%;text-align:center;line-height:45px;color:white;font-weight:bold;font-size:28px;text-shadow:1px 1px 4px #000;}
+  .score{font-size:34px;margin:10px 0;text-align:center;}
 
-  .question-area{flex:1;display:flex;align-items:center;justify-content:center;gap:30px;padding:10px 0;}
-  .qnum{font-size:110px;font-weight:bold;color:#003087;flex-shrink:0;}
-  .qtext{font-size:46px;line-height:1.3;text-align:left;max-width:65%;word-wrap:break-word;flex-shrink:1;}
+  .question-area{flex:1;display:flex;align-items:center;justify-content:center;gap:40px;width:100%;max-height:32vh;padding:20px 0;}
+  .qnum{font-size:130px;font-weight:bold;color:#003087;flex-shrink:0;}
+  .qtext{font-size:52px;line-height:1.3;text-align:left;max-width:65%;word-wrap:break-word;}
+  .correct-answer{font-size:52px;color:#005eb8;font-weight:bold;margin-left:20px;}
 
-  .working-area{width:90%;max-width:800px;margin:8px 0;height:130px;flex-shrink:0;}
-  .working-label{font-size:26px;text-align:center;margin-bottom:6px;font-weight:bold;}
-  .working{border:4px dotted #003087;background:#f8fbff;border-radius:10px;height:100%;padding:10px;}
-  #working{width:100%;height:100%;border:none;background:transparent;font-size:24px;resize:none;outline:none;}
+  .working-area{width:85%;max-width:900px;margin:20px 0;height:160px;flex-shrink:0;}
+  .working-label{font-size:30px;text-align:center;margin-bottom:8px;font-weight:bold;}
+  .working{border:4px dotted #003087;background:#f8fbff;border-radius:12px;height:100%;padding:15px;}
+  #working{width:100%;height:100%;border:none;background:transparent;font-size:28px;resize:none;outline:none;}
 
-  #answer-input{width:85%;max-width:460px;height:78px;font-size:46px;text-align:center;border:4px solid #000;border-radius:12px;margin:12px auto;display:block;}
+  #answer-input{width:80%;max-width:500px;height:90px;font-size:52px;text-align:center;border:4px solid #000;border-radius:15px;margin:20px auto;display:block;}
 
-  .btn-area button{width:80%;max-width:420px;margin:8px auto;font-size:28px;padding:16px;}
+  .btn-area button{width:75%;max-width:450px;margin:12px auto;font-size:34px;padding:20px;}
   .end-btn{background:#c00 !important;}
-  #feedback{font-size:40px;text-align:center;margin:10px 0;min-height:50px;}
+  #feedback{font-size:48px;text-align:center;margin:20px 0;min-height:70px;}
 
   .hidden{display:none !important;}
 
   @media (max-width:768px){
-    .ks2{font-size:32px;padding:10px 50px;}
-    .title{font-size:50px;}
-    .qnum{font-size:90px;}
-    .qtext{font-size:38px;text-align:center;max-width:90%;}
-    .question-area{flex-direction:column;gap:10px;}
-    #timer{font-size:42px;}
-    #answer-input{height:70px;font-size:40px;}
+    .ks2{font-size:36px;padding:12px 60px;}
+    .title{font-size:54px;}
+    .subtitle{font-size:32px;}
+    .namebox input{font-size:30px;padding:18px;}
+    button{font-size:32px;padding:18px;}
+    #timer{font-size:44px;}
+    .qnum{font-size:100px;}
+    .qtext{font-size:42px;text-align:center;max-width:90%;}
+    .correct-answer{font-size:42px;margin-left:0;margin-top:15px;}
+    .question-area{flex-direction:column;gap:15px;}
+    #answer-input{height:80px;font-size:46px;}
+    .working-area{height:140px;}
   }
 </style>
 </head>
@@ -89,7 +94,10 @@
 
   <div class="question-area">
     <div class="qnum" id="qnum">1</div>
-    <div class="qtext" id="question"></div>
+    <div style="display:flex;align-items:center;">
+      <div class="qtext" id="question"></div>
+      <div class="correct-answer hidden" id="correctAns"></div>
+    </div>
   </div>
 
   <div class="working-area">
@@ -109,10 +117,10 @@
 <div id="endpage" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
   <div class="ks2">Key stage 2</div>
-  <h1 style="font-size:70px;margin-top:80px;">Test Complete!</h1>
-  <h1 style="font-size:110px;color:#005eb8 margin:20px 0;" id="final">0 / 35</h1>
-  <h2 style="font-size:48px;margin:40px 0;" id="msg"></h2>
-  <button style="background:#27ae60;padding:22px 80px;font-size:34px;" onclick="saveAndHome()">Save PDF & Return Home</button><br><br>
+  <h1 style="font-size:80px;margin-top:100px;">Test Complete!</h1>
+  <h1 style="font-size:120px;color:#005eb8;" id="final">0 / 35</h1>
+  <h2 style="font-size:50px;margin:60px 0;" id="msg"></h2>
+  <button style="background:#27ae60;padding:25px 90px;font-size:36px;" onclick="saveAndHome()">Save PDF & Return Home</button><br><br>
   <button onclick="home()">Back to Menu</button>
 </div>
 
@@ -155,7 +163,7 @@ const reasoningBank = [
   {t:"0.05 as fraction =",a:"1/20",m:1},
   {t:"600 ml in litres =",a:"0.6",m:1},
   {t:"4.25 + 2.8 =",a:"7.05",m:1},
-  {t:"What is 17 × 19?",a:"323",m:2}
+  {t:"17 × 19 =",a:"323",m:2}
 ];
 
 function go(t){
@@ -189,6 +197,7 @@ function loadQ(){
   if(q>=paper.length)return end();
   document.getElementById('qnum').textContent=q+1;
   document.getElementById('question').innerHTML=paper[q].t;
+  document.getElementById('correctAns').classList.add('hidden');
   document.getElementById('answer-input').value='';
   document.getElementById('working').value='';
   document.getElementById('feedback').innerHTML='';
@@ -198,13 +207,20 @@ function check(){
   let c=paper[q].a.toString().toLowerCase();
   let ok=u===c;
   work.push({q:q+1,question:paper[q].t,working:document.getElementById('working').value,ok});
-  if(ok){score+=paper[q].m||1;confetti({particleCount:300,spread:120});
-    document.getElementById('feedback').innerHTML='<span style="color:green;">Correct!</span>';}
-  else document.getElementById('feedback').innerHTML=`<span style="color:red;">Incorrect – answer: ${paper[q].a}</span>`;
+  if(ok){
+    score+=paper[q].m||1;
+    confetti({particleCount:300,spread:120});
+    document.getElementById('feedback').innerHTML='<span style="color:green;">Correct!</span>';
+  } else {
+    document.getElementById('feedback').innerHTML=`<span style="color:red;">Incorrect</span>`;
+    document.getElementById('correctAns').innerHTML = "= " + paper[q].a;
+    document.getElementById('correctAns').classList.remove('hidden');
+  }
   document.getElementById('score').textContent=score;
   document.getElementById('prog').textContent=(q+1)+"/"+paper.length;
   document.getElementById('bar').style.width=((q+1)/paper.length*100)+"%";
-  q++;setTimeout(loadQ,ok?1200:3500);
+  q++;
+  setTimeout(loadQ,ok?1200:4000);
 }
 function end(){
   clearInterval(timer);
