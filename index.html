@@ -8,59 +8,58 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
-  body,html{height:100vh;overflow:hidden;font-family:Arial,Helvetica,sans-serif;background:white;}
-  .page{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:20px 15px;}
+  body,html{height:100vh;overflow:hidden;font-family:Arial,Helvetica,sans-serif;background:white;display:flex;flex-direction:column;}
+  .page{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:15px 10px;overflow:hidden;}
 
-  /* OFFICIAL 2022 HEADER */
-  .header{background:#000;color:#fff;padding:16px 0;text-align:center;font-weight:bold;font-size:19px;width:100%;border-radius:0 0 30px 30px;}
-  .ks2{background:#005eb8;color:white;padding:14px 80px;border-radius:60px;font-size:44px;font-weight:bold;margin:30px 0 20px;box-shadow:0 4px 10px rgba(0,0,0,0.2);}
+  /* Exact 2022 header */
+  .header{background:#000;color:#fff;padding:16px 0;text-align:center;font-weight:bold;font-size:19px;width:100%;border-radius:0 0 30px 30px;position:relative;z-index:10;}
+  .ks2{background:#005eb8;color:white;padding:14px 80px;border-radius:60px;font-size:44px;font-weight:bold;margin:25px 0 15px;box-shadow:0 4px 12px rgba(0,0,0,0.25);}
 
-  .title{font-size:68px;font-weight:bold;text-align:center;margin:20px 0 10px;}
-  .subtitle{font-size:38px;text-align:center;margin-bottom:40px;}
+  .title{font-size:68px;font-weight:bold;text-align:center;margin:15px 0;}
+  .subtitle{font-size:38px;text-align:center;margin-bottom:30px;}
 
-  .namebox{width:80%;max-width:700px;margin:40px 0;}
+  .namebox{width:80%;max-width:700px;margin:30px 0;}
   .namebox input{width:100%;border:3px solid #000;padding:20px;font-size:34px;text-align:center;border-radius:10px;}
 
-  button{background:#005eb8;color:white;border:none;border-radius:15px;padding:22px 50px;font-size:36px;cursor:pointer;margin:20px 0;width:80%;max-width:500px;box-shadow:0 4px 10px rgba(0,0,0,0.2);}
+  button{background:#005eb8;color:white;border:none;border-radius:15px;padding:20px 50px;font-size:36px;cursor:pointer;margin:15px 0;width:80%;max-width:500px;box-shadow:0 4px 10px rgba(0,0,0,0.2);}
   button:hover{background:#003087;}
 
-  #timer{font-size:52px;color:#c00;margin:15px 0;font-weight:bold;}
-  .progress{width:85%;max-width:900px;height:45px;background:#ddd;border-radius:22px;overflow:hidden;position:relative;margin:10px auto;}
+  /* GAME SCREEN – GUARANTEED NO CUT-OFF */
+  #timer{font-size:50px;color:#c00;margin:10px 0;font-weight:bold;}
+  .progress{width:85%;height:42px;background:#ddd;border-radius:21px;overflow:hidden;position:relative;margin:8px 0;}
   .bar{height:100%;width:0%;background:linear-gradient(90deg,#ff006e,#8338ec,#3a86ff,#06ffa5,#ffba08);transition:width 0.6s;}
-  .prog{position:absolute;width:100%;text-align:center;line-height:45px;color:white;font-weight:bold;font-size:28px;text-shadow:1px 1px 4px #000;}
-  .score{font-size:34px;margin:10px 0;text-align:center;}
+  .prog{position:absolute;width:100%;text-align:center;line-height:42px;color:white;font-weight:bold;font-size:26px;text-shadow:1px 1px 4px #000;}
+  .score{font-size:34px;margin:8px 0;}
 
-  .question-area{flex:1;display:flex;align-items:center;justify-content:center;gap:40px;width:100%;max-height:32vh;padding:20px 0;}
-  .qnum{font-size:130px;font-weight:bold;color:#003087;flex-shrink:0;}
-  .qtext{font-size:52px;line-height:1.3;text-align:left;max-width:65%;word-wrap:break-word;}
-  .correct-answer{font-size:52px;color:#005eb8;font-weight:bold;margin-left:20px;}
+  .question-area{flex:none;display:flex;align-items:center;justify-content:center;gap:35px;padding:15px 0;max-height:28vh;}
+  .qnum{font-size:130px;font-weight:bold;color:#003087;}
+  .qtext{font-size:52px;line-height:1.3;text-align:left;max-width:65%;}
+  .correct-answer{font-size:52px;color:#005eb8;font-weight:bold;margin-left:15px;}
 
-  .working-area{width:85%;max-width:900px;margin:20px 0;height:160px;flex-shrink:0;}
+  .working-area{width:85%;max-width:900px;margin:15px 0;height:140px;flex:none;}
   .working-label{font-size:30px;text-align:center;margin-bottom:8px;font-weight:bold;}
-  .working{border:4px dotted #003087;background:#f8fbff;border-radius:12px;height:100%;padding:15px;}
+  .working{border:4px dotted #003087;background:#f8fbff;border-radius:12px;height:100%;padding:12px;}
   #working{width:100%;height:100%;border:none;background:transparent;font-size:28px;resize:none;outline:none;}
 
-  #answer-input{width:80%;max-width:500px;height:90px;font-size:52px;text-align:center;border:4px solid #000;border-radius:15px;margin:20px auto;display:block;}
+  #answer-input{width:80%;max-width:500px;height:85px;font-size:50px;text-align:center;border:4px solid #000;border-radius:15px;margin:15px auto;display:block;flex:none;}
 
-  .btn-area button{width:75%;max-width:450px;margin:12px auto;font-size:34px;padding:20px;}
+  .btn-area{flex:none;margin-top:auto;padding:10px 0 20px;}
+  .btn-area button{width:75%;max-width:450px;margin:10px auto;font-size:34px;padding:18px;}
   .end-btn{background:#c00 !important;}
-  #feedback{font-size:48px;text-align:center;margin:20px 0;min-height:70px;}
+  #feedback{font-size:48px;text-align:center;margin:10px 0;min-height:60px;flex:none;}
 
   .hidden{display:none !important;}
 
   @media (max-width:768px){
     .ks2{font-size:36px;padding:12px 60px;}
     .title{font-size:54px;}
-    .subtitle{font-size:32px;}
-    .namebox input{font-size:30px;padding:18px;}
-    button{font-size:32px;padding:18px;}
-    #timer{font-size:44px;}
     .qnum{font-size:100px;}
     .qtext{font-size:42px;text-align:center;max-width:90%;}
-    .correct-answer{font-size:42px;margin-left:0;margin-top:15px;}
-    .question-area{flex-direction:column;gap:15px;}
-    #answer-input{height:80px;font-size:46px;}
-    .working-area{height:140px;}
+    .correct-answer{font-size:42px;margin-left:0;margin-top:10px;}
+    .question-area{flex-direction:column;gap:10px;}
+    #timer{font-size:44px;}
+    #answer-input{height:75px;font-size:44px;}
+    .working-area{height:120px;}
   }
 </style>
 </head>
@@ -88,13 +87,13 @@
 <div id="game" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
   <div class="ks2">Key stage 2</div>
-  <div id="timer">40:00</div>
-  <div class="progress"><div class="bar" id="bar"><div class="prog" id="prog">0 / 35</div></div></div>
-  <div class="score">Score: <strong id="score">0</strong> / <strong id="total">35</strong></div>
+  <div id="timer">30:00</div>
+  <div class="progress"><div class="bar" id="bar"><div class="prog" id="prog">0 / 40</div></div></div>
+  <div class="score">Score: <strong id="score">0</strong> / <strong id="total">40</strong></div>
 
   <div class="question-area">
     <div class="qnum" id="qnum">1</div>
-    <div style="display:flex;align-items:center;">
+    <div style="display:flex;align-items:center;flex-wrap:wrap;">
       <div class="qtext" id="question"></div>
       <div class="correct-answer hidden" id="correctAns"></div>
     </div>
@@ -117,9 +116,9 @@
 <div id="endpage" class="page hidden">
   <div class="header">2026 national curriculum tests</div>
   <div class="ks2">Key stage 2</div>
-  <h1 style="font-size:80px;margin-top:100px;">Test Complete!</h1>
-  <h1 style="font-size:120px;color:#005eb8;" id="final">0 / 35</h1>
-  <h2 style="font-size:50px;margin:60px 0;" id="msg"></h2>
+  <h1 style="font-size:80px;margin-top:80px;">Test Complete!</h1>
+  <h1 style="font-size:120px;color:#005eb8;" id="final">0 / 40</h1>
+  <h2 style="font-size:50px;margin:50px 0;" id="msg"></h2>
   <button style="background:#27ae60;padding:25px 90px;font-size:36px;" onclick="saveAndHome()">Save PDF & Return Home</button><br><br>
   <button onclick="home()">Back to Menu</button>
 </div>
@@ -128,122 +127,32 @@
 const { jsPDF } = window.jspdf;
 let q=0, score=0, timeLeft, timer, name="", work=[], paper=[], type="";
 
-const reasoningBank = [
-  {t:"15% of 240 =",a:"36",m:1},
-  {t:"24 × 18 =",a:"432",m:2},
-  {t:"528 ÷ 12 =",a:"44",m:1},
-  {t:"456 × 7 =",a:"3192",m:2},
-  {t:"12.5% of 800 =",a:"100",m:1},
-  {t:"Volume of cuboid 6 × 4 × 5 cm =",a:"120",m:2},
-  {t:"3/5 of 45 =",a:"27",m:1},
-  {t:"0.4 × 0.7 =",a:"0.28",m:1},
-  {t:"Area of triangle base 12cm height 8cm =",a:"48",m:2},
-  {t:"350 spaces, 70% full =",a:"245",m:2},
-  {t:"Film starts 6:45pm lasts 2h 35min. Finish time?",a:"9:20",m:2},
-  {t:"Point (3,5) translated 4 right 2 up =",a:"(7,7)",m:2},
-  {t:"Buy one box £1.90, second half price. Two boxes cost?",a:"2.85",m:1},
-  {t:"3/8 of 96 =",a:"36",m:1},
-  {t:"Round 5.762 to 2 decimal places",a:"5.76",m:1},
-  {t:"10% of £360 =",a:"36",m:1},
-  {t:"Minutes in 3¼ hours =",a:"195",m:1},
-  {t:"Perimeter of rectangle 8cm × 5cm =",a:"26",m:1},
-  {t:"Temperature 15°C lower than 8°C =",a:"-7",m:1},
-  {t:"¾ + ⅝ =",a:"1 3/8",m:1},
-  {t:"2.5 kg in grams =",a:"2500",m:1},
-  {t:"180° − 137° =",a:"43",m:1},
-  {t:"999 ÷ 9 =",a:"111",m:1},
-  {t:"Mode of 3, 7, 3, 8, 3, 9 =",a:"3",m:1},
-  {t:"0.2 × 0.9 =",a:"0.18",m:1},
-  {t:"Faces on a cube =",a:"6",m:1},
-  {t:"15 × 12 =",a:"180",m:1},
-  {t:"480 ÷ 15 =",a:"32",m:1},
-  {t:"⅓ of 150 =",a:"50",m:1},
-  {t:"8² =",a:"64",m:1},
-  {t:"125% of 80 =",a:"100",m:1},
-  {t:"0.05 as fraction =",a:"1/20",m:1},
-  {t:"600 ml in litres =",a:"0.6",m:1},
-  {t:"4.25 + 2.8 =",a:"7.05",m:1},
-  {t:"17 × 19 =",a:"323",m:2}
+const reasoningBank = [ /* (same 35 questions as before – omitted for brevity but kept in full code) */
+  {t:"15% of 240 =",a:"36",m:1},{t:"24 × 18 =",a:"432",m:2},{t:"528 ÷ 12 =",a:"44",m:1},
+  {t:"456 × 7 =",a:"3192",m:2},{t:"12.5% of 800 =",a:"100",m:1},{t:"Volume of cuboid 6 × 4 × 5 cm =",a:"120",m:2},
+  {t:"3/5 of 45 =",a:"27",m:1},{t:"0.4 × 0.7 =",a:"0.28",m:1},{t:"Area of triangle base 12cm height 8cm =",a:"48",m:2},
+  {t:"350 spaces, 70% full =",a:"245",m:2},{t:"Film starts 6:45pm lasts 2h 35min. Finish time?",a:"9:20",m:2},
+  {t:"Point (3,5) translated 4 right 2 up =",a:"(7,7)",m:2},{t:"Buy one box £1.90, second half price. Two boxes cost?",a:"2.85",m:1},
+  {t:"3/8 of 96 =",a:"36",m:1},{t:"Round 5.762 to 2 decimal places",a:"5.76",m:1},{t:"10% of £360 =",a:"36",m:1},
+  {t:"Minutes in 3¼ hours =",a:"195",m:1},{t:"Perimeter of rectangle 8cm × 5cm =",a:"26",m:1},
+  {t:"Temperature 15°C lower than 8°C =",a:"-7",m:1},{t:"¾ + ⅝ =",a:"1 3/8",m:1},{t:"2.5 kg in grams =",a:"2500",m:1},
+  {t:"180° − 137° =",a:"43",m:1},{t:"999 ÷ 9 =",a:"111",m:1},{t:"Mode of 3, 7, 3, 8, 3, 9 =",a:"3",m:1},
+  {t:"0.2 × 0.9 =",a:"0.18",m:1},{t:"Faces on a cube =",a:"6",m:1},{t:"15 × 12 =",a:"180",m:1},
+  {t:"480 ÷ 15 =",a:"32",m:1},{t:"⅓ of 150 =",a:"50",m:1},{t:"8² =",a:"64",m:1},
+  {t:"125% of 80 =",a:"100",m:1},{t:"0.05 as fraction =",a:"1/20",m:1},{t:"600 ml in litres =",a:"0.6",m:1},
+  {t:"4.25 + 2.8 =",a:"7.05",m:1},{t:"17 × 19 =",a:"323",m:2}
 ];
 
-function go(t){
-  type=t;
-  document.getElementById('welcome').classList.add('hidden');
-  document.getElementById('cover').classList.remove('hidden');
-  document.getElementById('papertitle').innerHTML = t==='arithmetic'?'Paper 1: arithmetic':'Paper 2 / Paper 3: reasoning';
-}
-function start(){
-  name=document.getElementById('name').value.trim()||"Student";
-  paper=type==='arithmetic'?genArith():shuffle([...reasoningBank]);
-  timeLeft=type==='arithmetic'?1800:2400;
-  document.getElementById('total').textContent=paper.length;
-  document.getElementById('cover').classList.add('hidden');
-  document.getElementById('game').classList.remove('hidden');
-  q=0;score=0;work=[];loadQ();startTimer();
-}
-function genArith(){
-  let a=[];for(let i=1;i<=40;i++){
-    let x=Math.floor(Math.random()*8999)+1001;
-    let y=i<=20?Math.floor(Math.random()*899)+101:Math.floor(Math.random()*89)+11;
-    a.push({t:(i<=20?x+" + "+y+" =":x+" × "+y+" ="),a:(i<=20?x+y:x*y).toString(),m:1});
-  }return a;
-}
+function go(t){type=t;document.getElementById('welcome').classList.add('hidden');document.getElementById('cover').classList.remove('hidden');document.getElementById('papertitle').innerHTML=t==='arithmetic'?'Paper 1: arithmetic':'Paper 2 / Paper 3: reasoning';}
+function start(){name=document.getElementById('name').value.trim()||"Student";paper=type==='arithmetic'?genArith():shuffle([...reasoningBank]);timeLeft=type==='arithmetic'?1800:2400;document.getElementById('total').textContent=paper.length;document.getElementById('cover').classList.add('hidden');document.getElementById('game').classList.remove('hidden');q=0;score=0;work=[];loadQ();startTimer();}
+function genArith(){let a=[];for(let i=1;i<=40;i++){let x=Math.floor(Math.random()*8999)+1001;let y=i<=20?Math.floor(Math.random()*899)+101:Math.floor(Math.random()*89)+11;a.push({t:(i<=20?x+" + "+y+" =":x+" × "+y+" ="),a:(i<=20?x+y:x*y).toString(),m:1});}return a;}
 function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function startTimer(){
-  timer=setInterval(()=>{timeLeft--;let m=Math.floor(timeLeft/60),s=timeLeft%60;
-    document.getElementById('timer').textContent=m+":"+(s<10?"0":"")+s;if(timeLeft<=0)end();},1000);
-}
-function loadQ(){
-  if(q>=paper.length)return end();
-  document.getElementById('qnum').textContent=q+1;
-  document.getElementById('question').innerHTML=paper[q].t;
-  document.getElementById('correctAns').classList.add('hidden');
-  document.getElementById('answer-input').value='';
-  document.getElementById('working').value='';
-  document.getElementById('feedback').innerHTML='';
-}
-function check(){
-  let u=document.getElementById('answer-input').value.trim().toLowerCase();
-  let c=paper[q].a.toString().toLowerCase();
-  let ok=u===c;
-  work.push({q:q+1,question:paper[q].t,working:document.getElementById('working').value,ok});
-  if(ok){
-    score+=paper[q].m||1;
-    confetti({particleCount:300,spread:120});
-    document.getElementById('feedback').innerHTML='<span style="color:green;">Correct!</span>';
-  } else {
-    document.getElementById('feedback').innerHTML=`<span style="color:red;">Incorrect</span>`;
-    document.getElementById('correctAns').innerHTML = "= " + paper[q].a;
-    document.getElementById('correctAns').classList.remove('hidden');
-  }
-  document.getElementById('score').textContent=score;
-  document.getElementById('prog').textContent=(q+1)+"/"+paper.length;
-  document.getElementById('bar').style.width=((q+1)/paper.length*100)+"%";
-  q++;
-  setTimeout(loadQ,ok?1200:4000);
-}
-function end(){
-  clearInterval(timer);
-  document.getElementById('game').classList.add('hidden');
-  document.getElementById('endpage').classList.remove('hidden');
-  document.getElementById('final').textContent=score+" / "+paper.length;
-  document.getElementById('msg').innerHTML=score<20?"Great effort!":score<32?"Almost Greater Depth!":"GREATER DEPTH<br>ACHIEVED!";
-}
-function home(){
-  ['welcome','cover','game','endpage'].forEach(id=>document.getElementById(id).classList.add('hidden'));
-  document.getElementById('welcome').classList.remove('hidden');
-}
-function saveAndHome(){
-  const doc=new jsPDF();doc.setFontSize(20);
-  doc.text("SATs Results – "+name,105,20,{align:"center"});
-  doc.text("Score: "+score+" / "+paper.length,105,35,{align:"center"});
-  let y=50;work.forEach(w=>{if(y>270){doc.addPage();y=20;}
-    doc.setFontSize(10);doc.text(`Q${w.q}: ${w.ok?"Correct":"Incorrect"}`,15,y);
-    doc.text(doc.splitTextToSize(w.question.replace(/<br>/g," "),180),20,y+8);
-    if(w.working)doc.text("Working: "+w.working.substring(0,180),20,y+20);y+=35;});
-  doc.save(name+"_SATs_2026.pdf");
-  setTimeout(home,800);
-}
+function startTimer(){timer=setInterval(()=>{timeLeft--;let m=Math.floor(timeLeft/60),s=timeLeft%60;document.getElementById('timer').textContent=m+":"+(s<10?"0":"")+s;if(timeLeft<=0)end();},1000);}
+function loadQ(){if(q>=paper.length)return end();document.getElementById('qnum').textContent=q+1;document.getElementById('question').innerHTML=paper[q].t;document.getElementById('correctAns').classList.add('hidden');document.getElementById('answer-input').value='';document.getElementById('working').value='';document.getElementById('feedback').innerHTML='';}
+function check(){let u=document.getElementById('answer-input').value.trim().toLowerCase();let c=paper[q].a.toString().toLowerCase();let ok=u===c;work.push({q:q+1,question:paper[q].t,working:document.getElementById('working').value,ok});if(ok){score+=paper[q].m||1;confetti({particleCount:300,spread:120});document.getElementById('feedback').innerHTML='<span style="color:green;">Correct!</span>';}else{document.getElementById('feedback').innerHTML='<span style="color:red;">Incorrect</span>';document.getElementById('correctAns').innerHTML="= "+paper[q].a;document.getElementById('correctAns').classList.remove('hidden');}document.getElementById('score').textContent=score;document.getElementById('prog').textContent=(q+1)+"/"+paper.length;document.getElementById('bar').style.width=((q+1)/paper.length*100)+"%";q++;setTimeout(loadQ,ok?1200:4000);}
+function end(){clearInterval(timer);document.getElementById('game').classList.add('hidden');document.getElementById('endpage').classList.remove('hidden');document.getElementById('final').textContent=score+" / "+paper.length;document.getElementById('msg').innerHTML=score<20?"Great effort!":score<32?"Almost Greater Depth!":"GREATER DEPTH<br>ACHIEVED!";}
+function home(){['welcome','cover','game','endpage'].forEach(id=>document.getElementById(id).classList.add('hidden'));document.getElementById('welcome').classList.remove('hidden');}
+function saveAndHome(){const doc=new jsPDF();doc.setFontSize(20);doc.text("SATs Results – "+name,105,20,{align:"center"});doc.text("Score: "+score+" / "+paper.length,105,35,{align:"center"});let y=50;work.forEach(w=>{if(y>270){doc.addPage();y=20;}doc.setFontSize(10);doc.text(`Q${w.q}: ${w.ok?"Correct":"Incorrect"}`,15,y);doc.text(doc.splitTextToSize(w.question,180),20,y+8);if(w.working)doc.text("Working: "+w.working.substring(0,180),20,y+20);y+=35;});doc.save(name+"_SATs_2026.pdf");setTimeout(home,800);}
 </script>
 </body>
 </html>
